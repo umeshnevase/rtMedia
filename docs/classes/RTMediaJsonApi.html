@@ -1,0 +1,557 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>My project » \RTMediaJsonApi</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">My project</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/BuddyPressMedia.html"><i class="icon-folder-open"></i> BuddyPressMedia</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/PlaceLocalInclude.html"><i class="icon-folder-open"></i> PlaceLocalInclude</a></li>
+<li><a href="../packages/RTMedia.html"><i class="icon-folder-open"></i> RTMedia</a></li>
+<li><a href="../packages/rtMedia.html"><i class="icon-folder-open"></i> rtMedia</a></li>
+<li><a href="../packages/wordpress-plugin-tests.html"><i class="icon-folder-open"></i> wordpress-plugin-tests</a></li>
+<li><a href="../packages/wordpress-plugins-tests.html"><i class="icon-folder-open"></i> wordpress-plugins-tests</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">2379</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<div class="btn-toolbar">
+<div class="btn-group visibility" data-toggle="buttons-checkbox">
+<button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button>
+</div>
+<div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i title="Methods" class="icon-custom icon-method"></i> Methods
+                    <ul>
+<li class="method public "><a href="#method___construct" title="__construct() :: "><span class="description">__construct()
+        </span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#method_api_new_look_upload_dir" title="api_new_look_upload_dir() :: "><span class="description">api_new_look_upload_dir()
+        </span><pre>api_new_look_upload_dir()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_add_rtmedia_comment_request" title="rtmedia_api_process_add_rtmedia_comment_request() :: Post comment on activity_id or media_id"><span class="description">Post comment on activity_id or media_id</span><pre>rtmedia_api_process_add_rtmedia_comment_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_bp_get_activities_request" title="rtmedia_api_process_bp_get_activities_request() :: Sends a reset link to user email"><span class="description">Sends a reset link to user email</span><pre>rtmedia_api_process_bp_get_activities_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_bp_get_profile_request" title="rtmedia_api_process_bp_get_profile_request() :: "><span class="description">rtmedia_api_process_bp_get_profile_request()
+        </span><pre>rtmedia_api_process_bp_get_profile_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_follow_request" title="rtmedia_api_process_follow_request() :: "><span class="description">rtmedia_api_process_follow_request()
+        </span><pre>rtmedia_api_process_follow_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_get_likes_rtmedia_request" title="rtmedia_api_process_get_likes_rtmedia_request() :: Fetch Likes by media id"><span class="description">Fetch Likes by media id</span><pre>rtmedia_api_process_get_likes_rtmedia_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_get_rtmedia_comments_request" title="rtmedia_api_process_get_rtmedia_comments_request() :: Fetch Comments by media id"><span class="description">Fetch Comments by media id</span><pre>rtmedia_api_process_get_rtmedia_comments_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_like_media_request" title="rtmedia_api_process_like_media_request() :: Like/Unlike by media_id or activity_id"><span class="description">Like/Unlike by media_id or activity_id</span><pre>rtmedia_api_process_like_media_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_logout_request" title="rtmedia_api_process_logout_request() :: "><span class="description">rtmedia_api_process_logout_request()
+        </span><pre>rtmedia_api_process_logout_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_remove_comment_request" title="rtmedia_api_process_remove_comment_request() :: Delete comment by activity id or media id"><span class="description">Delete comment by activity id or media id</span><pre>rtmedia_api_process_remove_comment_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_request" title="rtmedia_api_process_request() :: "><span class="description">rtmedia_api_process_request()
+        </span><pre>rtmedia_api_process_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_rtmedia_gallery_request" title="rtmedia_api_process_rtmedia_gallery_request() :: "><span class="description">rtmedia_api_process_rtmedia_gallery_request()
+        </span><pre>rtmedia_api_process_rtmedia_gallery_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_rtmedia_get_media_details_request" title="rtmedia_api_process_rtmedia_get_media_details_request() :: "><span class="description">rtmedia_api_process_rtmedia_get_media_details_request()
+        </span><pre>rtmedia_api_process_rtmedia_get_media_details_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_rtmedia_upload_media_request" title="rtmedia_api_process_rtmedia_upload_media_request() :: "><span class="description">rtmedia_api_process_rtmedia_upload_media_request()
+        </span><pre>rtmedia_api_process_rtmedia_upload_media_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_unfollow_request" title="rtmedia_api_process_unfollow_request() :: "><span class="description">rtmedia_api_process_unfollow_request()
+        </span><pre>rtmedia_api_process_unfollow_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_update_avatar_request" title="rtmedia_api_process_update_avatar_request() :: "><span class="description">rtmedia_api_process_update_avatar_request()
+        </span><pre>rtmedia_api_process_update_avatar_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_update_profile_request" title="rtmedia_api_process_update_profile_request() :: "><span class="description">rtmedia_api_process_update_profile_request()
+        </span><pre>rtmedia_api_process_update_profile_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_wp_forgot_password_request" title="rtmedia_api_process_wp_forgot_password_request() :: Sends a reset link to user email"><span class="description">Sends a reset link to user email</span><pre>rtmedia_api_process_wp_forgot_password_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_wp_login_request" title="rtmedia_api_process_wp_login_request() :: Takes username and password, if succesful returns a access token"><span class="description">Takes username and password, if succesful returns a access token</span><pre>rtmedia_api_process_wp_login_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_process_wp_register_request" title="rtmedia_api_process_wp_register_request() :: register a user through api request
+requires signup_* =&gt; display_name, username, password, confirm password, location,"><span class="description">register a user through api request
+requires signup_* =&gt; display_name, username, password, confirm password, location,</span><pre>rtmedia_api_process_wp_register_request()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_api_response_object" title="rtmedia_api_response_object() :: Returns a json object"><span class="description">Returns a json object</span><pre>rtmedia_api_response_object()</pre></a></li>
+</ul>
+</li>
+<li class="nav-header">
+<i title="Properties" class="icon-custom icon-property"></i> Properties
+                    <ul>
+<li class="property public "><a href="#property_ec_invalid_media_id" title="$ec_invalid_media_id() :: "><span class="description"></span><pre>$ec_invalid_media_id</pre></a></li>
+<li class="property public "><a href="#property_ec_invalid_request_type" title="$ec_invalid_request_type() :: "><span class="description"></span><pre>$ec_invalid_request_type</pre></a></li>
+<li class="property public "><a href="#property_ec_media_activity_id_missing" title="$ec_media_activity_id_missing() :: "><span class="description"></span><pre>$ec_media_activity_id_missing</pre></a></li>
+<li class="property public "><a href="#property_ec_method_missing" title="$ec_method_missing() :: "><span class="description"></span><pre>$ec_method_missing</pre></a></li>
+<li class="property public "><a href="#property_ec_server_error" title="$ec_server_error() :: "><span class="description"></span><pre>$ec_server_error</pre></a></li>
+<li class="property public "><a href="#property_ec_token_invalid" title="$ec_token_invalid() :: "><span class="description"></span><pre>$ec_token_invalid</pre></a></li>
+<li class="property public "><a href="#property_ec_token_missing" title="$ec_token_missing() :: "><span class="description"></span><pre>$ec_token_missing</pre></a></li>
+<li class="property public "><a href="#property_msg_invalid_media_id" title="$msg_invalid_media_id() :: "><span class="description"></span><pre>$msg_invalid_media_id</pre></a></li>
+<li class="property public "><a href="#property_msg_invalid_request_type" title="$msg_invalid_request_type() :: "><span class="description"></span><pre>$msg_invalid_request_type</pre></a></li>
+<li class="property public "><a href="#property_msg_media_activity_id_missing" title="$msg_media_activity_id_missing() :: "><span class="description"></span><pre>$msg_media_activity_id_missing</pre></a></li>
+<li class="property public "><a href="#property_msg_method_missing" title="$msg_method_missing() :: "><span class="description"></span><pre>$msg_method_missing</pre></a></li>
+<li class="property public "><a href="#property_msg_server_error" title="$msg_server_error() :: "><span class="description"></span><pre>$msg_server_error</pre></a></li>
+<li class="property public "><a href="#property_msg_token_invalid" title="$msg_token_invalid() :: "><span class="description"></span><pre>$msg_token_invalid</pre></a></li>
+<li class="property public "><a href="#property_msg_token_missing" title="$msg_token_missing() :: "><span class="description"></span><pre>$msg_token_missing</pre></a></li>
+<li class="property public "><a href="#property_rtmediajsonapifunction" title="$rtmediajsonapifunction() :: "><span class="description"></span><pre>$rtmediajsonapifunction</pre></a></li>
+<li class="property public "><a href="#property_user_id" title="$user_id() :: "><span class="description"></span><pre>$user_id</pre></a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="span8">
+<a id="\RTMediaJsonApi"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i title="Classes" class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/RTMediaJsonApi.html">RTMediaJsonApi</a>
+</li>
+</ul>
+<div class="element class">
+<p class="short_description">File Description</p>
+<div class="details">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>author</th>
+<td><a href="mailto:umeshsingla05@gmail.com">Umesh Kumar</a></td>
+</tr></table>
+<h3>
+<i title="Methods" class="icon-custom icon-method"></i> Methods</h3>
+<a id="method___construct"></a><div class="element clickable method public method___construct" data-toggle="collapse" data-target=".method___construct .collapse" title="public">
+<h2>__construct()
+        </h2>
+<pre>__construct() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_api_new_look_upload_dir"></a><div class="element clickable method public method_api_new_look_upload_dir" data-toggle="collapse" data-target=".method_api_new_look_upload_dir .collapse" title="public">
+<h2>api_new_look_upload_dir()
+        </h2>
+<pre>api_new_look_upload_dir($args) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$args</h4></div>
+</div></div>
+</div>
+<a id="method_rtmedia_api_process_add_rtmedia_comment_request"></a><div class="element clickable method public method_rtmedia_api_process_add_rtmedia_comment_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_add_rtmedia_comment_request .collapse" title="public">
+<h2>Post comment on activity_id or media_id</h2>
+<pre>rtmedia_api_process_add_rtmedia_comment_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>global</th>
+<td>type $this->msg_server_error</td>
+</tr>
+<tr>
+<th>global</th>
+<td>int $this->ec_server_error</td>
+</tr>
+<tr>
+<th>global</th>
+<td>int $this->ec_invalid_media_id</td>
+</tr>
+<tr>
+<th>global</th>
+<td>type $this->msg_invalid_media_id</td>
+</tr>
+</table>
+</div></div>
+</div>
+<a id="method_rtmedia_api_process_bp_get_activities_request"></a><div class="element clickable method public method_rtmedia_api_process_bp_get_activities_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_bp_get_activities_request .collapse" title="public">
+<h2>Sends a reset link to user email</h2>
+<pre>rtmedia_api_process_bp_get_activities_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>global</th>
+<td>type $wpdb</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_rtmedia_api_process_bp_get_profile_request"></a><div class="element clickable method public method_rtmedia_api_process_bp_get_profile_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_bp_get_profile_request .collapse" title="public">
+<h2>rtmedia_api_process_bp_get_profile_request()
+        </h2>
+<pre>rtmedia_api_process_bp_get_profile_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_api_process_follow_request"></a><div class="element clickable method public method_rtmedia_api_process_follow_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_follow_request .collapse" title="public">
+<h2>rtmedia_api_process_follow_request()
+        </h2>
+<pre>rtmedia_api_process_follow_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_api_process_get_likes_rtmedia_request"></a><div class="element clickable method public method_rtmedia_api_process_get_likes_rtmedia_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_get_likes_rtmedia_request .collapse" title="public">
+<h2>Fetch Likes by media id</h2>
+<pre>rtmedia_api_process_get_likes_rtmedia_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>global</th>
+<td>type $wpdb</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_rtmedia_api_process_get_rtmedia_comments_request"></a><div class="element clickable method public method_rtmedia_api_process_get_rtmedia_comments_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_get_rtmedia_comments_request .collapse" title="public">
+<h2>Fetch Comments by media id</h2>
+<pre>rtmedia_api_process_get_rtmedia_comments_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>global</th>
+<td>type $wpdb</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_rtmedia_api_process_like_media_request"></a><div class="element clickable method public method_rtmedia_api_process_like_media_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_like_media_request .collapse" title="public">
+<h2>Like/Unlike by media_id or activity_id</h2>
+<pre>rtmedia_api_process_like_media_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered">
+<tr>
+<th>global</th>
+<td>int $this->ec_server_error</td>
+</tr>
+<tr>
+<th>global</th>
+<td>type $this->msg_server_error</td>
+</tr>
+<tr>
+<th>global</th>
+<td>int $this->ec_invalid_media_id</td>
+</tr>
+<tr>
+<th>global</th>
+<td>type $this->msg_invalid_media_id</td>
+</tr>
+</table>
+</div></div>
+</div>
+<a id="method_rtmedia_api_process_logout_request"></a><div class="element clickable method public method_rtmedia_api_process_logout_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_logout_request .collapse" title="public">
+<h2>rtmedia_api_process_logout_request()
+        </h2>
+<pre>rtmedia_api_process_logout_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_api_process_remove_comment_request"></a><div class="element clickable method public method_rtmedia_api_process_remove_comment_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_remove_comment_request .collapse" title="public">
+<h2>Delete comment by activity id or media id</h2>
+<pre>rtmedia_api_process_remove_comment_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_api_process_request"></a><div class="element clickable method public method_rtmedia_api_process_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_request .collapse" title="public">
+<h2>rtmedia_api_process_request()
+        </h2>
+<pre>rtmedia_api_process_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_api_process_rtmedia_gallery_request"></a><div class="element clickable method public method_rtmedia_api_process_rtmedia_gallery_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_rtmedia_gallery_request .collapse" title="public">
+<h2>rtmedia_api_process_rtmedia_gallery_request()
+        </h2>
+<pre>rtmedia_api_process_rtmedia_gallery_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_api_process_rtmedia_get_media_details_request"></a><div class="element clickable method public method_rtmedia_api_process_rtmedia_get_media_details_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_rtmedia_get_media_details_request .collapse" title="public">
+<h2>rtmedia_api_process_rtmedia_get_media_details_request()
+        </h2>
+<pre>rtmedia_api_process_rtmedia_get_media_details_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_api_process_rtmedia_upload_media_request"></a><div class="element clickable method public method_rtmedia_api_process_rtmedia_upload_media_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_rtmedia_upload_media_request .collapse" title="public">
+<h2>rtmedia_api_process_rtmedia_upload_media_request()
+        </h2>
+<pre>rtmedia_api_process_rtmedia_upload_media_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_api_process_unfollow_request"></a><div class="element clickable method public method_rtmedia_api_process_unfollow_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_unfollow_request .collapse" title="public">
+<h2>rtmedia_api_process_unfollow_request()
+        </h2>
+<pre>rtmedia_api_process_unfollow_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_api_process_update_avatar_request"></a><div class="element clickable method public method_rtmedia_api_process_update_avatar_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_update_avatar_request .collapse" title="public">
+<h2>rtmedia_api_process_update_avatar_request()
+        </h2>
+<pre>rtmedia_api_process_update_avatar_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_api_process_update_profile_request"></a><div class="element clickable method public method_rtmedia_api_process_update_profile_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_update_profile_request .collapse" title="public">
+<h2>rtmedia_api_process_update_profile_request()
+        </h2>
+<pre>rtmedia_api_process_update_profile_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_api_process_wp_forgot_password_request"></a><div class="element clickable method public method_rtmedia_api_process_wp_forgot_password_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_wp_forgot_password_request .collapse" title="public">
+<h2>Sends a reset link to user email</h2>
+<pre>rtmedia_api_process_wp_forgot_password_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>global</th>
+<td>type $wpdb</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_rtmedia_api_process_wp_login_request"></a><div class="element clickable method public method_rtmedia_api_process_wp_login_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_wp_login_request .collapse" title="public">
+<h2>Takes username and password, if succesful returns a access token</h2>
+<pre>rtmedia_api_process_wp_login_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_api_process_wp_register_request"></a><div class="element clickable method public method_rtmedia_api_process_wp_register_request" data-toggle="collapse" data-target=".method_rtmedia_api_process_wp_register_request .collapse" title="public">
+<h2>register a user through api request
+requires signup_* =&gt; display_name, username, password, confirm password, location,</h2>
+<pre>rtmedia_api_process_wp_register_request() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_api_response_object"></a><div class="element clickable method public method_rtmedia_api_response_object" data-toggle="collapse" data-target=".method_rtmedia_api_response_object .collapse" title="public">
+<h2>Returns a json object</h2>
+<pre>rtmedia_api_response_object(\type $status, \type $status_code, \type $message, \type $data<code> = false</code>) : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$status</h4>
+<code><a href="type.html">\type</a></code>
+</div>
+<div class="subelement argument">
+<h4>$status_code</h4>
+<code><a href="type.html">\type</a></code>
+</div>
+<div class="subelement argument">
+<h4>$message</h4>
+<code><a href="type.html">\type</a></code>
+</div>
+<div class="subelement argument">
+<h4>$data</h4>
+<code><a href="type.html">\type</a></code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<h3>
+<i title="Properties" class="icon-custom icon-property"></i> Properties</h3>
+<a id="property_ec_invalid_media_id"> </a><div class="element clickable property public property_ec_invalid_media_id" data-toggle="collapse" data-target=".property_ec_invalid_media_id .collapse" title="public">
+<h2>$ec_invalid_media_id</h2>
+<pre>$ec_invalid_media_id </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>600006</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_ec_invalid_request_type"> </a><div class="element clickable property public property_ec_invalid_request_type" data-toggle="collapse" data-target=".property_ec_invalid_request_type .collapse" title="public">
+<h2>$ec_invalid_request_type</h2>
+<pre>$ec_invalid_request_type </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>600007</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_ec_media_activity_id_missing"> </a><div class="element clickable property public property_ec_media_activity_id_missing" data-toggle="collapse" data-target=".property_ec_media_activity_id_missing .collapse" title="public">
+<h2>$ec_media_activity_id_missing</h2>
+<pre>$ec_media_activity_id_missing </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>600005</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_ec_method_missing"> </a><div class="element clickable property public property_ec_method_missing" data-toggle="collapse" data-target=".property_ec_method_missing .collapse" title="public">
+<h2>$ec_method_missing</h2>
+<pre>$ec_method_missing </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>600001</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_ec_server_error"> </a><div class="element clickable property public property_ec_server_error" data-toggle="collapse" data-target=".property_ec_server_error .collapse" title="public">
+<h2>$ec_server_error</h2>
+<pre>$ec_server_error </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>600004</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_ec_token_invalid"> </a><div class="element clickable property public property_ec_token_invalid" data-toggle="collapse" data-target=".property_ec_token_invalid .collapse" title="public">
+<h2>$ec_token_invalid</h2>
+<pre>$ec_token_invalid </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>600003</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_ec_token_missing"> </a><div class="element clickable property public property_ec_token_missing" data-toggle="collapse" data-target=".property_ec_token_missing .collapse" title="public">
+<h2>$ec_token_missing</h2>
+<pre>$ec_token_missing </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>600002</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_msg_invalid_media_id"> </a><div class="element clickable property public property_msg_invalid_media_id" data-toggle="collapse" data-target=".property_msg_invalid_media_id .collapse" title="public">
+<h2>$msg_invalid_media_id</h2>
+<pre>$msg_invalid_media_id </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>'invalid media id'</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_msg_invalid_request_type"> </a><div class="element clickable property public property_msg_invalid_request_type" data-toggle="collapse" data-target=".property_msg_invalid_request_type .collapse" title="public">
+<h2>$msg_invalid_request_type</h2>
+<pre>$msg_invalid_request_type </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>'invalid request type'</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_msg_media_activity_id_missing"> </a><div class="element clickable property public property_msg_media_activity_id_missing" data-toggle="collapse" data-target=".property_msg_media_activity_id_missing .collapse" title="public">
+<h2>$msg_media_activity_id_missing</h2>
+<pre>$msg_media_activity_id_missing </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>'media/activity id missing'</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_msg_method_missing"> </a><div class="element clickable property public property_msg_method_missing" data-toggle="collapse" data-target=".property_msg_method_missing .collapse" title="public">
+<h2>$msg_method_missing</h2>
+<pre>$msg_method_missing </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>'no method specified'</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_msg_server_error"> </a><div class="element clickable property public property_msg_server_error" data-toggle="collapse" data-target=".property_msg_server_error .collapse" title="public">
+<h2>$msg_server_error</h2>
+<pre>$msg_server_error </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>'server error'</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_msg_token_invalid"> </a><div class="element clickable property public property_msg_token_invalid" data-toggle="collapse" data-target=".property_msg_token_invalid .collapse" title="public">
+<h2>$msg_token_invalid</h2>
+<pre>$msg_token_invalid </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>'token invalid'</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_msg_token_missing"> </a><div class="element clickable property public property_msg_token_missing" data-toggle="collapse" data-target=".property_msg_token_missing .collapse" title="public">
+<h2>$msg_token_missing</h2>
+<pre>$msg_token_missing </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>'token empty'</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_rtmediajsonapifunction"> </a><div class="element clickable property public property_rtmediajsonapifunction" data-toggle="collapse" data-target=".property_rtmediajsonapifunction .collapse" title="public">
+<h2>$rtmediajsonapifunction</h2>
+<pre>$rtmediajsonapifunction </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_user_id"> </a><div class="element clickable property public property_user_id" data-toggle="collapse" data-target=".property_user_id .collapse" title="public">
+<h2>$user_id</h2>
+<pre>$user_id </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>''</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.2.0
+</a> and<br>
+            generated on 2014-01-31T17:24:24+05:30.<br></footer></div>
+</div>
+</body>
+</html>

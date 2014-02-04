@@ -1,0 +1,580 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>My project » \RTMedia</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">My project</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/BuddyPressMedia.html"><i class="icon-folder-open"></i> BuddyPressMedia</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/PlaceLocalInclude.html"><i class="icon-folder-open"></i> PlaceLocalInclude</a></li>
+<li><a href="../packages/RTMedia.html"><i class="icon-folder-open"></i> RTMedia</a></li>
+<li><a href="../packages/rtMedia.html"><i class="icon-folder-open"></i> rtMedia</a></li>
+<li><a href="../packages/wordpress-plugin-tests.html"><i class="icon-folder-open"></i> wordpress-plugin-tests</a></li>
+<li><a href="../packages/wordpress-plugins-tests.html"><i class="icon-folder-open"></i> wordpress-plugins-tests</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">2379</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<div class="btn-toolbar">
+<div class="btn-group visibility" data-toggle="buttons-checkbox">
+<button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button>
+</div>
+<div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i title="Methods" class="icon-custom icon-method"></i> Methods
+                    <ul>
+<li class="method public "><a href="#method___construct" title="__construct() :: Constructs the class
+loads and initiates the plugin, loads translations."><span class="description">Constructs the class
+loads and initiates the plugin, loads translations.</span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#method_add_image_sizes" title="add_image_sizes() :: "><span class="description">add_image_sizes()
+        </span><pre>add_image_sizes()</pre></a></li>
+<li class="method public "><a href="#method_admin_init" title="admin_init() :: Load admin screens"><span class="description">Load admin screens</span><pre>admin_init()</pre></a></li>
+<li class="method public "><a href="#method_check_global_album" title="check_global_album() :: "><span class="description">check_global_album()
+        </span><pre>check_global_album()</pre></a></li>
+<li class="method public "><a href="#method_constants" title="constants() :: Defines all the constants if undefined. Can be overridden by
+defining them elsewhere, say wp-config.php"><span class="description">Defines all the constants if undefined. Can be overridden by
+defining them elsewhere, say wp-config.php</span><pre>constants()</pre></a></li>
+<li class="method public "><a href="#method_create_table_error_notice" title="create_table_error_notice() :: "><span class="description">create_table_error_notice()
+        </span><pre>create_table_error_notice()</pre></a></li>
+<li class="method public "><a href="#method_custome_style_for_activity_image_size" title="custome_style_for_activity_image_size() :: "><span class="description">custome_style_for_activity_image_size()
+        </span><pre>custome_style_for_activity_image_size()</pre></a></li>
+<li class="method public "><a href="#method_default_count" title="default_count() :: "><span class="description">default_count()
+        </span><pre>default_count()</pre></a></li>
+<li class="method public "><a href="#method_define_type_constants" title="define_type_constants() :: "><span class="description">define_type_constants()
+        </span><pre>define_type_constants()</pre></a></li>
+<li class="method public "><a href="#method_enqueue_scripts_styles" title="enqueue_scripts_styles() :: "><span class="description">enqueue_scripts_styles()
+        </span><pre>enqueue_scripts_styles()</pre></a></li>
+<li class="method public "><a href="#method_filter_allow_mime_type_mu" title="filter_allow_mime_type_mu() :: "><span class="description">filter_allow_mime_type_mu()
+        </span><pre>filter_allow_mime_type_mu()</pre></a></li>
+<li class="method public "><a href="#method_filter_image_sizes" title="filter_image_sizes() :: "><span class="description">filter_image_sizes()
+        </span><pre>filter_image_sizes()</pre></a></li>
+<li class="method public "><a href="#method_filter_image_sizes_details" title="filter_image_sizes_details() :: "><span class="description">filter_image_sizes_details()
+        </span><pre>filter_image_sizes_details()</pre></a></li>
+<li class="method public "><a href="#method_get_user_link" title="get_user_link() :: "><span class="description">get_user_link()
+        </span><pre>get_user_link()</pre></a></li>
+<li class="method public "><a href="#method_image_sizes" title="image_sizes() :: "><span class="description">image_sizes()
+        </span><pre>image_sizes()</pre></a></li>
+<li class="method public "><a href="#method_init" title="init() :: Hooks the plugin into BuddyPress via 'bp_include' action."><span class="description">Hooks the plugin into BuddyPress via 'bp_include' action.</span><pre>init()</pre></a></li>
+<li class="method public "><a href="#method_init_buddypress_options" title="init_buddypress_options() :: "><span class="description">init_buddypress_options()
+        </span><pre>init_buddypress_options()</pre></a></li>
+<li class="method public "><a href="#method_init_site_options" title="init_site_options() :: "><span class="description">init_site_options()
+        </span><pre>init_site_options()</pre></a></li>
+<li class="method public "><a href="#method_load_translation" title="load_translation() :: Loads translations"><span class="description">Loads translations</span><pre>load_translation()</pre></a></li>
+<li class="method public "><a href="#method_media_screen" title="media_screen() :: "><span class="description">media_screen()
+        </span><pre>media_screen()</pre></a></li>
+<li class="method public "><a href="#method_plugin_get_version" title="plugin_get_version() :: "><span class="description">plugin_get_version()
+        </span><pre>plugin_get_version()</pre></a></li>
+<li class="method public "><a href="#method_redirect_on_change_slug" title="redirect_on_change_slug() :: "><span class="description">redirect_on_change_slug()
+        </span><pre>redirect_on_change_slug()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia_custom_image_sizes_choose" title="rtmedia_custom_image_sizes_choose() :: "><span class="description">rtmedia_custom_image_sizes_choose()
+        </span><pre>rtmedia_custom_image_sizes_choose()</pre></a></li>
+<li class="method public "><a href="#method_sanitize_allowed_types" title="sanitize_allowed_types() :: Sanitize all media sizes after hooking custom media types"><span class="description">Sanitize all media sizes after hooking custom media types</span><pre>sanitize_allowed_types()</pre></a></li>
+<li class="method public "><a href="#method_set_allowed_types" title="set_allowed_types() :: Default allowed media types array"><span class="description">Default allowed media types array</span><pre>set_allowed_types()</pre></a></li>
+<li class="method public "><a href="#method_set_bp_bar" title="set_bp_bar() :: "><span class="description">set_bp_bar()
+        </span><pre>set_bp_bar()</pre></a></li>
+<li class="method public "><a href="#method_set_default_sizes" title="set_default_sizes() :: Set the default sizes"><span class="description">Set the default sizes</span><pre>set_default_sizes()</pre></a></li>
+<li class="method public "><a href="#method_set_friends_object" title="set_friends_object() :: "><span class="description">set_friends_object()
+        </span><pre>set_friends_object()</pre></a></li>
+<li class="method public "><a href="#method_set_privacy" title="set_privacy() :: Set privacy options"><span class="description">Set privacy options</span><pre>set_privacy()</pre></a></li>
+<li class="method public "><a href="#method_set_site_options" title="set_site_options() :: "><span class="description">set_site_options()
+        </span><pre>set_site_options()</pre></a></li>
+<li class="method public "><a href="#method_unset_bp_media_image_sizes" title="unset_bp_media_image_sizes() :: "><span class="description">unset_bp_media_image_sizes()
+        </span><pre>unset_bp_media_image_sizes()</pre></a></li>
+<li class="method public "><a href="#method_unset_bp_media_image_sizes_details" title="unset_bp_media_image_sizes_details() :: "><span class="description">unset_bp_media_image_sizes_details()
+        </span><pre>unset_bp_media_image_sizes_details()</pre></a></li>
+<li class="method public "><a href="#method_update_db" title="update_db() :: "><span class="description">update_db()
+        </span><pre>update_db()</pre></a></li>
+</ul>
+</li>
+<li class="nav-header">
+<i title="Properties" class="icon-custom icon-property"></i> Properties
+                    <ul>
+<li class="property public "><a href="#property_activity_types" title="$activity_types() :: "><span class="description">The types of activity BuddyPress Media creates</span><pre>$activity_types</pre></a></li>
+<li class="property public "><a href="#property_allowed_types" title="$allowed_types() :: "><span class="description">allowed media types</span><pre>$allowed_types</pre></a></li>
+<li class="property public "><a href="#property_default_privacy" title="$default_privacy() :: "><span class="description">default application wide privacy levels</span><pre>$default_privacy</pre></a></li>
+<li class="property public "><a href="#property_default_sizes" title="$default_sizes() :: "><span class="description">default media sizes</span><pre>$default_sizes</pre></a></li>
+<li class="property public "><a href="#property_options" title="$options() :: "><span class="description"></span><pre>$options</pre></a></li>
+<li class="property public "><a href="#property_posts_per_page" title="$posts_per_page() :: "><span class="description">Number of media items to show in one view.</span><pre>$posts_per_page</pre></a></li>
+<li class="property public "><a href="#property_privacy_settings" title="$privacy_settings() :: "><span class="description">privacy settings</span><pre>$privacy_settings</pre></a></li>
+<li class="property public "><a href="#property_render_options" title="$render_options() :: "><span class="description"></span><pre>$render_options</pre></a></li>
+<li class="property public "><a href="#property_support_url" title="$support_url() :: "><span class="description">Support forum url</span><pre>$support_url</pre></a></li>
+</ul>
+</li>
+<li class="nav-header private">» Private
+                    <ul><li class="property private "><a href="#property_default_thumbnail" title="$default_thumbnail() :: "><span class="description">default thumbnail url fallback for all media types</span><pre>$default_thumbnail</pre></a></li></ul>
+</li>
+</ul>
+</div>
+<div class="span8">
+<a id="\RTMedia"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i title="Classes" class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/RTMedia.html">RTMedia</a>
+</li>
+</ul>
+<div class="element class">
+<p class="short_description">RTMedia</p>
+<div class="details">
+<div class="long_description">The main rtMedia Class. This is where everything starts.</div>
+<table class="table table-bordered">
+<tr>
+<th>package</th>
+<td><a href="../packages/rtMedia.Main.html">rtMedia</a></td>
+</tr>
+<tr>
+<th>subpackage</th>
+<td>Main</td>
+</tr>
+<tr>
+<th>author</th>
+<td><a href="mailto:faishal.saiyed@rtcamp.com">Faishal</a></td>
+</tr>
+</table>
+<h3>
+<i title="Methods" class="icon-custom icon-method"></i> Methods</h3>
+<a id="method___construct"></a><div class="element clickable method public method___construct" data-toggle="collapse" data-target=".method___construct .collapse" title="public">
+<h2>Constructs the class
+loads and initiates the plugin, loads translations.</h2>
+<pre>__construct() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description">Initialises media counter</div>
+<table class="table table-bordered"><tr>
+<th>global</th>
+<td>int $bp_media_counter Media counter</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_add_image_sizes"></a><div class="element clickable method public method_add_image_sizes" data-toggle="collapse" data-target=".method_add_image_sizes .collapse" title="public">
+<h2>add_image_sizes()
+        </h2>
+<pre>add_image_sizes() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_admin_init"></a><div class="element clickable method public method_admin_init" data-toggle="collapse" data-target=".method_admin_init .collapse" title="public">
+<h2>Load admin screens</h2>
+<pre>admin_init() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>global</th>
+<td>RTMediaAdmin $rtmedia_admin Class for loading admin screen</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_check_global_album"></a><div class="element clickable method public method_check_global_album" data-toggle="collapse" data-target=".method_check_global_album .collapse" title="public">
+<h2>check_global_album()
+        </h2>
+<pre>check_global_album() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_constants"></a><div class="element clickable method public method_constants" data-toggle="collapse" data-target=".method_constants .collapse" title="public">
+<h2>Defines all the constants if undefined. Can be overridden by
+defining them elsewhere, say wp-config.php</h2>
+<pre>constants() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_create_table_error_notice"></a><div class="element clickable method public method_create_table_error_notice" data-toggle="collapse" data-target=".method_create_table_error_notice .collapse" title="public">
+<h2>create_table_error_notice()
+        </h2>
+<pre>create_table_error_notice() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_custome_style_for_activity_image_size"></a><div class="element clickable method public method_custome_style_for_activity_image_size" data-toggle="collapse" data-target=".method_custome_style_for_activity_image_size .collapse" title="public">
+<h2>custome_style_for_activity_image_size()
+        </h2>
+<pre>custome_style_for_activity_image_size() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_default_count"></a><div class="element clickable method public method_default_count" data-toggle="collapse" data-target=".method_default_count .collapse" title="public">
+<h2>default_count()
+        </h2>
+<pre>default_count() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_define_type_constants"></a><div class="element clickable method public method_define_type_constants" data-toggle="collapse" data-target=".method_define_type_constants .collapse" title="public">
+<h2>define_type_constants()
+        </h2>
+<pre>define_type_constants() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_enqueue_scripts_styles"></a><div class="element clickable method public method_enqueue_scripts_styles" data-toggle="collapse" data-target=".method_enqueue_scripts_styles .collapse" title="public">
+<h2>enqueue_scripts_styles()
+        </h2>
+<pre>enqueue_scripts_styles() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_filter_allow_mime_type_mu"></a><div class="element clickable method public method_filter_allow_mime_type_mu" data-toggle="collapse" data-target=".method_filter_allow_mime_type_mu .collapse" title="public">
+<h2>filter_allow_mime_type_mu()
+        </h2>
+<pre>filter_allow_mime_type_mu($options) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$options</h4></div>
+</div></div>
+</div>
+<a id="method_filter_image_sizes"></a><div class="element clickable method public method_filter_image_sizes" data-toggle="collapse" data-target=".method_filter_image_sizes .collapse" title="public">
+<h2>filter_image_sizes()
+        </h2>
+<pre>filter_image_sizes($sizes) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$sizes</h4></div>
+</div></div>
+</div>
+<a id="method_filter_image_sizes_details"></a><div class="element clickable method public method_filter_image_sizes_details" data-toggle="collapse" data-target=".method_filter_image_sizes_details .collapse" title="public">
+<h2>filter_image_sizes_details()
+        </h2>
+<pre>filter_image_sizes_details($sizes) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$sizes</h4></div>
+</div></div>
+</div>
+<a id="method_get_user_link"></a><div class="element clickable method public method_get_user_link" data-toggle="collapse" data-target=".method_get_user_link .collapse" title="public">
+<h2>get_user_link()
+        </h2>
+<pre>get_user_link($user) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$user</h4></div>
+</div></div>
+</div>
+<a id="method_image_sizes"></a><div class="element clickable method public method_image_sizes" data-toggle="collapse" data-target=".method_image_sizes .collapse" title="public">
+<h2>image_sizes()
+        </h2>
+<pre>image_sizes() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_init"></a><div class="element clickable method public method_init" data-toggle="collapse" data-target=".method_init .collapse" title="public">
+<h2>Hooks the plugin into BuddyPress via 'bp_include' action.</h2>
+<pre>init() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description">Initialises the plugin's functionalities, options,
+loads media for Profiles and Groups.
+Creates Admin panels
+Loads accessory functions</div>
+<table class="table table-bordered"><tr>
+<th>global</th>
+<td>BPMediaAdmin $bp_media_admin</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_init_buddypress_options"></a><div class="element clickable method public method_init_buddypress_options" data-toggle="collapse" data-target=".method_init_buddypress_options .collapse" title="public">
+<h2>init_buddypress_options()
+        </h2>
+<pre>init_buddypress_options() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_init_site_options"></a><div class="element clickable method public method_init_site_options" data-toggle="collapse" data-target=".method_init_site_options .collapse" title="public">
+<h2>init_site_options()
+        </h2>
+<pre>init_site_options() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_load_translation"></a><div class="element clickable method public method_load_translation" data-toggle="collapse" data-target=".method_load_translation .collapse" title="public">
+<h2>Loads translations</h2>
+<pre>load_translation() </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_media_screen"></a><div class="element clickable method public method_media_screen" data-toggle="collapse" data-target=".method_media_screen .collapse" title="public">
+<h2>media_screen()
+        </h2>
+<pre>media_screen() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_plugin_get_version"></a><div class="element clickable method public method_plugin_get_version" data-toggle="collapse" data-target=".method_plugin_get_version .collapse" title="public">
+<h2>plugin_get_version()
+        </h2>
+<pre>plugin_get_version($path<code> = NULL</code>) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$path</h4></div>
+</div></div>
+</div>
+<a id="method_redirect_on_change_slug"></a><div class="element clickable method public method_redirect_on_change_slug" data-toggle="collapse" data-target=".method_redirect_on_change_slug .collapse" title="public">
+<h2>redirect_on_change_slug()
+        </h2>
+<pre>redirect_on_change_slug() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia_custom_image_sizes_choose"></a><div class="element clickable method public method_rtmedia_custom_image_sizes_choose" data-toggle="collapse" data-target=".method_rtmedia_custom_image_sizes_choose .collapse" title="public">
+<h2>rtmedia_custom_image_sizes_choose()
+        </h2>
+<pre>rtmedia_custom_image_sizes_choose($sizes) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$sizes</h4></div>
+</div></div>
+</div>
+<a id="method_sanitize_allowed_types"></a><div class="element clickable method public method_sanitize_allowed_types" data-toggle="collapse" data-target=".method_sanitize_allowed_types .collapse" title="public">
+<h2>Sanitize all media sizes after hooking custom media types</h2>
+<pre>sanitize_allowed_types(array $allowed_types) : array</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$allowed_types</h4>
+<code>array</code><p>allowed media types after hooking custom types</p></div>
+<h3>Returns</h3>
+<div class="subelement response">
+<code>array</code>$allowed_types sanitized media types</div>
+</div></div>
+</div>
+<a id="method_set_allowed_types"></a><div class="element clickable method public method_set_allowed_types" data-toggle="collapse" data-target=".method_set_allowed_types .collapse" title="public">
+<h2>Default allowed media types array</h2>
+<pre>set_allowed_types() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_set_bp_bar"></a><div class="element clickable method public method_set_bp_bar" data-toggle="collapse" data-target=".method_set_bp_bar .collapse" title="public">
+<h2>set_bp_bar()
+        </h2>
+<pre>set_bp_bar() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_set_default_sizes"></a><div class="element clickable method public method_set_default_sizes" data-toggle="collapse" data-target=".method_set_default_sizes .collapse" title="public">
+<h2>Set the default sizes</h2>
+<pre>set_default_sizes() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_set_friends_object"></a><div class="element clickable method public method_set_friends_object" data-toggle="collapse" data-target=".method_set_friends_object .collapse" title="public">
+<h2>set_friends_object()
+        </h2>
+<pre>set_friends_object() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_set_privacy"></a><div class="element clickable method public method_set_privacy" data-toggle="collapse" data-target=".method_set_privacy .collapse" title="public">
+<h2>Set privacy options</h2>
+<pre>set_privacy() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_set_site_options"></a><div class="element clickable method public method_set_site_options" data-toggle="collapse" data-target=".method_set_site_options .collapse" title="public">
+<h2>set_site_options()
+        </h2>
+<pre>set_site_options() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_unset_bp_media_image_sizes"></a><div class="element clickable method public method_unset_bp_media_image_sizes" data-toggle="collapse" data-target=".method_unset_bp_media_image_sizes .collapse" title="public">
+<h2>unset_bp_media_image_sizes()
+        </h2>
+<pre>unset_bp_media_image_sizes($sizes) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$sizes</h4></div>
+</div></div>
+</div>
+<a id="method_unset_bp_media_image_sizes_details"></a><div class="element clickable method public method_unset_bp_media_image_sizes_details" data-toggle="collapse" data-target=".method_unset_bp_media_image_sizes_details .collapse" title="public">
+<h2>unset_bp_media_image_sizes_details()
+        </h2>
+<pre>unset_bp_media_image_sizes_details($sizes) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$sizes</h4></div>
+</div></div>
+</div>
+<a id="method_update_db"></a><div class="element clickable method public method_update_db" data-toggle="collapse" data-target=".method_update_db .collapse" title="public">
+<h2>update_db()
+        </h2>
+<pre>update_db() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<h3>
+<i title="Properties" class="icon-custom icon-property"></i> Properties</h3>
+<a id="property_activity_types"> </a><div class="element clickable property public property_activity_types" data-toggle="collapse" data-target=".property_activity_types .collapse" title="public">
+<h2>The types of activity BuddyPress Media creates</h2>
+<pre>$activity_types : array</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>array('media_upload', 'album_updated', 'album_created')</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_allowed_types"> </a><div class="element clickable property public property_allowed_types" data-toggle="collapse" data-target=".property_allowed_types .collapse" title="public">
+<h2>allowed media types</h2>
+<pre>$allowed_types : array</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_default_privacy"> </a><div class="element clickable property public property_default_privacy" data-toggle="collapse" data-target=".property_default_privacy .collapse" title="public">
+<h2>default application wide privacy levels</h2>
+<pre>$default_privacy : object</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>array('0' => 'Public', '20' => 'Users', '40' => 'Friends', '60' => 'Private')</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_default_sizes"> </a><div class="element clickable property public property_default_sizes" data-toggle="collapse" data-target=".property_default_sizes .collapse" title="public">
+<h2>default media sizes</h2>
+<pre>$default_sizes : array</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_options"> </a><div class="element clickable property public property_options" data-toggle="collapse" data-target=".property_options .collapse" title="public">
+<h2>$options</h2>
+<pre>$options </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_posts_per_page"> </a><div class="element clickable property public property_posts_per_page" data-toggle="collapse" data-target=".property_posts_per_page .collapse" title="public">
+<h2>Number of media items to show in one view.</h2>
+<pre>$posts_per_page : int</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>10</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_privacy_settings"> </a><div class="element clickable property public property_privacy_settings" data-toggle="collapse" data-target=".property_privacy_settings .collapse" title="public">
+<h2>privacy settings</h2>
+<pre>$privacy_settings : array</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_render_options"> </a><div class="element clickable property public property_render_options" data-toggle="collapse" data-target=".property_render_options .collapse" title="public">
+<h2>$render_options</h2>
+<pre>$render_options </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_support_url"> </a><div class="element clickable property public property_support_url" data-toggle="collapse" data-target=".property_support_url .collapse" title="public">
+<h2>Support forum url</h2>
+<pre>$support_url : string</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>'http://rtcamp.com/support/forum/buddypress-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media'</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_default_thumbnail"> </a><div class="element clickable property private property_default_thumbnail" data-toggle="collapse" data-target=".property_default_thumbnail .collapse" title="private">
+<h2>default thumbnail url fallback for all media types</h2>
+<pre>$default_thumbnail : string</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.2.0
+</a> and<br>
+            generated on 2014-01-31T17:24:25+05:30.<br></footer></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>My project » \RTMediaMigration</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">My project</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/BuddyPressMedia.html"><i class="icon-folder-open"></i> BuddyPressMedia</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/PlaceLocalInclude.html"><i class="icon-folder-open"></i> PlaceLocalInclude</a></li>
+<li><a href="../packages/RTMedia.html"><i class="icon-folder-open"></i> RTMedia</a></li>
+<li><a href="../packages/rtMedia.html"><i class="icon-folder-open"></i> rtMedia</a></li>
+<li><a href="../packages/wordpress-plugin-tests.html"><i class="icon-folder-open"></i> wordpress-plugin-tests</a></li>
+<li><a href="../packages/wordpress-plugins-tests.html"><i class="icon-folder-open"></i> wordpress-plugins-tests</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">2379</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<div class="btn-toolbar">
+<div class="btn-group visibility" data-toggle="buttons-checkbox">
+<button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button>
+</div>
+<div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i title="Methods" class="icon-custom icon-method"></i> Methods
+                    <ul>
+<li class="method public "><a href="#method___construct" title="__construct() :: "><span class="description">__construct()
+        </span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#method_add_migration_notice" title="add_migration_notice() :: "><span class="description">add_migration_notice()
+        </span><pre>add_migration_notice()</pre></a></li>
+<li class="method public "><a href="#method_create_notice" title="create_notice() :: "><span class="description">create_notice()
+        </span><pre>create_notice()</pre></a></li>
+<li class="method public "><a href="#method_formatSeconds" title="formatSeconds() :: "><span class="description">formatSeconds()
+        </span><pre>formatSeconds()</pre></a></li>
+<li class="method public "><a href="#method_get_done_count" title="get_done_count() :: "><span class="description">get_done_count()
+        </span><pre>get_done_count()</pre></a></li>
+<li class="method public "><a href="#method_get_last_imported" title="get_last_imported() :: "><span class="description">get_last_imported()
+        </span><pre>get_last_imported()</pre></a></li>
+<li class="method public "><a href="#method_get_total_count" title="get_total_count() :: "><span class="description">get_total_count()
+        </span><pre>get_total_count()</pre></a></li>
+<li class="method public "><a href="#method_hide_migration_notice" title="hide_migration_notice() :: "><span class="description">hide_migration_notice()
+        </span><pre>hide_migration_notice()</pre></a></li>
+<li class="method public "><a href="#method_importmedia" title="importmedia() :: "><span class="description">importmedia()
+        </span><pre>importmedia()</pre></a></li>
+<li class="method public "><a href="#method_insert_comment" title="insert_comment() :: "><span class="description">insert_comment()
+        </span><pre>insert_comment()</pre></a></li>
+<li class="method public "><a href="#method_manage_album" title="manage_album() :: "><span class="description">manage_album()
+        </span><pre>manage_album()</pre></a></li>
+<li class="method public "><a href="#method_menu" title="menu() :: "><span class="description">menu()
+        </span><pre>menu()</pre></a></li>
+<li class="method public "><a href="#method_migrate_encoding_options" title="migrate_encoding_options() :: "><span class="description">migrate_encoding_options()
+        </span><pre>migrate_encoding_options()</pre></a></li>
+<li class="method public "><a href="#method_migrate_image_size_fix" title="migrate_image_size_fix() :: "><span class="description">migrate_image_size_fix()
+        </span><pre>migrate_image_size_fix()</pre></a></li>
+<li class="method public "><a href="#method_migrate_single_media" title="migrate_single_media() :: "><span class="description">migrate_single_media()
+        </span><pre>migrate_single_media()</pre></a></li>
+<li class="method public "><a href="#method_migrate_to_new_db" title="migrate_to_new_db() :: "><span class="description">migrate_to_new_db()
+        </span><pre>migrate_to_new_db()</pre></a></li>
+<li class="method public "><a href="#method_return_migration" title="return_migration() :: "><span class="description">return_migration()
+        </span><pre>return_migration()</pre></a></li>
+<li class="method public "><a href="#method_search_and_replace" title="search_and_replace() :: "><span class="description">search_and_replace()
+        </span><pre>search_and_replace()</pre></a></li>
+<li class="method public "><a href="#method_table_exists" title="table_exists() :: "><span class="description">table_exists()
+        </span><pre>table_exists()</pre></a></li>
+<li class="method public "><a href="#method_test" title="test() :: "><span class="description">test()
+        </span><pre>test()</pre></a></li>
+</ul>
+</li>
+<li class="nav-header">
+<i title="Properties" class="icon-custom icon-property"></i> Properties
+                    <ul><li class="property public "><a href="#property_bmp_table" title="$bmp_table() :: "><span class="description"></span><pre>$bmp_table</pre></a></li></ul>
+</li>
+</ul>
+</div>
+<div class="span8">
+<a id="\RTMediaMigration"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i title="Classes" class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/RTMediaMigration.html">RTMediaMigration</a>
+</li>
+</ul>
+<div class="element class">
+<p class="short_description">Description of BuddyPress_Migration</p>
+<div class="details">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>author</th>
+<td><a href="">faishal</a></td>
+</tr></table>
+<h3>
+<i title="Methods" class="icon-custom icon-method"></i> Methods</h3>
+<a id="method___construct"></a><div class="element clickable method public method___construct" data-toggle="collapse" data-target=".method___construct .collapse" title="public">
+<h2>__construct()
+        </h2>
+<pre>__construct() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_add_migration_notice"></a><div class="element clickable method public method_add_migration_notice" data-toggle="collapse" data-target=".method_add_migration_notice .collapse" title="public">
+<h2>add_migration_notice()
+        </h2>
+<pre>add_migration_notice() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_create_notice"></a><div class="element clickable method public method_create_notice" data-toggle="collapse" data-target=".method_create_notice .collapse" title="public">
+<h2>create_notice()
+        </h2>
+<pre>create_notice($message, $type<code> = "error"</code>) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$message</h4></div>
+<div class="subelement argument"><h4>$type</h4></div>
+</div></div>
+</div>
+<a id="method_formatSeconds"></a><div class="element clickable method public method_formatSeconds" data-toggle="collapse" data-target=".method_formatSeconds .collapse" title="public">
+<h2>formatSeconds()
+        </h2>
+<pre>formatSeconds($secondsLeft) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$secondsLeft</h4></div>
+</div></div>
+</div>
+<a id="method_get_done_count"></a><div class="element clickable method public method_get_done_count" data-toggle="collapse" data-target=".method_get_done_count .collapse" title="public">
+<h2>get_done_count()
+        </h2>
+<pre>get_done_count($flag<code> = false</code>) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$flag</h4></div>
+</div></div>
+</div>
+<a id="method_get_last_imported"></a><div class="element clickable method public method_get_last_imported" data-toggle="collapse" data-target=".method_get_last_imported .collapse" title="public">
+<h2>get_last_imported()
+        </h2>
+<pre>get_last_imported() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_get_total_count"></a><div class="element clickable method public method_get_total_count" data-toggle="collapse" data-target=".method_get_total_count .collapse" title="public">
+<h2>get_total_count()
+        </h2>
+<pre>get_total_count() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_hide_migration_notice"></a><div class="element clickable method public method_hide_migration_notice" data-toggle="collapse" data-target=".method_hide_migration_notice .collapse" title="public">
+<h2>hide_migration_notice()
+        </h2>
+<pre>hide_migration_notice() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_importmedia"></a><div class="element clickable method public method_importmedia" data-toggle="collapse" data-target=".method_importmedia .collapse" title="public">
+<h2>importmedia()
+        </h2>
+<pre>importmedia($id, $prefix) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$id</h4></div>
+<div class="subelement argument"><h4>$prefix</h4></div>
+</div></div>
+</div>
+<a id="method_insert_comment"></a><div class="element clickable method public method_insert_comment" data-toggle="collapse" data-target=".method_insert_comment .collapse" title="public">
+<h2>insert_comment()
+        </h2>
+<pre>insert_comment($media_id, $data, $exclude, $parent_commnet_id<code> = 0</code>) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$media_id</h4></div>
+<div class="subelement argument"><h4>$data</h4></div>
+<div class="subelement argument"><h4>$exclude</h4></div>
+<div class="subelement argument"><h4>$parent_commnet_id</h4></div>
+</div></div>
+</div>
+<a id="method_manage_album"></a><div class="element clickable method public method_manage_album" data-toggle="collapse" data-target=".method_manage_album .collapse" title="public">
+<h2>manage_album()
+        </h2>
+<pre>manage_album() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_menu"></a><div class="element clickable method public method_menu" data-toggle="collapse" data-target=".method_menu .collapse" title="public">
+<h2>menu()
+        </h2>
+<pre>menu() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_migrate_encoding_options"></a><div class="element clickable method public method_migrate_encoding_options" data-toggle="collapse" data-target=".method_migrate_encoding_options .collapse" title="public">
+<h2>migrate_encoding_options()
+        </h2>
+<pre>migrate_encoding_options() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_migrate_image_size_fix"></a><div class="element clickable method public method_migrate_image_size_fix" data-toggle="collapse" data-target=".method_migrate_image_size_fix .collapse" title="public">
+<h2>migrate_image_size_fix()
+        </h2>
+<pre>migrate_image_size_fix() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_migrate_single_media"></a><div class="element clickable method public method_migrate_single_media" data-toggle="collapse" data-target=".method_migrate_single_media .collapse" title="public">
+<h2>migrate_single_media()
+        </h2>
+<pre>migrate_single_media($result, $album<code> = false</code>) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$result</h4></div>
+<div class="subelement argument"><h4>$album</h4></div>
+</div></div>
+</div>
+<a id="method_migrate_to_new_db"></a><div class="element clickable method public method_migrate_to_new_db" data-toggle="collapse" data-target=".method_migrate_to_new_db .collapse" title="public">
+<h2>migrate_to_new_db()
+        </h2>
+<pre>migrate_to_new_db($lastid<code> = 0</code>, $limit<code> = 1</code>) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$lastid</h4></div>
+<div class="subelement argument"><h4>$limit</h4></div>
+</div></div>
+</div>
+<a id="method_return_migration"></a><div class="element clickable method public method_return_migration" data-toggle="collapse" data-target=".method_return_migration .collapse" title="public">
+<h2>return_migration()
+        </h2>
+<pre>return_migration() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_search_and_replace"></a><div class="element clickable method public method_search_and_replace" data-toggle="collapse" data-target=".method_search_and_replace .collapse" title="public">
+<h2>search_and_replace()
+        </h2>
+<pre>search_and_replace($old, $new) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$old</h4></div>
+<div class="subelement argument"><h4>$new</h4></div>
+</div></div>
+</div>
+<a id="method_table_exists"></a><div class="element clickable method public method_table_exists" data-toggle="collapse" data-target=".method_table_exists .collapse" title="public">
+<h2>table_exists()
+        </h2>
+<pre>table_exists($table) </pre>
+<div class="labels"><span class="label">Static</span></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$table</h4></div>
+</div></div>
+</div>
+<a id="method_test"></a><div class="element clickable method public method_test" data-toggle="collapse" data-target=".method_test .collapse" title="public">
+<h2>test()
+        </h2>
+<pre>test() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<h3>
+<i title="Properties" class="icon-custom icon-property"></i> Properties</h3>
+<a id="property_bmp_table"> </a><div class="element clickable property public property_bmp_table" data-toggle="collapse" data-target=".property_bmp_table .collapse" title="public">
+<h2>$bmp_table</h2>
+<pre>$bmp_table </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>""</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.2.0
+</a> and<br>
+            generated on 2014-01-31T17:24:24+05:30.<br></footer></div>
+</div>
+</body>
+</html>

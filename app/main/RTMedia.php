@@ -1,10 +1,6 @@
 <?php
-if (!defined('ABSPATH')) {
-    exit;
-}
-
 /**
- * rtMedia
+ * RTMedia
  *
  * The main rtMedia Class. This is where everything starts.
  *
@@ -76,7 +72,6 @@ class RTMedia
 
     /**
      * Constructs the class
-     * Defines constants and excerpt lengths, initiates admin notices,
      * loads and initiates the plugin, loads translations.
      * Initialises media counter
      *
@@ -91,6 +86,7 @@ class RTMedia
         add_action('rt_db_upgrade', array($this, 'fix_privacy'));
         add_action('rt_db_upgrade', array($this, 'fix_group_media_privacy'));
         add_action('rt_db_upgrade', array($this, 'fix_db_collation'));
+        
         $this->update_db();
         $this->default_thumbnail = apply_filters('rtmedia_default_thumbnail', RTMEDIA_URL . 'assets/thumb_default.png');
         add_action('init', array($this, 'check_global_album'));
@@ -125,65 +121,6 @@ class RTMedia
         }
         return $options ;
     }
-    function fix_parent_id() {
-        $site_global = rtmedia_get_site_option('rtmedia-global-albums');
-        if ($site_global && is_array($site_global) && isset($site_global[0])) {
-            $model = new RTMediaModel();
-            $album_row = $model->get_by_id($site_global[0]);
-            if (isset($album_row["result"]) && count($album_row["result"]) > 0) {
-                global $wpdb;
-                $row = $album_row["result"][0];
-		if( isset( $row["media_id"] ) ) {
-		    $sql = "update $wpdb->posts p
-                                left join
-                            $model->table_name r ON ( p.ID = r.media_id and blog_id = '".get_current_blog_id()."' )
-                        set
-                            post_parent = {$row["media_id"]}
-                        where
-                            p.guid like '%/rtMedia/%'
-                                and (p.post_parent = 0 or p.post_parent is NULL)
-                                and not r.id is NULL
-                                and r.media_type <> 'album'";
-		    $wpdb->query($sql);
-		}
-            }
-        }
-    }
-
-    function fix_privacy() {
-	global $wpdb;
-	$model = new RTMediaModel();
-	$update_sql = "UPDATE $model->table_name SET privacy = '80' where privacy = '-1' ";
-	$wpdb->query($update_sql);
-    }
-
-    /*
-     * Update media privacy of the medias having context=group
-     * update privacy of groups medias according to the privacy of the group 0->public, 20-> private/hidden
-     */
-    function fix_group_media_privacy(){
-        //if buddypress is active and groups are enabled
-	global $wpdb;
-	$model = new RTMediaModel();
-	$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 0 where m.context = 'group' and bp.status = 'public' and m.privacy <> 80 ";
-	$wpdb->query($sql_group);
-	$sql_group = " UPDATE $model->table_name m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 20 where m.context = 'group' and ( bp.status = 'private' OR bp.status = 'hidden' ) and m.privacy <> 80 ";
-	$wpdb->query($sql_group);
-    }
-
-
-    function fix_db_collation() {
-	global $wpdb;
-	$model = new RTMediaModel();
-	$interaction_model = new RTMediaInteractionModel();
-	$update_media_sql = "ALTER TABLE ".$model->table_name." CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci";
-	$wpdb->query($update_media_sql);
-	$update_media_meta_sql = "ALTER TABLE ".$wpdb->base_prefix.$model->meta_table_name." CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci";
-	$wpdb->query($update_media_meta_sql);
-	$update_media_interaction_sql = "ALTER TABLE ".$interaction_model->table_name." CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci";
-	$wpdb->query($update_media_interaction_sql);
-    }
-
     function set_site_options() {
 
         $rtmedia_options = rtmedia_get_site_option('rtmedia-options');

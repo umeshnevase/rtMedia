@@ -133,10 +133,7 @@ class RTMediaRouter {
         $rt_ajax_request = false;
 
         // check if it is an ajax request
-        if (
-                        ! empty( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) &&
-                        strtolower( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) == 'xmlhttprequest'
-         ){
+        if ( ! empty( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) && strtolower( $_SERVER[ 'HTTP_X_REQUESTED_WITH' ] ) == 'xmlhttprequest' ){
                 $rt_ajax_request = true;
         }
          if($rt_ajax_request)

@@ -1,0 +1,592 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+<meta charset="utf-8">
+<title>My project » \RTMediaQuery</title>
+<meta name="author" content="Mike van Riel">
+<meta name="description" content="">
+<link href="../css/template.css" rel="stylesheet" media="all">
+<script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script><script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script><script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script><script src="../js/bootstrap.js" type="text/javascript"></script><script src="../js/template.js" type="text/javascript"></script><script src="../js/prettify/prettify.min.js" type="text/javascript"></script><link rel="shortcut icon" href="../img/favicon.ico">
+<link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png">
+</head>
+<body>
+<div class="navbar navbar-fixed-top">
+<div class="navbar-inner"><div class="container">
+<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><a class="brand" href="../index.html">My project</a><div class="nav-collapse"><ul class="nav">
+<li class="dropdown">
+<a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                    API Documentation <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a>Packages</a></li>
+<li><a href="../packages/BuddyPressMedia.html"><i class="icon-folder-open"></i> BuddyPressMedia</a></li>
+<li><a href="../packages/Default.html"><i class="icon-folder-open"></i> Default</a></li>
+<li><a href="../packages/PlaceLocalInclude.html"><i class="icon-folder-open"></i> PlaceLocalInclude</a></li>
+<li><a href="../packages/RTMedia.html"><i class="icon-folder-open"></i> RTMedia</a></li>
+<li><a href="../packages/rtMedia.html"><i class="icon-folder-open"></i> rtMedia</a></li>
+<li><a href="../packages/wordpress-plugin-tests.html"><i class="icon-folder-open"></i> wordpress-plugin-tests</a></li>
+<li><a href="../packages/wordpress-plugins-tests.html"><i class="icon-folder-open"></i> wordpress-plugins-tests</a></li>
+</ul>
+</li>
+<li class="dropdown" id="charts-menu">
+<a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                    Charts <b class="caret"></b></a><ul class="dropdown-menu"><li><a href="../graph_class.html"><i class="icon-list-alt"></i> Class hierarchy diagram</a></li></ul>
+</li>
+<li class="dropdown" id="reports-menu">
+<a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                    Reports <b class="caret"></b></a><ul class="dropdown-menu">
+<li><a href="../errors.html"><i class="icon-remove-sign"></i> Errors 
+                <span class="label label-info">2379</span></a></li>
+<li><a href="../markers.html"><i class="icon-map-marker"></i> Markers 
+                <ul></ul></a></li>
+<li><a href="../deprecated.html"><i class="icon-stop"></i> Deprecated elements 
+                <span class="label label-info">0</span></a></li>
+</ul>
+</li>
+</ul></div>
+</div></div>
+<div class="go_to_top"><a href="#___" style="color: inherit">Back to top  <i class="icon-upload icon-white"></i></a></div>
+</div>
+<div id="___" class="container">
+<noscript><div class="alert alert-warning">
+                            Javascript is disabled; several features are only available
+                            if Javascript is enabled.
+                        </div></noscript>
+<div class="row">
+<div class="span4">
+<div class="btn-toolbar">
+<div class="btn-group visibility" data-toggle="buttons-checkbox">
+<button class="btn public active" title="Show public elements">Public</button><button class="btn protected" title="Show protected elements">Protected</button><button class="btn private" title="Show private elements">Private</button><button class="btn inherited active" title="Show inherited elements">Inherited</button>
+</div>
+<div class="btn-group view pull-right" data-toggle="buttons-radio">
+<button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button><button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+</div>
+</div>
+<ul class="side-nav nav nav-list">
+<li class="nav-header">
+<i title="Methods" class="icon-custom icon-method"></i> Methods
+                    <ul>
+<li class="method public "><a href="#method___construct" title="__construct() :: Initialise the query"><span class="description">Initialise the query</span><pre>__construct()</pre></a></li>
+<li class="method public "><a href="#method_album_or_media" title="album_or_media() :: "><span class="description">album_or_media()
+        </span><pre>album_or_media()</pre></a></li>
+<li class="method public "><a href="#method_get_data" title="get_data() :: "><span class="description">get_data()
+        </span><pre>get_data()</pre></a></li>
+<li class="method public "><a href="#method_get_media_by_media_id" title="get_media_by_media_id() :: helper method to find the array entry for the given media id"><span class="description">helper method to find the array entry for the given media id</span><pre>get_media_by_media_id()</pre></a></li>
+<li class="method public "><a href="#method_get_media_id" title="get_media_id() :: helper method to fetch media id of each media from the map"><span class="description">helper method to fetch media id of each media from the map</span><pre>get_media_id()</pre></a></li>
+<li class="method public "><a href="#method_get_user" title="get_user() :: "><span class="description">get_user()
+        </span><pre>get_user()</pre></a></li>
+<li class="method public "><a href="#method_have_media" title="have_media() :: Checks at any point of time any media is left to be processed in the db pool"><span class="description">Checks at any point of time any media is left to be processed in the db pool</span><pre>have_media()</pre></a></li>
+<li class="method public "><a href="#method_init" title="init() :: Initialise the default args for the query"><span class="description">Initialise the default args for the query</span><pre>init()</pre></a></li>
+<li class="method public "><a href="#method_is_album" title="is_album() :: "><span class="description">is_album()
+        </span><pre>is_album()</pre></a></li>
+<li class="method public "><a href="#method_is_album_gallery" title="is_album_gallery() :: "><span class="description">is_album_gallery()
+        </span><pre>is_album_gallery()</pre></a></li>
+<li class="method public "><a href="#method_is_gallery" title="is_gallery() :: "><span class="description">is_gallery()
+        </span><pre>is_gallery()</pre></a></li>
+<li class="method public "><a href="#method_is_group_album" title="is_group_album() :: "><span class="description">is_group_album()
+        </span><pre>is_group_album()</pre></a></li>
+<li class="method public "><a href="#method_is_playlist" title="is_playlist() :: "><span class="description">is_playlist()
+        </span><pre>is_playlist()</pre></a></li>
+<li class="method public "><a href="#method_is_playlist_gallery" title="is_playlist_gallery() :: "><span class="description">is_playlist_gallery()
+        </span><pre>is_playlist_gallery()</pre></a></li>
+<li class="method public "><a href="#method_is_single" title="is_single() :: "><span class="description">is_single()
+        </span><pre>is_single()</pre></a></li>
+<li class="method public "><a href="#method_next_media" title="next_media() :: helper method for rt_album to move ahead in the db pool"><span class="description">helper method for rt_album to move ahead in the db pool</span><pre>next_media()</pre></a></li>
+<li class="method public "><a href="#method_order_by" title="order_by() :: "><span class="description">order_by()
+        </span><pre>order_by()</pre></a></li>
+<li class="method public "><a href="#method_permalink" title="permalink() :: "><span class="description">permalink()
+        </span><pre>permalink()</pre></a></li>
+<li class="method public "><a href="#method_populate_album" title="populate_album() :: "><span class="description">populate_album()
+        </span><pre>populate_album()</pre></a></li>
+<li class="method public "><a href="#method_populate_comments" title="populate_comments() :: "><span class="description">populate_comments()
+        </span><pre>populate_comments()</pre></a></li>
+<li class="method public "><a href="#method_populate_data" title="populate_data() :: populate the data object for the page/album"><span class="description">populate the data object for the page/album</span><pre>populate_data()</pre></a></li>
+<li class="method public "><a href="#method_populate_media" title="populate_media() :: "><span class="description">populate_media()
+        </span><pre>populate_media()</pre></a></li>
+<li class="method public "><a href="#method_populate_post_data" title="populate_post_data() :: populate the post data for the fetched media from rtMedia context"><span class="description">populate the post data for the fetched media from rtMedia context</span><pre>populate_post_data()</pre></a></li>
+<li class="method public "><a href="#method_privacy_filter" title="privacy_filter() :: "><span class="description">privacy_filter()
+        </span><pre>privacy_filter()</pre></a></li>
+<li class="method public "><a href="#method_query" title="query() :: get media query for the request"><span class="description">get media query for the request</span><pre>query()</pre></a></li>
+<li class="method public "><a href="#method_register_set_gallery_template_filter" title="register_set_gallery_template_filter() :: "><span class="description">register_set_gallery_template_filter()
+        </span><pre>register_set_gallery_template_filter()</pre></a></li>
+<li class="method public "><a href="#method_rewind_media" title="rewind_media() :: Rewinds the db pool of media album and resets it to begining"><span class="description">Rewinds the db pool of media album and resets it to begining</span><pre>rewind_media()</pre></a></li>
+<li class="method public "><a href="#method_rtmedia" title="rtmedia() :: moves ahead in the loop of media within the album"><span class="description">moves ahead in the loop of media within the album</span><pre>rtmedia()</pre></a></li>
+<li class="method public "><a href="#method_set_action_query" title="set_action_query() :: "><span class="description">set_action_query()
+        </span><pre>set_action_query()</pre></a></li>
+<li class="method public "><a href="#method_set_actions" title="set_actions() :: additional actions to be added via action hook"><span class="description">additional actions to be added via action hook</span><pre>set_actions()</pre></a></li>
+<li class="method public "><a href="#method_set_json_format" title="set_json_format() :: json request"><span class="description">json request</span><pre>set_json_format()</pre></a></li>
+<li class="method public "><a href="#method_set_media_type" title="set_media_type() :: "><span class="description">set_media_type()
+        </span><pre>set_media_type()</pre></a></li>
+<li class="method public "><a href="#method_set_privacy" title="set_privacy() :: "><span class="description">set_privacy()
+        </span><pre>set_privacy()</pre></a></li>
+</ul>
+</li>
+<li class="nav-header">
+<i title="Properties" class="icon-custom icon-property"></i> Properties
+                    <ul>
+<li class="property public "><a href="#property_action_query" title="$action_query() :: "><span class="description">The current action object (edit/delete/custom)</span><pre>$action_query</pre></a></li>
+<li class="property public "><a href="#property_actions" title="$actions() :: "><span class="description">The actions recognised for the object</span><pre>$actions</pre></a></li>
+<li class="property public "><a href="#property_current_media" title="$current_media() :: "><span class="description"></span><pre>$current_media</pre></a></li>
+<li class="property public "><a href="#property_format" title="$format() :: "><span class="description"></span><pre>$format</pre></a></li>
+<li class="property public "><a href="#property_in_the_media_loop" title="$in_the_media_loop() :: "><span class="description"></span><pre>$in_the_media_loop</pre></a></li>
+<li class="property public "><a href="#property_media" title="$media() :: "><span class="description"></span><pre>$media</pre></a></li>
+<li class="property public "><a href="#property_media_count" title="$media_count() :: "><span class="description"></span><pre>$media_count</pre></a></li>
+<li class="property public "><a href="#property_media_query" title="$media_query() :: "><span class="description">The query arguments for the current instance (variable)</span><pre>$media_query</pre></a></li>
+<li class="property public "><a href="#property_original_query" title="$original_query() :: "><span class="description"></span><pre>$original_query</pre></a></li>
+<li class="property public "><a href="#property_query" title="$query() :: "><span class="description">The query arguments for the current instance</span><pre>$query</pre></a></li>
+<li class="property public "><a href="#property_shorcode_global" title="$shorcode_global() :: "><span class="description"></span><pre>$shorcode_global</pre></a></li>
+</ul>
+</li>
+<li class="nav-header private">» Private
+                    <ul><li class="property private "><a href="#property_interaction" title="$interaction() :: "><span class="description">The currently relevant interaction object</span><pre>$interaction</pre></a></li></ul>
+</li>
+</ul>
+</div>
+<div class="span8">
+<a id="\RTMediaQuery"></a><ul class="breadcrumb">
+<li>
+<a href="../index.html"><i title="Classes" class="icon-custom icon-class"></i></a><span class="divider">\</span>
+</li>
+<li class="active">
+<span class="divider">\</span><a href="../classes/RTMediaQuery.html">RTMediaQuery</a>
+</li>
+</ul>
+<div class="element class">
+<p class="short_description">Description of RTMediaQuery</p>
+<div class="details">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>author</th>
+<td><a href="">saurabh</a></td>
+</tr></table>
+<h3>
+<i title="Methods" class="icon-custom icon-method"></i> Methods</h3>
+<a id="method___construct"></a><div class="element clickable method public method___construct" data-toggle="collapse" data-target=".method___construct .collapse" title="public">
+<h2>Initialise the query</h2>
+<pre>__construct(array $args<code> = false</code>) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>global</th>
+<td>object $rtmedia_interaction The global interaction object</td>
+</tr></table>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$args</h4>
+<code>array</code><p>The query arguments</p></div>
+</div></div>
+</div>
+<a id="method_album_or_media"></a><div class="element clickable method public method_album_or_media" data-toggle="collapse" data-target=".method_album_or_media .collapse" title="public">
+<h2>album_or_media()
+        </h2>
+<pre>album_or_media() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_get_data"></a><div class="element clickable method public method_get_data" data-toggle="collapse" data-target=".method_get_data .collapse" title="public">
+<h2>get_data()
+        </h2>
+<pre>get_data() : <a href="type.html">\type</a></pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Returns</h3>
+<div class="subelement response"><code><a href="type.html">\type</a></code></div>
+</div></div>
+</div>
+<a id="method_get_media_by_media_id"></a><div class="element clickable method public method_get_media_by_media_id" data-toggle="collapse" data-target=".method_get_media_by_media_id .collapse" title="public">
+<h2>helper method to find the array entry for the given media id</h2>
+<pre>get_media_by_media_id(\type $id) : null</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$id</h4>
+<code><a href="type.html">\type</a></code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code>null</code></div>
+</div></div>
+</div>
+<a id="method_get_media_id"></a><div class="element clickable method public method_get_media_id" data-toggle="collapse" data-target=".method_get_media_id .collapse" title="public">
+<h2>helper method to fetch media id of each media from the map</h2>
+<pre>get_media_id(\type $media) : <a href="type.html">\type</a></pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$media</h4>
+<code><a href="type.html">\type</a></code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code><a href="type.html">\type</a></code></div>
+</div></div>
+</div>
+<a id="method_get_user"></a><div class="element clickable method public method_get_user" data-toggle="collapse" data-target=".method_get_user .collapse" title="public">
+<h2>get_user()
+        </h2>
+<pre>get_user() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_have_media"></a><div class="element clickable method public method_have_media" data-toggle="collapse" data-target=".method_have_media .collapse" title="public">
+<h2>Checks at any point of time any media is left to be processed in the db pool</h2>
+<pre>have_media() : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<a id="method_init"></a><div class="element clickable method public method_init" data-toggle="collapse" data-target=".method_init .collapse" title="public">
+<h2>Initialise the default args for the query</h2>
+<pre>init() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_is_album"></a><div class="element clickable method public method_is_album" data-toggle="collapse" data-target=".method_is_album .collapse" title="public">
+<h2>is_album()
+        </h2>
+<pre>is_album() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_is_album_gallery"></a><div class="element clickable method public method_is_album_gallery" data-toggle="collapse" data-target=".method_is_album_gallery .collapse" title="public">
+<h2>is_album_gallery()
+        </h2>
+<pre>is_album_gallery() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_is_gallery"></a><div class="element clickable method public method_is_gallery" data-toggle="collapse" data-target=".method_is_gallery .collapse" title="public">
+<h2>is_gallery()
+        </h2>
+<pre>is_gallery() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_is_group_album"></a><div class="element clickable method public method_is_group_album" data-toggle="collapse" data-target=".method_is_group_album .collapse" title="public">
+<h2>is_group_album()
+        </h2>
+<pre>is_group_album() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_is_playlist"></a><div class="element clickable method public method_is_playlist" data-toggle="collapse" data-target=".method_is_playlist .collapse" title="public">
+<h2>is_playlist()
+        </h2>
+<pre>is_playlist() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_is_playlist_gallery"></a><div class="element clickable method public method_is_playlist_gallery" data-toggle="collapse" data-target=".method_is_playlist_gallery .collapse" title="public">
+<h2>is_playlist_gallery()
+        </h2>
+<pre>is_playlist_gallery() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_is_single"></a><div class="element clickable method public method_is_single" data-toggle="collapse" data-target=".method_is_single .collapse" title="public">
+<h2>is_single()
+        </h2>
+<pre>is_single() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_next_media"></a><div class="element clickable method public method_next_media" data-toggle="collapse" data-target=".method_next_media .collapse" title="public">
+<h2>helper method for rt_album to move ahead in the db pool</h2>
+<pre>next_media() : <a href="type.html">\type</a></pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Returns</h3>
+<div class="subelement response"><code><a href="type.html">\type</a></code></div>
+</div></div>
+</div>
+<a id="method_order_by"></a><div class="element clickable method public method_order_by" data-toggle="collapse" data-target=".method_order_by .collapse" title="public">
+<h2>order_by()
+        </h2>
+<pre>order_by() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_permalink"></a><div class="element clickable method public method_permalink" data-toggle="collapse" data-target=".method_permalink .collapse" title="public">
+<h2>permalink()
+        </h2>
+<pre>permalink() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_populate_album"></a><div class="element clickable method public method_populate_album" data-toggle="collapse" data-target=".method_populate_album .collapse" title="public">
+<h2>populate_album()
+        </h2>
+<pre>populate_album() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_populate_comments"></a><div class="element clickable method public method_populate_comments" data-toggle="collapse" data-target=".method_populate_comments .collapse" title="public">
+<h2>populate_comments()
+        </h2>
+<pre>populate_comments() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_populate_data"></a><div class="element clickable method public method_populate_data" data-toggle="collapse" data-target=".method_populate_data .collapse" title="public">
+<h2>populate the data object for the page/album</h2>
+<pre>populate_data() : boolean</pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Returns</h3>
+<div class="subelement response"><code>boolean</code></div>
+</div></div>
+</div>
+<a id="method_populate_media"></a><div class="element clickable method public method_populate_media" data-toggle="collapse" data-target=".method_populate_media .collapse" title="public">
+<h2>populate_media()
+        </h2>
+<pre>populate_media() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_populate_post_data"></a><div class="element clickable method public method_populate_post_data" data-toggle="collapse" data-target=".method_populate_post_data .collapse" title="public">
+<h2>populate the post data for the fetched media from rtMedia context</h2>
+<pre>populate_post_data(\type $media) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$media</h4>
+<code><a href="type.html">\type</a></code>
+</div>
+</div></div>
+</div>
+<a id="method_privacy_filter"></a><div class="element clickable method public method_privacy_filter" data-toggle="collapse" data-target=".method_privacy_filter .collapse" title="public">
+<h2>privacy_filter()
+        </h2>
+<pre>privacy_filter($where, $table_name) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$where</h4></div>
+<div class="subelement argument"><h4>$table_name</h4></div>
+</div></div>
+</div>
+<a id="method_query"></a><div class="element clickable method public method_query" data-toggle="collapse" data-target=".method_query .collapse" title="public">
+<h2>get media query for the request</h2>
+<pre>query(\type $query) : <a href="type.html">\type</a></pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument">
+<h4>$query</h4>
+<code><a href="type.html">\type</a></code>
+</div>
+<h3>Returns</h3>
+<div class="subelement response"><code><a href="type.html">\type</a></code></div>
+</div></div>
+</div>
+<a id="method_register_set_gallery_template_filter"></a><div class="element clickable method public method_register_set_gallery_template_filter" data-toggle="collapse" data-target=".method_register_set_gallery_template_filter .collapse" title="public">
+<h2>register_set_gallery_template_filter()
+        </h2>
+<pre>register_set_gallery_template_filter($template, $attr) </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<h3>Parameters</h3>
+<div class="subelement argument"><h4>$template</h4></div>
+<div class="subelement argument"><h4>$attr</h4></div>
+</div></div>
+</div>
+<a id="method_rewind_media"></a><div class="element clickable method public method_rewind_media" data-toggle="collapse" data-target=".method_rewind_media .collapse" title="public">
+<h2>Rewinds the db pool of media album and resets it to begining</h2>
+<pre>rewind_media() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_rtmedia"></a><div class="element clickable method public method_rtmedia" data-toggle="collapse" data-target=".method_rtmedia .collapse" title="public">
+<h2>moves ahead in the loop of media within the album</h2>
+<pre>rtmedia() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description">
+<div class="long_description"></div>
+<table class="table table-bordered"><tr>
+<th>global</th>
+<td>type $rtmedia_media</td>
+</tr></table>
+</div></div>
+</div>
+<a id="method_set_action_query"></a><div class="element clickable method public method_set_action_query" data-toggle="collapse" data-target=".method_set_action_query .collapse" title="public">
+<h2>set_action_query()
+        </h2>
+<pre>set_action_query() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_set_actions"></a><div class="element clickable method public method_set_actions" data-toggle="collapse" data-target=".method_set_actions .collapse" title="public">
+<h2>additional actions to be added via action hook</h2>
+<pre>set_actions() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_set_json_format"></a><div class="element clickable method public method_set_json_format" data-toggle="collapse" data-target=".method_set_json_format .collapse" title="public">
+<h2>json request</h2>
+<pre>set_json_format() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_set_media_type"></a><div class="element clickable method public method_set_media_type" data-toggle="collapse" data-target=".method_set_media_type .collapse" title="public">
+<h2>set_media_type()
+        </h2>
+<pre>set_media_type() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="method_set_privacy"></a><div class="element clickable method public method_set_privacy" data-toggle="collapse" data-target=".method_set_privacy .collapse" title="public">
+<h2>set_privacy()
+        </h2>
+<pre>set_privacy() </pre>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<h3>
+<i title="Properties" class="icon-custom icon-property"></i> Properties</h3>
+<a id="property_action_query"> </a><div class="element clickable property public property_action_query" data-toggle="collapse" data-target=".property_action_query .collapse" title="public">
+<h2>The current action object (edit/delete/custom)</h2>
+<pre>$action_query : object</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>false</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_actions"> </a><div class="element clickable property public property_actions" data-toggle="collapse" data-target=".property_actions .collapse" title="public">
+<h2>The actions recognised for the object</h2>
+<pre>$actions : array</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>array('edit' => array('Edit', false), 'delete' => array('Delete', false), 'comment' => array('Comment', true), 'delete-comment' => array('Comment Deleted', false))</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_current_media"> </a><div class="element clickable property public property_current_media" data-toggle="collapse" data-target=".property_current_media .collapse" title="public">
+<h2>$current_media</h2>
+<pre>$current_media </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>-1</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_format"> </a><div class="element clickable property public property_format" data-toggle="collapse" data-target=".property_format .collapse" title="public">
+<h2>$format</h2>
+<pre>$format </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>false</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_in_the_media_loop"> </a><div class="element clickable property public property_in_the_media_loop" data-toggle="collapse" data-target=".property_in_the_media_loop .collapse" title="public">
+<h2>$in_the_media_loop</h2>
+<pre>$in_the_media_loop </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>false</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_media"> </a><div class="element clickable property public property_media" data-toggle="collapse" data-target=".property_media .collapse" title="public">
+<h2>$media</h2>
+<pre>$media </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>''</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_media_count"> </a><div class="element clickable property public property_media_count" data-toggle="collapse" data-target=".property_media_count .collapse" title="public">
+<h2>$media_count</h2>
+<pre>$media_count </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>0</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_media_query"> </a><div class="element clickable property public property_media_query" data-toggle="collapse" data-target=".property_media_query .collapse" title="public">
+<h2>The query arguments for the current instance (variable)</h2>
+<pre>$media_query : array</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>''</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_original_query"> </a><div class="element clickable property public property_original_query" data-toggle="collapse" data-target=".property_original_query .collapse" title="public">
+<h2>$original_query</h2>
+<pre>$original_query </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_query"> </a><div class="element clickable property public property_query" data-toggle="collapse" data-target=".property_query .collapse" title="public">
+<h2>The query arguments for the current instance</h2>
+<pre>$query : array</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>''</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_shorcode_global"> </a><div class="element clickable property public property_shorcode_global" data-toggle="collapse" data-target=".property_shorcode_global .collapse" title="public">
+<h2>$shorcode_global</h2>
+<pre>$shorcode_global </pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"><code>false</code></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+<a id="property_interaction"> </a><div class="element clickable property private property_interaction" data-toggle="collapse" data-target=".property_interaction .collapse" title="private">
+<h2>The currently relevant interaction object</h2>
+<pre>$interaction : object</pre>
+<div class="row collapse"><div class="detail-description">
+<h3>Default</h3>
+<div class="subelement argument"></div>
+</div></div>
+<div class="labels"></div>
+<div class="row collapse"><div class="detail-description"><div class="long_description"></div></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><footer class="span12">
+            Template is built using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap 2</a> and icons provided by <a href="http://glyphicons.com/">Glyphicons</a>.<br>
+            Documentation is powered by <a href="http://www.phpdoc.org/">phpDocumentor 2.2.0
+</a> and<br>
+            generated on 2014-01-31T17:24:25+05:30.<br></footer></div>
+</div>
+</body>
+</html>
