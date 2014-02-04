@@ -63,7 +63,8 @@ if ( !defined ( 'RTMEDIA_BOWER_COMPONENTS_URL' ) ) {
 /**
  * Start session here to avoid header notice
  */
-if ( !session_id () ) {
+# running from the cli doesn't set $_SESSION here on phpunit trunk
+if ( ! headers_sent() &&  session_status () == PHP_SESSION_NONE ) {
         session_start () ;
 }
 /**

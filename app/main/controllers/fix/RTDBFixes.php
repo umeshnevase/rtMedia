@@ -75,6 +75,9 @@ class RTDBFixes {
          */
         function fix_group_media_privacy () {
                 //if buddypress is active and groups are enabled
+                if ( ! class_exists( 'BuddyPress' ) ){
+                       return; 
+                }
                 global $wpdb ;
                 $model    =new RTMediaModel() ;
                 $sql_group=" UPDATE {$model->table_name} m join {$wpdb->prefix}bp_groups bp on m.context_id = bp.id SET m.privacy = 0 where m.context = 'group' and bp.status = 'public' and m.privacy <> 80 " ;

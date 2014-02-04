@@ -82,11 +82,6 @@ class RTMedia
          *
          * Buddypress Media Auto Upgradation
          */
-	add_action('rt_db_upgrade', array($this, 'fix_parent_id'));
-        add_action('rt_db_upgrade', array($this, 'fix_privacy'));
-        add_action('rt_db_upgrade', array($this, 'fix_group_media_privacy'));
-        add_action('rt_db_upgrade', array($this, 'fix_db_collation'));
-        
         $this->update_db();
         $this->default_thumbnail = apply_filters('rtmedia_default_thumbnail', RTMEDIA_URL . 'assets/thumb_default.png');
         add_action('init', array($this, 'check_global_album'));
@@ -689,6 +684,8 @@ class RTMedia
     }
 
     function update_db() {
+            $new_db_fix = new RTDBFixes();
+            $new_db_fix->set_hooks();
         $update = new RTDBUpdate(false, RTMEDIA_PATH."index.php", RTMEDIA_PATH."app/schema/",true);
         /* Current Version. */
         if (!defined('RTMEDIA_VERSION'))
