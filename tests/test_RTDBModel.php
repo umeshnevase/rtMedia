@@ -18,7 +18,7 @@ class test_RTDBModel extends WP_UnitTestCase {
          */
         function setUp () {
                 parent::setUp () ;
-                $this->rtdbmodel = new RTDBModel ( "test_table" ) ;
+                $this->rtdbmodel = new RTDBModel ( "rtm_media_meta" ) ;
         }
         /**
          * Check table name with Default withprefix Paramater which is false And set MultiSite Wordpress Signle Table true
@@ -61,29 +61,89 @@ class test_RTDBModel extends WP_UnitTestCase {
         function test_get () {
                 $this->rtdbmodel->set_table_name ( "rtm_media_meta" ) ;
                 $this->rtdbmodel->insert ( array ( 'media_id' => 1 , 'meta_key' => 'test_key' , 'meta_value' => 'test_value' ) ) ;
+                
                 $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) ) ;
                 $this->assertGreaterThan ( 0 , count ( $result ) ) ;
+                
+                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , 'asdf' ) ;
+                $this->assertGreaterThan ( 0 , count ( $result ) ) ;
+                
+                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , '1' ) ;
+                $this->assertGreaterThan ( 0 , count ( $result ) ) ;
+                
+                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , '-9999' ) ;
+                $this->assertGreaterThan ( 0 , count ( $result ) ) ;
+                
+                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , -9999 ) ;
+                $this->assertGreaterThan ( 0 , count ( $result ) ) ;
+                
+                $this->inset_media(20); //Inset bulk media
+                
+                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , 1 ) ;
+                $this->assertGreaterThan ( 0 , count ( $result ) ) ;
+                
+                
+                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , 1 , 1 ) ;
+                $this->assertLessThanOrEqual( 1 , count ( $result ) ) ;
+                
+                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , 1 , -121 ) ;
+                $this->assertLessThanOrEqual( 10 , count ( $result ) ) ;
+                
+                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , 1 , "asdfasdf" ) ;
+                $this->assertLessThanOrEqual( 10 , count ( $result ) ) ;
+                
+                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , 1 , "10" ) ;
+                $this->assertLessThanOrEqual( 10 , count ( $result ) ) ;
+                
+                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' )) ;
+                $this->assertGreaterThan ( 0 , count ( $result ) ) ;
+                
+                
         }
-//        function test_get_1(){
-//                $this->rtdbmodel->set_table_name ( "rtm_media_meta" ) ;
-//                $this->rtdbmodel->insert ( array ( 'media_id' => 1 , 'meta_key' => 'test_key' , 'meta_value' => 'test_value' ) ) ;      
-//                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , 'asdf' ) ;
-//                $this->assertGreaterThan ( 0 , count ( $result ) ) ;
-//                $this->rtdbmodel->set_table_name ( "rtm_media_meta" ) ;
-//                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , '1' ) ;
-//                $this->assertGreaterThan ( 0 , count ( $result ) ) ;
-//                $this->rtdbmodel->set_table_name ( "rtm_media_meta" ) ;
-//                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , 1 ) ;
-//                $this->assertGreaterThan ( 0 , count ( $result ) ) ;
-//                $this->rtdbmodel->set_table_name ( "rtm_media_meta" ) ;
-//                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , '-9999' ) ;
-//                $this->assertGreaterThan ( 0 , count ( $result ) ) ;
-//                $this->rtdbmodel->set_table_name ( "rtm_media_meta" ) ;
-//                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' ) , -9999 ) ;
-//                $this->assertGreaterThan ( 0 , count ( $result ) ) ;
-//        }
+        
+        function test_delete() {
+                $this->rtdbmodel->set_table_name ( "rtm_media_meta" ) ;
+                $this->inset_media(20);
+                $result = $this->rtdbmodel->delete ( array ( 'meta_key' => 'test_key' ) ) ;
+                $this->assertEquals ( 1 , count ( $result ) ) ;
+                
+                $result = $this->rtdbmodel->delete ( array ( 'meta_key' => 'test_key' ) ) ;
+                $this->assertEquals ( 1 , count ( $result ) ) ;
+        }
+        
+        function test_update(){
+                $this->inset_media(1);
+                
+                $result = $this->rtdbmodel->update( array ( 'meta_key' => 'test_keys' ) , array ( 'meta_key' => 'test_key' ) ) ;
+                
+                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_key' )) ;
+                $this->assertEquals (0, count($result));
+                
+                $result = $this->rtdbmodel->get ( array ( 'meta_key' => 'test_keys' )) ;
+                $this->assertGreaterThan (0, count($result));
+                $this->assertEquals ('test_keys', $result[0]->meta_key);
+        }
+        function inset_media($count = 1){
+                while($count > 0 ){
+                        $this->rtdbmodel->insert ( array ( 'media_id' => $count , 'meta_key' => 'test_key' , 'meta_value' => 'test_value' ) ) ;
+                        $count --;
+                }
+        }
         function test_insert_with_right_input () {
                 $this->rtdbmodel->set_table_name ( "rtm_media_meta" ) ;
                 $this->assertGreaterThan ( 0 , $this->rtdbmodel->insert ( array ( 'media_id' => 1 , 'meta_key' => 'test_key' , 'meta_value' => 'test_value' ) ) ) ;
+        }
+        
+        
+        function test_get_by_column_name () {
+                $this->rtdbmodel->delete ( array ( 'meta_key' => 'test_key' ) ) ;
+                $this->rtdbmodel->delete ( array ( 'meta_key' => 'test_keys' ) ) ;
+                
+                $this->inset_media();
+                
+                $result = $this->rtdbmodel->get_by_meta_key ( 'test_key' ) ;
+                $this->assertEquals (1, count($result["result"]));
+                
+                $this->assertEquals (1 , $result["result"][0]["media_id"]);
         }
 }

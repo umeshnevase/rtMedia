@@ -90,13 +90,13 @@ if ( !class_exists ( 'RTDBModel' ) ) {
                                         if ( $paging ) {
                                                 if ( intval ( $this->per_page ) < 0 )
                                                         $this->per_page = 1 ;
-
+                                
                                                 $offset = ($page - 1) * $this->per_page ;
 
                                                 if ( !is_integer ( $offset ) )
-                                                        $offset = 0 ;
+                                                        $offset = 10 ;
                                                 if ( intval ( $offset ) < 0 )
-                                                        $offset = 0 ;
+                                                        $offset = 10 ;
 
                                                 if ( $offset <= $return_array[ "total" ] ) {
                                                         $other = " LIMIT " . $offset . "," . $this->per_page ;
@@ -177,9 +177,9 @@ if ( !class_exists ( 'RTDBModel' ) ) {
                                         $offset = 0 ;
 
                                 if ( !is_integer ( $per_page ) )
-                                        $per_page = 0 ;
+                                        $per_page = 10 ;
                                 if ( intval ( $per_page ) < 0 )
-                                        $per_page = 1 ;
+                                        $per_page = 10 ;
                                 $sql .= ' LIMIT ' . $offset . ',' . $per_page ;
                         }
                         global $wpdb ;
