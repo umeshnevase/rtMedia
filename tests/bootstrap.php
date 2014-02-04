@@ -15,6 +15,9 @@ $GLOBALS['wp_tests_options'] = array(
 $_tests_dir = getenv('WP_TESTS_DIR');
 if ( ! $_tests_dir ) $_tests_dir = '/Users/faishal/work/wordpress-develop/tests/phpunit';
 
+if(  ! file_exists ( '/Users/faishal/work/wordpress-develop/tests/phpunit' ) )
+        $_tests_dir = '/home/gitlab_ci_runner/wordpress-develop/tests/phpunit';
+
 require_once $_tests_dir . '/includes/functions.php';
 
 function _manually_load_plugin() {
