@@ -631,7 +631,6 @@ class RTMedia
             'nav' => true,
             'like' => false,
             'featured' => false,
-            'ApiKey'    => false,
 //            'Group' => false, will be constructed after rtmedia pro classes are constructed.
             'ViewCount' => false
                 //'query'		=> false

@@ -445,11 +445,7 @@ if ( ! class_exists ( 'RTMediaAdmin' ) ) {
             } else {
                 wp_enqueue_style ( 'rtmedia-widget', RTMEDIA_URL . 'app/assets/css/widget.css', '', RTMEDIA_VERSION );
             }
-            //API key user profile page
-            if($hook == 'profile.php' || $hook == 'user-edit.php'){
-                wp_enqueue_script ( 'rtmedia-admin', RTMEDIA_URL . 'app/assets/js/rtmedia-api-key.js', array( 'jquery' ), RTMEDIA_VERSION );
             }
-        }
 
         /**
          * Admin Menu

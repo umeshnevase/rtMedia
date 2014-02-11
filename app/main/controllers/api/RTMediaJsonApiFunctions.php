@@ -45,16 +45,12 @@ class RTMediaJsonApiFunctions{
     function rtmedia_api_validate_token( $token ){
         if ( empty($token ) ) return false;
         if ( class_exists( "RTMediaApiLogin" )) {
-            $token_user = FALSE;
             $rtmediaapilogin = new RTMediaApiLogin();
             $columns = array(
                 'token' => $token
             );
             $token_data =  $rtmediaapilogin->get($columns);
-            if(empty($token_data)){
-                $token_user = get_users(array('meta_key' => 'rtmedia_api_key', 'meta_value' => $token));
-            }
-            if ( ( empty( $token_data ) || $token_data[0]->status === 'FALSE') && !$token_user ) {
+            if ( empty( $token_data ) || $token_data[0]->status === 'FALSE' ) {
                 return FALSE;
             }
             return $token_data;
