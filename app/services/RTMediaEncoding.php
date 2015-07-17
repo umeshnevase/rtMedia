@@ -17,6 +17,10 @@ class RTMediaEncoding {
 	public function __construct( $no_init = false ) {
 		$this->api_key = get_site_option( 'rtmedia-encoding-api-key' );
 		$this->stored_api_key = get_site_option( 'rtmedia-encoding-api-key-stored' );
+
+		// Do not add any action
+		$no_init = true;
+
 		if ( $no_init ){
 			return;
 		}
