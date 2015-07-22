@@ -52,7 +52,6 @@ class RTMediaEncoding {
 			}
 		}
 
-		add_action( 'wp_ajax_rtmedia_unsubscribe_encoding_service', array( $this, 'unsubscribe_encoding' ) );
 		add_action( 'wp_ajax_rtmedia_hide_encoding_notice', array( $this, 'hide_encoding_notice' ), 1 );
 		//add_action('wp_ajax_rtmedia_regenerate_thumbnails', array($this, 'rtmedia_regenerate_thumbnails'), 1);
 	}
@@ -252,20 +251,6 @@ class RTMediaEncoding {
 		update_site_option( 'rtmedia-encoding-service-notice', true );
 		update_site_option( 'rtmedia-encoding-expansion-notice', true );
 		echo true;
-		die();
-	}
-
-	public function unsubscribe_encoding() {
-		$unsubscribe_url = trailingslashit( $this->api_url ) . 'api/cancel/' . $this->api_key;
-		$unsubscribe_page = wp_remote_post( $unsubscribe_url, array( 'timeout' => 120, 'body' => array( 'note' => $_GET[ 'note' ] ) ) );
-		if ( ! is_wp_error( $unsubscribe_page ) && ( ! isset( $unsubscribe_page[ 'headers' ][ 'status' ] ) || (isset( $unsubscribe_page[ 'headers' ][ 'status' ] ) && ($unsubscribe_page[ 'headers' ][ 'status' ] == 200))) ) {
-			$subscription_info = json_decode( $unsubscribe_page[ 'body' ] );
-			if ( isset( $subscription_info->status ) && $subscription_info->status ) {
-				echo json_encode( array( 'updated' => __( 'Your subscription was cancelled successfully', 'rtmedia' ), 'form' => $this->encoding_subscription_form( $_GET[ 'plan' ], $_GET[ 'price' ] ) ) );
-			}
-		} else {
-			echo json_encode( array( 'error' => __( 'Something went wrong please try again.', 'rtmedia' ) ) );
-		}
 		die();
 	}
 
