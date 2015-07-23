@@ -21,6 +21,11 @@ class RTMediaEncoding {
 		// Do not add any action
 		$no_init = true;
 
+		if( function_exists( 'rtmedia_transcoding_can_process' ) && rtmedia_transcoding_can_process() ){
+			add_filter( 'rtmedia_plupload_files_filter', array( $this, 'allowed_types' ), 10, 1 );
+			add_filter( 'rtmedia_allowed_types', array( $this, 'allowed_types_admin_settings' ), 10, 1 );
+		}
+
 		if ( $no_init ){
 			return;
 		}
@@ -107,6 +112,26 @@ class RTMediaEncoding {
 				$this->update_usage( $this->api_key );
 			}
 		}
+	}
+
+	public function allowed_types( $types ) {
+		if ( isset( $types[ 0 ] ) && isset( $types[ 0 ][ 'extensions' ] ) ) {
+			if ( is_rtmedia_upload_video_enabled() )
+				$types[ 0 ][ 'extensions' ] .= ',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo'; //Allow all types of file to be uploded
+			if ( is_rtmedia_upload_music_enabled() )
+				$types[ 0 ][ 'extensions' ] .= ',wma,ogg,wav,m4a'; //Allow all types of file to be uploded
+		}
+		return $types;
+	}
+
+	public function allowed_types_admin_settings( $types ) {
+		$allowed_video_string = implode( ",", $types[ 'video' ][ 'extn' ] );
+		$allowed_audio_string = implode( ",", $types[ 'music' ][ 'extn' ] );
+		$allowed_video = explode( ",", $allowed_video_string . ',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo' );
+		$allowed_audio = explode( ",", $allowed_audio_string . ',wma,ogg,wav,m4a' );
+		$types[ 'video' ][ 'extn' ] = array_unique( $allowed_video );
+		$types[ 'music' ][ 'extn' ] = array_unique( $allowed_audio );
+		return $types;
 	}
 
 	public function bypass_video_audio( $flag, $file ) {
