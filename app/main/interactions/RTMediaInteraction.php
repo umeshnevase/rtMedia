@@ -31,10 +31,19 @@ class RTMediaInteraction {
         add_action ( 'template_redirect', array( $this, 'init' ), 99 );
 
         add_filter ( 'wp_title', array( $this, 'set_title' ), 99999, 2 );
+
+        // Yoast SEO plugin support https://wordpress.org/plugins/wordpress-seo/
         add_filter ( 'wpseo_opengraph_title', array( $this, 'set_title' ), 9999, 1 );
         add_filter ( 'wpseo_opengraph', array( $this, 'rtmedia_wpseo_og_image' ), 999, 1 );
         add_filter ( 'wpseo_opengraph_url', array( $this, 'rtmedia_wpseo_og_url' ), 999, 1 );
+
+        // All in One SEO Pack plugin support https://wordpress.org/plugins/all-in-one-seo-pack/
+	    add_filter( 'aiosp_opengraph_meta', array( $this, 'all_in_one_seo_meta' ), 999, 3 );
     }
+
+	function all_in_one_seo_meta( $filtered_value, $t, $k ){
+		return $filtered_value;
+	}
 
     function flush_rules() {
 	$rtmedia_version  = rtmedia_get_site_option("rtmedia_flush_rules_plugin_version");
