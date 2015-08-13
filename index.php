@@ -95,6 +95,8 @@ function rtmedia_autoloader( $class_name ) {
 		'app/log/' . $class_name . '.php',
 		'app/importers/' . $class_name . '.php',
 		'app/main/controllers/api/' . $class_name . '.php',
+		'includes/buddypress/attachment/' . $class_name . '.php',
+		'includes/helper/' . $class_name . '.php',
 	);
 	foreach ( $rtlibpath as $path ) {
 		$path = RTMEDIA_PATH . $path;

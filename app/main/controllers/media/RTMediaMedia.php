@@ -141,8 +141,8 @@ class RTMediaMedia {
 	/**
 	 * Generic method to add a media
 	 *
-	 * @param type $uploaded
-	 * @param type $file_object
+	 * @param array $uploaded
+	 * @param array $file_object
 	 *
 	 * @return type
 	 */

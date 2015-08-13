@@ -571,6 +571,8 @@ jQuery( function ( $ ) {
 				up.settings.multipart_params.album_id = $( '#rtmedia-uploader-form .rtmedia-user-album-list' ).find( ":selected" ).val();
 			else if ( $( '#rtmedia-uploader-form .rtmedia-current-album' ).length > 0 )
 				up.settings.multipart_params.album_id = $( '#rtmedia-uploader-form .rtmedia-current-album' ).val();
+
+			up.settings.multipart_params.action = 'rtmedia_bp_attachment_upload';
 		} );
 
 		uploaderObj.uploader.bind( 'FileUploaded', function ( up, file, res ) {
