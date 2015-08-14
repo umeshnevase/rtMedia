@@ -56,6 +56,7 @@
 					$thumb_image = "";
 				}
 
+				// $_POST[ "rtmedia_update" ] will be set for activity attachments
 				if ( isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true" ){
 					if ( preg_match( '/(?i)msie [1-9]/', $_SERVER[ 'HTTP_USER_AGENT' ] ) ){ // if IE(<=9) set content type = text/plain
 						header( 'Content-type: text/plain' );
@@ -65,17 +66,24 @@
 
 					// Legacy code says it needs data in array !
 					// todo need to remove array
-					echo json_encode( array( $rtmedia_id ) );
+					$res_array = array( $rtmedia_id );
 				} else {
-					// Media Upload Case - on album/post/profile/group
-					$data = array( 'media_id' => $rtmedia_id, 'activity_id' => $activity_id, 'redirect_url' => '', 'permalink' => $permalink, 'cover_art' => $thumb_image );
 					if ( preg_match( '/(?i)msie [1-9]/', $_SERVER[ 'HTTP_USER_AGENT' ] ) ){ // if IE(<=9) set content type = text/plain
 						header( 'Content-type: text/plain' );
 					} else {
 						header( 'Content-type: application/json' );
 					}
-					echo json_encode( apply_filters( 'rtmedia_upload_endpoint_response', $data ) );
+
+					// Media Upload Case - on album/post/profile/group
+					$res_array = apply_filters( 'rtmedia_upload_endpoint_response', array(
+								'media_id' => $rtmedia_id,
+								'activity_id' => $activity_id,
+								'permalink' => $permalink,
+								'cover_art' => $thumb_image, )
+					);
+
 				}
+				echo json_encode( $res_array );
 			}
 			die();
 		}
