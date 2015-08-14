@@ -22,8 +22,24 @@
 		 * @param $plupload_params
 		 */
 		function modify_plupload_params( $plupload_params ){
+
+			// set upload url
 			$plupload_params[ 'url' ] = admin_url( 'admin-ajax.php' );
+
+			// add action parameter to handle wp_ajax_
 			$plupload_params[ 'multipart_params' ][ 'action' ] = 'rtmedia_bp_attachment_upload';
+
+			// set context and context_id
+			// By default it will be profile context unless it is group page.
+			$context = 'profile';
+			$context_id = get_current_user_id();
+			if( bp_is_group() ){
+				$current_group = groups_get_current_group();
+				$context = 'group';
+				$context_id = $current_group->id;
+			}
+			$plupload_params[ 'multipart_params' ][ 'context' ] = $context;
+			$plupload_params[ 'multipart_params' ][ 'context_id' ] = $context_id;
 
 			return $plupload_params;
 		}
