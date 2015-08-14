@@ -1,16 +1,41 @@
 <?php
 
+	/**
+	 * rtMedia attachment upload for BuddyPress activity / profile / group
+	 *
+	 * Class RTMediaBPAttachmentUpload
+	 */
 	class RTMediaBPAttachmentUpload {
 
-		private $upload;
-
 		public function __construct(){
+
+			// filter to modify plupload parameters as per the BP Attachments API
+			add_filter( 'rtmedia_modify_upload_params', array( $this, 'modify_plupload_params' ) );
+
+			// handle ajax call to add attachment
 			add_action( 'wp_ajax_rtmedia_bp_attachment_upload', array( $this, 'handle_bp_attachment_upload' ) );
 		}
 
+		/**
+		 * Modify upload url for BP Attachments API
+		 *
+		 * @param $plupload_params
+		 */
+		function modify_plupload_params( $plupload_params ){
+			$plupload_params[ 'url' ] = admin_url( 'admin-ajax.php' );
+			$plupload_params[ 'multipart_params' ][ 'action' ] = 'rtmedia_bp_attachment_upload';
+
+			return $plupload_params;
+		}
+
+		/**
+		 * Handle uploading media and attach it to activity
+		 */
 		function handle_bp_attachment_upload(){
 			$nonce = $_REQUEST[ 'rtmedia_upload_nonce' ];
 			if ( wp_verify_nonce( $nonce, 'rtmedia_upload_nonce' ) ){
+
+				// Insert WordPress attachment
 				$attachment = new RTMediaBPAttachment();
 				$uploaded = $attachment->insert_attachment( $_FILES, $_POST );
 
@@ -37,7 +62,10 @@
 					} else {
 						header( 'Content-type: application/json' );
 					}
-					echo json_encode( $activity_id );
+
+					// Legacy code says it needs data in array !
+					// todo need to remove array
+					echo json_encode( array( $rtmedia_id ) );
 				} else {
 					// Media Upload Case - on album/post/profile/group
 					$data = array( 'media_id' => $rtmedia_id, 'activity_id' => $activity_id, 'redirect_url' => '', 'permalink' => $permalink, 'cover_art' => $thumb_image );
@@ -52,6 +80,13 @@
 			die();
 		}
 
+		/**
+		 * Insert activity for attached media
+		 *
+		 * @param object $uploaded
+		 *
+		 * @return bool|int
+		 */
 		function insert_activity( $uploaded ){
 
 			$rtmedia_media = new RTMediaMedia();
@@ -63,7 +98,11 @@
 			$rtmedia_id = $uploaded->id;
 
 			// todo why need to use $_POST[ "rtmedia_update" ] here ?
-			if ( ( ( $activity_id == - 1 || $activity_id == false ) && ( ! ( isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true" ) ) ) || $allow_single_activity ){
+			if ( (
+					( $activity_id == - 1 || $activity_id == false )
+					&& ( ! ( isset ( $_POST[ "rtmedia_update" ] ) && $_POST[ "rtmedia_update" ] == "true" ) )
+				)
+				|| $allow_single_activity ){
 				$activity_id = $rtmedia_media->insert_activity( $rtmedia_media_id, $uploaded );
 			} else {
 				$rtmedia_media->model->update( array( 'activity_id' => $activity_id ), array( 'id' => $rtmedia_id ) );

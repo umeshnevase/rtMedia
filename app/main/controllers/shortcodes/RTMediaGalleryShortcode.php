@@ -57,8 +57,6 @@ class RTMediaGalleryShortcode {
         } else {
             $url = trailingslashit ( $url ) . "upload/";
         }
-
-        $url = admin_url( 'admin-ajax.php' );
 		
         $params = array(
             'url' => $url,
