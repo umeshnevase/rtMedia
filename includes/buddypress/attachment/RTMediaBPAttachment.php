@@ -108,7 +108,13 @@
 			unset( $upload_helper );
 			unset( $rtmedia_media );
 
-			return is_array( $media_object ) ? $media_object[0] : $media_object;
+			$return_object = is_array( $media_object ) ? $media_object[0] : $media_object;
+
+			// pass activity_id which we got from $_POST because it needs to attach in single activity in case of
+			// multiple media upload
+			$return_object->activity_id = $upload_params[ 'activity_id' ];
+
+			return $return_object;
 
 		}
 

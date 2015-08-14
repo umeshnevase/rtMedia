@@ -44,11 +44,9 @@
 
 			// set media context
 			if( ! $this->has_context() ) {
-				// todo remove $rtmedia_interaction
-				global $rtmedia_interaction;
-
-				$this->upload[ 'context' ] = $rtmedia_interaction->context->type;
-				$this->upload[ 'context_id' ] = $rtmedia_interaction->context->id;
+				// set default context to profile
+				$this->upload[ 'context' ] = 'profile';
+				$this->upload[ 'context_id' ] = get_current_user_id();
 			}
 			$this->upload[ 'context_id' ] = intval( $this->upload[ 'context_id' ] );
 			$this->upload[ 'context' ] = esc_html( $this->upload[ 'context' ] );

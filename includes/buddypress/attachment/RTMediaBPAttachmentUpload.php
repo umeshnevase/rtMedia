@@ -21,7 +21,7 @@
 				$rtmedia_id = $uploaded->id;
 				$permalink = get_rtmedia_permalink( $rtmedia_id );
 				$media_type = $uploaded->media_type;
-				$cover_art = $uploaded->coverr_art;
+				$cover_art = $uploaded->cover_art;
 
 				if ( $media_type == "photo" ){
 					$thumb_image = rtmedia_image( "rt_media_thumbnail", $rtmedia_id, false );
@@ -40,11 +40,7 @@
 					echo json_encode( $activity_id );
 				} else {
 					// Media Upload Case - on album/post/profile/group
-					if( isset( $media[0] ) ) {
-						$data = array( 'media_id' => $rtmedia_id, 'activity_id' => $activity_id, 'redirect_url' => '', 'permalink' => $permalink, 'cover_art' => $thumb_image );
-					} else {
-						$data = array();
-					}
+					$data = array( 'media_id' => $rtmedia_id, 'activity_id' => $activity_id, 'redirect_url' => '', 'permalink' => $permalink, 'cover_art' => $thumb_image );
 					if ( preg_match( '/(?i)msie [1-9]/', $_SERVER[ 'HTTP_USER_AGENT' ] ) ){ // if IE(<=9) set content type = text/plain
 						header( 'Content-type: text/plain' );
 					} else {

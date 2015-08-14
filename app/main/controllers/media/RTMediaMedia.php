@@ -158,13 +158,14 @@ class RTMediaMedia {
 		$attachment_ids = $this->insert_attachment( $attachments, $file_object );
 
 		/* check for multisite and if valid then add taxonomies */
-		if ( ! $this->is_multisite() ){
+		if ( ! $this->is_multisite() && isset( $uploaded[ 'taxonomy' ] ) ){
 			$this->add_taxonomy( $attachment_ids, $uploaded[ 'taxonomy' ] );
 		}
 
 		/* fetch custom fields and add them to meta table */
-		$this->add_meta( $attachment_ids, $uploaded[ 'custom_fields' ] );
-
+		if( isset( $uploaded[ 'custom_fields' ] ) ){
+			$this->add_meta( $attachment_ids, $uploaded[ 'custom_fields' ] );
+		}
 
 		/* add media in rtMedia context */
 		$media_ids = $this->insertmedia( $attachment_ids, $uploaded, $file_object /* passing file object to check the extension */ );
