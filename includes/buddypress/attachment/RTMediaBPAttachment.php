@@ -3,6 +3,13 @@
 	class RTMediaBPAttachment extends BP_Attachment {
 
 		/**
+		 * @var $rt_upload_params
+		 *
+		 * Holds the upload media parameters
+		 */
+		private $rt_upload_params;
+
+		/**
 		 * Initialization
 		 */
 		public function __construct(){
@@ -19,24 +26,27 @@
 		 *
 		 * @return array
 		 */
-		public function upload_dir_filter() {
+		public function upload_dir_filter( $up_dir_params = array() ) {
 
 			// identify whether it's group or user profile and set upload directory accordingly
 			$dir_name = 'users';
 			$id = bp_displayed_user_id();
 			if ( bp_is_group() ) {
 				$dir_name = 'groups';
-				$id = bp_get_group_id();
+				$id = $this->rt_upload_params[ 'context_id' ];
 			}
 			$sub_dir = $dir_name . '/' . $id;
 
 			// Add /year/month/ into upload directory
-			// can't ise wp_upload_dir() here as this function it self
-			$time = current_time( 'mysql' );
-			$year = substr( $time, 0, 4 );
-			$month = substr( $time, 5, 2 );
-			$sub_sub_dir = "/$year/$month";
-
+			if( empty( $up_dir_params ) ){
+				// can't use wp_upload_dir() here as this function it self
+				$time = current_time( 'mysql' );
+				$year = substr( $time, 0, 4 );
+				$month = substr( $time, 5, 2 );
+				$sub_sub_dir = "/$year/$month";
+			} else {
+				$sub_sub_dir = $up_dir_params[ 'subdir' ];
+			}
 			$sub_dir .= $sub_sub_dir;
 
 			$rtmedia_upload_dir = array(
@@ -49,7 +59,7 @@
 			);
 
 
-			$rtmedia_upload_dir = apply_filters( "rtmedia_bp_attachments_upload_dir", $rtmedia_upload_dir );
+			$rtmedia_upload_dir = apply_filters( "rtmedia_bp_attachments_upload_dir", $rtmedia_upload_dir, $up_dir_params );
 
 			return $rtmedia_upload_dir;
 		}
@@ -67,9 +77,6 @@
 			// Initialize required classes
 			$upload_helper = new RTMediaMediaUploadHelper();
 			$rtmedia_media = new RTMediaMedia();
-
-			// Upload file
-			$file_object = parent::upload( $file );
 
 			// Set media post object
 			$upload_params = $upload_helper->set_media_object( $upload_params );
@@ -105,8 +112,15 @@
 
 			}
 
+			$this->rt_upload_params = $upload_params;
+
+			// Upload file
+			$file_object = parent::upload( $file );
+
+			// Add media
 			$media_id_array = $rtmedia_media->add( $upload_params, array( $file_object ) );
 
+			// Get uploaded media object
 			$media_object = $rtmedia_media->model->get( array( 'id' => $media_id_array ) );
 
 			unset( $upload_helper );
