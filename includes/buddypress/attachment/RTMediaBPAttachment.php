@@ -77,22 +77,22 @@
 			/*
 			 * Customize upload params for BuddyPress
 			 */
-			// context
-			if( empty( $upload_params[ 'context' ] ) ){
+			// set context
+			// Context might be bp_member for user profile and bp_group for groups
+			if( empty( $upload_params[ 'context' ] ) || $upload_params[ 'context' ] == 'bp_member' ){
 				$upload_params[ 'context' ] = 'profile';
 			}
 			if( $upload_params[ 'context' ] == 'profile' ){
 				$upload_params[ 'context_id' ] = get_current_user_id();
 			}
+			if( $upload_params[ 'context' ] == 'bp_group' ){
+				$upload_params[ 'context' ] = 'group';
+			}
 
 			// set group media privacy
 			if ( isset( $upload_params[ 'context' ] ) && isset( $upload_params[ 'context_id' ] )
-				&& ( $upload_params[ 'context' ] == 'group' || $upload_params[ 'context' ] == 'bp_group' )
-				&& function_exists( 'groups_get_group' )
+				&& $upload_params[ 'context' ] == 'group' && function_exists( 'groups_get_group' )
 			){
-
-				// context might be group or bp_group
-				$upload_params[ 'context' ] = 'group';
 
 				$group = groups_get_group( array( 'group_id' => $upload_params[ 'context_id' ] ) );
 				if ( isset( $group->status ) && $group->status != 'public' ){

@@ -1489,10 +1489,20 @@ function rtmedia_uploader( $attr = '' ) {
 	if ( rtmedia_is_uploader_view_allowed( true, 'media_gallery' ) ) {
 		if ( function_exists( 'bp_is_blog_page' ) && ! bp_is_blog_page() ) {
 			if ( function_exists( 'bp_is_user' ) && bp_is_user() && function_exists( 'bp_displayed_user_id' ) && bp_displayed_user_id() == get_current_user_id() ) {
+				// set context to profile if not set
+				if( !empty( $attr ) && is_array( $attr ) && !isset( $attr['context'] ) ){
+					$attr['context'] = 'profile';
+					$attr['context_id'] = get_current_user_id();
+				}
 				echo RTMediaUploadShortcode::pre_render( $attr );
 			} else {
 				if ( function_exists( 'bp_is_group' ) && bp_is_group() ) {
 					if ( can_user_upload_in_group() ) {
+						// set group context if not set
+						if( !empty( $attr ) && is_array( $attr ) && !isset( $attr['context'] ) ){
+							$attr['context'] = 'group';
+							$attr['context_id'] = bp_get_group_id();
+						}
 						echo RTMediaUploadShortcode::pre_render( $attr );
 					}
 				}
