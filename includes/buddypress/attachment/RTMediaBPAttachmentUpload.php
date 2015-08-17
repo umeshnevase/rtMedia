@@ -9,15 +9,18 @@
 
 		public function __construct(){
 
-			// filter to modify plupload parameters as per the BP Attachments API
-			add_filter( 'rtmedia_modify_upload_params', array( $this, 'modify_plupload_params' ) );
+			// Do not proceed if BuddyPress is not active and if active, check whether it has attachment api or not
+			if( rtm_is_bp_active() && rtm_is_bp_have_attachment_api() ){
+				// filter to modify plupload parameters as per the BP Attachments API
+				add_filter( 'rtmedia_modify_upload_params', array( $this, 'modify_plupload_params' ) );
 
-			// handle ajax call to add attachment
-			add_action( 'wp_ajax_rtmedia_bp_attachment_upload', array( $this, 'handle_bp_attachment_upload' ) );
+				// handle ajax call to add attachment
+				add_action( 'wp_ajax_rtmedia_bp_attachment_upload', array( $this, 'handle_bp_attachment_upload' ) );
+			}
 		}
 
 		/**
-		 * Modify upload url for BP Attachments API
+		 * Modify plupload parameters for BP Attachments API
 		 *
 		 * @param $plupload_params
 		 */
