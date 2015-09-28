@@ -149,6 +149,10 @@ class RTMediaBPComponent extends BP_Component {
 
 			foreach ( $rtmedia->allowed_types as $type ) {
 
+				if( ! isset( $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] ) )
+					continue;
+				if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
+					continue;
 				$name       = strtoupper( $type['name'] );
 				$type_label = __( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], RTMEDIA_TEXT_DOMAIN );
 
@@ -199,6 +203,7 @@ class RTMediaBPComponent extends BP_Component {
 				);
 			}
 
+			$sub_nav = apply_filters( 'rtmedia_sub_nav', $sub_nav, $slug, $media_page_link, $pos_index );
 			parent::setup_nav( $main_nav, $sub_nav );
 		}
 	}
@@ -245,7 +250,7 @@ class RTMediaBPComponent extends BP_Component {
 				}
 			}
 
-			apply_filters( 'rtmedia_admin_bar_nav', $wp_admin_nav, $this->id );
+			$wp_admin_nav = apply_filters( 'rtmedia_admin_bar_nav', $wp_admin_nav, 'my-account-' . RTMEDIA_MEDIA_SLUG );
 
 			// Legacy rtMedia sub admin menu hook
 			do_action( 'rtmedia_add_admin_bar_media_sub_menu', 'my-account-' . RTMEDIA_MEDIA_SLUG );
@@ -322,8 +327,8 @@ class RTMediaBPComponent extends BP_Component {
 			if ( ! empty( $bp->current_action ) ) {
 				$query_param['id'] = $bp->current_action;
 			}
-		} elseif ( $this->is_album_gallery_screen ) {
-			$query_param['media_type'] = 'album';
+		//} elseif ( $this->is_album_gallery_screen ) {
+		//	$query_param['media_type'] = 'album';
 		} else {
 			if ( ! empty( $bp->current_action ) && $bp->current_action != 'all' ) {
 				$query_param['media_type'] = $bp->current_action;
@@ -337,7 +342,7 @@ class RTMediaBPComponent extends BP_Component {
 
 	function init() {
 		add_filter( 'rtmedia_query_filter', array( $this, 'remove_page_no_from_query' ), 10, 1 );
-		add_filter( 'rtmedia_action_query_in_populate_media', array(
+		add_filter( 'rtmedia_action_query_in_pop	ulate_media', array(
 			$this,
 			'add_current_page_in_fetch_media'
 		), 10, 2 );
