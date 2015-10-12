@@ -342,10 +342,7 @@ class RTMediaBPComponent extends BP_Component {
 
 	function init() {
 		add_filter( 'rtmedia_query_filter', array( $this, 'remove_page_no_from_query' ), 10, 1 );
-		add_filter( 'rtmedia_action_query_in_pop	ulate_media', array(
-			$this,
-			'add_current_page_in_fetch_media'
-		), 10, 2 );
+		add_filter( 'rtmedia_action_query_in_populate_media', array( $this, 'add_current_page_in_fetch_media' ), 10, 2 );
 	}
 
 	function handle_media_actions() {
