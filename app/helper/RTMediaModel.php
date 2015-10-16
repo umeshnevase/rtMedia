@@ -300,7 +300,7 @@ class RTMediaModel extends RTDBModel {
 	 * @param  mixed $user_id
 	 * @param  mixed $where_query
 	 *
-	 * @return string $result
+	 * @return bool|array $result
 	 */
 	function get_counts( $user_id = false, $where_query = false ){
 
