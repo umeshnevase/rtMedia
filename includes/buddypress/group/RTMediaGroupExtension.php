@@ -9,10 +9,16 @@ if ( class_exists ( 'BP_Group_Extension' ) ) :// Recommended, to prevent problem
     class RTMediaGroupExtension extends BP_Group_Extension {
 
         function __construct () {
-            $this->name = RTMEDIA_MEDIA_LABEL;
-            $this->slug = RTMEDIA_MEDIA_SLUG . "-setting";
-            $this->create_step_position = 21;
-            $this->enable_nav_item = false;
+
+	        $args = array(
+				'name'                  => RTMEDIA_MEDIA_LABEL,
+		        'slug'                  => RTMEDIA_MEDIA_SLUG,
+				'visibility'            => 'private',
+		        'create_step_position'  => 21,
+		        'enable_nav_item'       => true,
+	        );
+
+	        parent::init( $args );
         }
 
         function create_screen ( $group_id = NULL ) {

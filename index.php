@@ -113,6 +113,7 @@ function rtmedia_autoloader( $class_name ) {
 		'app/importers/' . $class_name . '.php',
 		'app/main/controllers/api/' . $class_name . '.php',
 		'includes/buddypress/component/' . $class_name . '.php',
+		'includes/buddypress/group/' . $class_name . '.php',
 		'includes/template/' . $class_name . '.php',
 	);
 	foreach ( $rtlibpath as $path ) {
