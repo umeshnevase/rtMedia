@@ -27,7 +27,10 @@ class RTMediaPrivacy {
 			add_filter( 'bp_activity_get_user_join_filter', array( $this, 'activity_privacy' ), 10, 6 );
 			add_filter( 'bp_use_legacy_activity_query', array( $this, 'enable_buddypress_privacy' ), 10, 3 );
 			add_filter( 'bp_activity_has_more_items', array( $this, 'enable_buddypress_load_more' ), 10, 1 );
+			add_action( 'bp_actions', array( $this,'rt_privacy_settings_action' ) );
 		}
+		add_action( 'friends_friendship_accepted', array( 'RTMediaFriends', 'refresh_friends_cache' ) );
+		add_action( 'friends_friendship_deleted', array( 'RTMediaFriends', 'refresh_friends_cache' ) );
 	}
 
 	function enable_buddypress_load_more( $has_more_items ) {
@@ -249,13 +252,35 @@ class RTMediaPrivacy {
 		bp_core_load_template( apply_filters( 'bp_settings_screen_delete_account', 'members/single/plugins' ) );
 	}
 
-	function content() {
+	/**
+	 * changing and saving of privacy setting save action
+	 */
+	function rt_privacy_settings_action() {
 		if ( buddypress()->current_action != 'privacy' )
 			return;
 
 		if ( isset( $_POST[ "rtmedia-default-privacy" ] ) ) {
-			update_user_meta( get_current_user_id(), 'rtmedia-default-privacy', $_POST[ "rtmedia-default-privacy" ] );
+			$status=false;
+			if ( wp_verify_nonce( $_POST['rtmedia_member_settings_privacy'],'rtmedia_member_settings_privacy' ) ) {
+				$status = update_user_meta(get_current_user_id(), 'rtmedia-default-privacy', $_POST["rtmedia-default-privacy"]);
+			}
+			if(false == $status ) {
+				$feedback = __( 'No changes were made to your account.', 'buddypress-media' );
+				$feedback_type = 'error';
+			} else if ( true == $status ) {
+				$feedback = __( 'Your default privacy settings saved successfully.', 'buddypress-media' );
+				$feedback_type = 'success';
+			}
+			bp_core_add_message( $feedback, $feedback_type );
+			do_action( 'bp_core_general_settings_after_save' );
+			bp_core_redirect( bp_displayed_user_domain() . bp_get_settings_slug() . '/privacy/' );
 		}
+	}
+
+	function content() {
+		if ( buddypress()->current_action != 'privacy' )
+			return;
+
 		$default_privacy = get_user_meta( get_current_user_id(), 'rtmedia-default-privacy', true );
 		if ( $default_privacy === false || $default_privacy === '' ) {
 			$default_privacy = get_rtmedia_default_privacy();
@@ -264,8 +289,9 @@ class RTMediaPrivacy {
 		?>
 		<form method="post">
 			<div class="rtm_bp_default_privacy">
+				<?php wp_nonce_field( 'rtmedia_member_settings_privacy', 'rtmedia_member_settings_privacy' ); ?>
 				<div class="section">
-					<div class="rtm-title"><h3><?php _e( 'Default Privacy', 'rtmedia' ); ?></h3></div>
+					<div class="rtm-title"><h3><?php _e( 'Default Privacy', 'buddypress-media' ); ?></h3></div>
 					<div class="rtm-privacy-levels">
 						<?php foreach ( $rtmedia->privacy_settings[ 'levels' ] as $level => $data ) { ?>
 							<label><input type='radio' value='<?php echo $level; ?>' name ='rtmedia-default-privacy' <?php echo ($default_privacy == $level) ? "checked" : ""; ?> /> <?php echo $data; ?></label><br/>
@@ -274,14 +300,14 @@ class RTMediaPrivacy {
 				</div>
 			</div>
 			<div class="submit">
-				<input type="submit" name="submit" value="<?php esc_attr_e( 'Save Changes', 'rtmedia' ); ?>" id="submit" class="auto">
+				<input type="submit" name="submit" value="<?php esc_attr_e( 'Save Changes', 'buddypress-media' ); ?>" id="submit" class="auto">
 			</div>
 		</form>
 		<?php
 	}
 
 	function title() {
-		return __( 'Privacy', 'rtmedia' );
+		return __( 'Privacy', 'buddypress-media' );
 	}
 
 	function activity_privacy( $sql, $select_sql, $from_sql, $where_sql, $sort, $pag_sql = '' ) {

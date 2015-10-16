@@ -441,10 +441,10 @@ class RTMediaMedia {
 
 		$attachments = array();
 
-		foreach ( $file_object as $file ) {
+		foreach ( $file_object as $index => $file ) {
 			$uploaded[ 'title' ] = wp_kses( $uploaded[ 'title' ], wp_kses_allowed_html() );
 			$uploaded[ 'description' ] = sanitize_text_field( $uploaded[ 'description' ] );
-			$attachments[ ] = array(
+			$attachments[$index] = array(
 				'post_mime_type' => $file[ 'type' ],
 				'guid' => $file[ 'url' ],
 				'post_title' => $uploaded[ 'title' ] ? $uploaded[ 'title' ] : preg_replace( "/\\.[^.\\s]{3,4}$/", "", $file[ 'name' ] ),
@@ -452,6 +452,10 @@ class RTMediaMedia {
 				'post_parent' => $album_id,
 				'post_author' => $uploaded[ 'media_author' ]
 			);
+
+			if( ! empty( $uploaded['date'] ) ){
+				$attachments[$index]['post_date'] = $uploaded['date'];
+			}
 		}
 
 		return $attachments;
@@ -481,7 +485,7 @@ class RTMediaMedia {
 				wp_update_attachment_metadata( $attachment_id, wp_generate_attachment_metadata( $attachment_id, $file_object[ $key ][ 'file' ] ) );
 			} else {
 				unlink( $file_object[ $key ][ 'file' ] );
-				throw new Exception ( __( 'Error creating attachment for the media file, please try again', 'rtmedia' ) );
+				throw new Exception ( __( 'Error creating attachment for the media file, please try again', 'buddypress-media' ) );
 			}
 			$updated_attachment_ids[ ] = $attachment_id;
 		}
@@ -583,7 +587,7 @@ class RTMediaMedia {
 
 		$media_str = constant( $media_const );
 
-		$action = sprintf( ( $count == 1 ) ? __( '%1$s added a %2$s', 'rtmedia' ) : __( '%1$s added %4$d %3$s', 'rtmedia' ), $username, $media->media_type, $media_str, $count );
+		$action = sprintf( ( $count == 1 ) ? __( '%1$s added a %2$s', 'buddypress-media' ) : __( '%1$s added %4$d %3$s', 'buddypress-media' ), $username, $media->media_type, $media_str, $count );
 		$action        = apply_filters( 'rtmedia_buddypress_action_text_fitler', $action, $username, $count, $user->user_nicename, $media->media_type );
 		$activity_args = array(
 			'user_id' => $user->ID,

@@ -47,7 +47,7 @@ function apply_rtMagnificPopup( selector ) {
 						if ( ! li.is( 'li' ) ) {
 							li = li.parent();
 						}
-						if ( li.is( ':nth-last-child(2)' ) ) { // if its last second media
+						if ( li.is( ':nth-last-child(2)' ) || li.is( ':last-child' ) ) { // if its last second media
 							var last_li = li.next();
 							if ( jQuery( '#rtMedia-galary-next' ).css( 'display' ) == 'block' ) { // if more medias are available
 								jQuery( '#rtMedia-galary-next' ).click(); // load more
@@ -594,7 +594,7 @@ jQuery( 'document' ).ready( function ( $ ) {
 				success: function ( data ) {
 					if ( data == '1' ) {
 						//media delete
-						rtmedia_gallery_action_alert_message( 'file deleted succeessfully.', 'success' );
+						rtmedia_gallery_action_alert_message( 'file deleted successfully.', 'success' );
 						curr_li.remove();
 						if ( typeof rtmedia_masonry_layout != "undefined" && rtmedia_masonry_layout == "true" && jQuery( '.rtmedia-container .rtmedia-list.rtm-no-masonry' ).length == 0 ) {
 							rtm_masonry_reload( rtm_masonry_container );

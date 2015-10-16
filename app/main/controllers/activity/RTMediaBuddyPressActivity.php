@@ -17,6 +17,9 @@ class RTMediaBuddyPressActivity {
 		if ( 0 != $rtmedia->options['buddypress_enableOnActivity'] ){
 			add_action( 'bp_after_activity_post_form', array( &$this, 'bp_after_activity_post_form' ) );
 			add_action( 'bp_activity_posted_update', array( &$this, 'bp_activity_posted_update' ), 99, 3 );
+
+			// manage user's last activity update.
+			add_action( 'bp_activity_posted_update', array( &$this, 'manage_user_last_activity_update' ), 999, 3 );
 			add_action( 'bp_groups_posted_update', array( &$this, 'bp_groups_posted_update' ), 99, 4 );
 		}
 		add_action( 'bp_init', array( $this, 'non_threaded_comments' ) );
@@ -160,6 +163,63 @@ class RTMediaBuddyPressActivity {
 		}
 	}
 
+	/**
+	 * Update `bp_latest_update` user meta with lasted public update.
+	 *
+	 * @param $content
+	 * @param $user_id
+	 * @param $activity_id
+	 */
+	function manage_user_last_activity_update( $content, $user_id, $activity_id ){
+		global $wpdb,$bp;
+
+		// do not proceed if not allowed
+		if( ! apply_filters( 'rtm_manage_user_last_activity_update', true, $activity_id ) ){
+			return;
+		}
+		$rtm_activity_model = new RTMediaActivityModel();
+
+		$rtm_activity_obj = $rtm_activity_model->get( array( 'activity_id' => $activity_id ) );
+
+		if( !empty( $rtm_activity_obj ) ){
+			if( isset( $rtm_activity_obj[0]->privacy ) && $rtm_activity_obj[0]->privacy > 0 ){
+
+				$get_columns = array(
+					'activity_id' => array(
+						'compare' => '<',
+						'value' => $activity_id
+					),
+					'user_id' => $user_id,
+					'privacy' => array(
+						'compare' => '<=',
+						'value' => 0
+					),
+				);
+
+				// get user's latest public activity update
+				$new_last_activity_obj = $rtm_activity_model->get( $get_columns, 0, 1 );
+
+				if( !empty( $new_last_activity_obj ) ){
+					// latest public activity id
+					$public_activity_id = $new_last_activity_obj[0]->activity_id;
+
+					// latest public activity content
+					$activity_content = bp_activity_get_meta( $public_activity_id, 'bp_activity_text' );
+					if( empty( $activity_content ) ){
+						$activity_content = $wpdb->get_var( "SELECT content FROM {$bp->activity->table_name} WHERE id = $public_activity_id" );
+					}
+					$activity_content = apply_filters( 'bp_activity_latest_update_content', $activity_content, $activity_content );
+
+					// update user's latest update
+					bp_update_user_meta( $user_id, 'bp_latest_update', array(
+						'id'      => $public_activity_id,
+						'content' => $activity_content
+					) );
+				}
+			}
+		}
+	}
+
 	function bp_after_activity_post_form(){
 		$url = trailingslashit ( $_SERVER[ "REQUEST_URI" ] );
 		$slug_split = explode( '/', $url );
@@ -177,7 +237,7 @@ class RTMediaBuddyPressActivity {
 				'url'             => $url,
 				'runtimes' => 'html5,flash,html4', 'browse_button' => 'rtmedia-add-media-button-post-update', // browse button assigned to "Attach Files" Button.
 				'container'       => 'rtmedia-whts-new-upload-container', 'drop_element' => 'whats-new-textarea', // drag-drop area assigned to activity update textarea
-				'filters'         => apply_filters( 'rtmedia_plupload_files_filter', array( array( 'title' => __( 'Media Files', 'rtmedia' ), 'extensions' => get_rtmedia_allowed_upload_type() ) ) ),
+				'filters'         => apply_filters( 'rtmedia_plupload_files_filter', array( array( 'title' => __( 'Media Files', 'buddypress-media' ), 'extensions' => get_rtmedia_allowed_upload_type() ) ) ),
 				'max_file_size' => ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M',
 				'multipart' => true, 'urlstream_upload' => true,
 				'flash_swf_url' => includes_url( 'js/plupload/plupload.flash.swf' ),
@@ -201,7 +261,7 @@ class RTMediaBuddyPressActivity {
 			$uploadView = new RTMediaUploadView( array( 'activity' => true ) );
 			$uploadView->render( 'uploader' );
 		} else {
-			echo "<div class='rtmedia-upload-not-allowed'>" . apply_filters( 'rtmedia_upload_not_allowed_message', __( 'You are not allowed to upload/attach media.', 'rtmedia' ), 'activity' ) . '</div>';
+			echo "<div class='rtmedia-upload-not-allowed'>" . apply_filters( 'rtmedia_upload_not_allowed_message', __( 'You are not allowed to upload/attach media.', 'buddypress-media' ), 'activity' ) . '</div>';
 		}
 	}
 
@@ -330,22 +390,22 @@ class RTMediaBuddyPressActivity {
 				if( defined( $media_const ) ){
 					$media_str = constant( $media_const );
 				} else {
-					$media_str = __( 'media', 'rtmedia' );
+					$media_str = RTMEDIA_MEDIA_SLUG;
 				}
 
                 $action = '';
                 $user = get_userdata( $activities[ $index ]->user_id );
                 // Updating activity based on count
                 if( $count == 1 ) {
-                    $action = sprintf( __( '%s added a %s', 'rtmedia' ), $user_link, $media_str );
+                    $action = sprintf( __( '%s added a %s', 'buddypress-media' ), $user_link, $media_str );
                 } else {
                     // Checking all the media linked with activity are of same type
                     if( isset( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) 
                         && !empty( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) 
                         && count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) == 1 ) {
-                        $action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, $media_str );
+                        $action = sprintf( __( '%s added %d %s', 'buddypress-media' ), $user_link, $count, $media_str );
                     } else {
-                        $action = sprintf( __( '%s added %d %s', 'rtmedia' ), $user_link, $count, __( 'media', 'rtmedia' ) );
+                        $action = sprintf( __( '%s added %d %s', 'buddypress-media' ), $user_link, $count, RTMEDIA_MEDIA_SLUG );
                     }
                 }
                 

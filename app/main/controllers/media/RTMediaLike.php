@@ -15,9 +15,9 @@ class RTMediaLike extends RTMediaUserInteraction {
 	function __construct() {
 		$args = array(
 			'action' => 'like',
-			'label' => __( 'Like', 'rtmedia' ),
-			'plural' => __( 'Likes', 'rtmedia' ),
-			'undo_label' => __( 'Unlike', 'rtmedia' ),
+			'label' => __( 'Like', 'buddypress-media' ),
+			'plural' => __( 'Likes', 'buddypress-media' ),
+			'undo_label' => __( 'Unlike', 'buddypress-media' ),
 			'privacy' => 20,
 			'countable' => true,
 			'single' => false,
@@ -29,6 +29,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 		remove_filter( 'rtmedia_action_buttons_before_delete', array( $this, 'button_filter' ) );
 		add_action( 'rtmedia_action_buttons_after_media', array( $this, 'button_filter' ), 12 );
 		add_action( 'rtmedia_actions_before_comments', array( $this, 'like_button_filter' ), 10 );
+		add_action( 'rtmedia_like_button_filter', array( $this, 'like_button_filter_nonce' ), 10, 1 );
 		if ( ! rtmedia_comments_enabled() ) {
 			add_action( 'rtmedia_actions_without_lightbox', array( $this, 'like_button_without_lightbox_filter' ) );
 		}
@@ -58,7 +59,9 @@ class RTMediaLike extends RTMediaUserInteraction {
 	function process() {
 		$actions = $this->model->get( array( 'id' => $this->action_query->id ) );
 
-
+		if( ! wp_verify_nonce( $_POST[ "like_nonce" ], 'rtm_media_like_nonce'.$this->media->id ) ){
+			die();
+		}
 		$rtmediainteraction = new RTMediaInteractionModel();
 		$user_id = $this->interactor;
 		$media_id = $this->action_query->id;
@@ -96,10 +99,10 @@ class RTMediaLike extends RTMediaUserInteraction {
 		$actions = intval( $actions[ 0 ]->{$actionwa} );
 		if ( $this->increase === true ) {
 			$actions ++;
-			$return[ "next" ] = $this->undo_label;
+			$return[ "next" ] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->undo_label );
 		} else {
 			$actions --;
-			$return[ "next" ] = $this->label;
+			$return[ "next" ] = apply_filters( 'rtmedia_' . $this->action . '_label_text', $this->label );
 		}
 		if ( $actions < 0 ) {
 			$actions = 0;
@@ -110,7 +113,7 @@ class RTMediaLike extends RTMediaUserInteraction {
 		global $rtmedia_points_media_id;
 		$rtmedia_points_media_id = $this->action_query->id;
 		do_action( "rtmedia_after_like_media", $this );
-		if ( isset( $_REQUEST[ "json" ] ) && $_REQUEST[ "json" ] == "true" ) {
+		if ( isset( $_POST[ "json" ] ) && $_POST[ "json" ] == "true" ) {
 			echo json_encode( $return );
 			die();
 		} else {
@@ -226,4 +229,8 @@ class RTMediaLike extends RTMediaUserInteraction {
 		//$this->label =  "<span class='like-count'>" .$actions ."</span>" . $this->label;
 	}
 
+	function like_button_filter_nonce( $button ) {
+		$button .= wp_nonce_field( 'rtm_media_like_nonce' . $this->media->id, 'rtm_media_like_nonce',true, false );
+		return $button;
+	}
 }
