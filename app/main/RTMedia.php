@@ -101,7 +101,7 @@ class RTMedia {
 		add_action( 'plugins_loaded', array( $this, 'init' ), 20 );
 		add_action( 'wp_enqueue_scripts', array( 'RTMediaGalleryShortcode', 'register_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts_styles' ), 999 );
-		include(RTMEDIA_PATH . 'app/main/controllers/template/rt-template-functions.php');
+		include( RTMEDIA_PATH . 'includes/template/rt-template-functions.php' );
 		add_filter( 'intermediate_image_sizes_advanced', array( $this, 'filter_image_sizes_details' ) );
 		add_filter( 'intermediate_image_sizes', array( $this, 'filter_image_sizes' ) );
 		add_filter( "site_option_upload_filetypes", array( &$this, "filter_allow_mime_type_mu" ), 1, 1 );

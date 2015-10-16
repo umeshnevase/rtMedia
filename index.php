@@ -97,7 +97,6 @@ function rtmedia_autoloader( $class_name ) {
 		'app/main/controllers/upload/' . $class_name . '.php',
 		'app/main/controllers/upload/processors/' . $class_name . '.php',
 		'app/main/controllers/shortcodes/' . $class_name . '.php',
-		'app/main/controllers/template/' . $class_name . '.php',
 		'app/main/controllers/media/' . $class_name . '.php',
 		'app/main/controllers/group/' . $class_name . '.php',
 		'app/main/controllers/privacy/' . $class_name . '.php',
