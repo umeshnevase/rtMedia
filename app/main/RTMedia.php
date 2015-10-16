@@ -70,8 +70,20 @@ class RTMedia {
 		'album_updated',
 		'album_created'
 	);
+	/**
+	 * @var array rtMedia admin options
+	 */
 	public $options;
+
+	/**
+	 * @var array
+	 */
 	public $render_options;
+
+	/**
+	 * @var object Object of RTMediaModel class
+	 */
+	public $model;
 
 	/**
 	 * Constructs the class
@@ -95,6 +107,9 @@ class RTMedia {
 		add_filter( "site_option_upload_filetypes", array( &$this, "filter_allow_mime_type_mu" ), 1, 1 );
 		add_filter( 'image_size_names_choose', array( $this, 'rtmedia_custom_image_sizes_choose' ) );
 		add_action( 'bp_loaded', array( $this, 'load_component' ) );
+
+		// set media model object
+		$this->model = new RTMediaModel();
 	}
 
 	function filter_allow_mime_type_mu( $options ) {
