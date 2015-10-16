@@ -112,12 +112,14 @@ class RTMediaBPComponent extends BP_Component {
 
 			$slug            = apply_filters( 'rtmedia_media_tab_slug', RTMEDIA_MEDIA_SLUG );
 			$media_page_link = trailingslashit( $user_domain . $slug );
+			$nav_count       = new RTMediaNav();
+			$profile_counts  = $nav_count->actual_counts( $bp->displayed_user->id );
 
 			global $rtmedia;
 
 			// set up nav
 			$main_nav = array(
-				'name'                => RTMEDIA_MEDIA_LABEL,
+				'name'                => RTMEDIA_MEDIA_LABEL . '<span>' . ( isset( $profile_counts['total']['all'] ) ? $profile_counts['total']['all'] : 0 ) . '</span>',
 				'slug'                => $slug,
 				'position'            => apply_filters( 'rtmedia_media_tab_position', 99 ),
 				'screen_function'     => array( $this, 'media_gallery_screen' ),
@@ -127,7 +129,7 @@ class RTMediaBPComponent extends BP_Component {
 			$pos_index = 0;
 
 			$sub_nav[] = array(
-				'name'            => __( 'All', 'buddypress-media' ),
+				'name'            => __( 'All', 'buddypress-media' ) . '<span>' . ( isset( $profile_counts['total']['all'] ) ? $profile_counts['total']['all'] : 0 ) . '</span>',
 				'slug'            => 'all',
 				'parent_url'      => $media_page_link,
 				'parent_slug'     => $slug,
@@ -136,9 +138,14 @@ class RTMediaBPComponent extends BP_Component {
 			);
 
 			if ( is_rtmedia_album_enable() ) {
+
+				$user_album_count = isset( $profile_counts['total']['album'] ) ? $profile_counts['total']['album'] : 0;
+				$other_album_count = $rtmedia->model->get_other_album_count ( bp_displayed_user_id (), "profile" );
+				$user_album_count += $other_album_count;
+
 				$album_label = __( defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'buddypress-media' );
 				$sub_nav[]   = array(
-					'name'            => $album_label,
+					'name'            => $album_label . '<span>' . $user_album_count . '</span>',
 					'slug'            => constant( 'RTMEDIA_ALBUM_SLUG' ),
 					'parent_url'      => $media_page_link,
 					'parent_slug'     => $slug,
@@ -149,15 +156,17 @@ class RTMediaBPComponent extends BP_Component {
 
 			foreach ( $rtmedia->allowed_types as $type ) {
 
-				if( ! isset( $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] ) )
+				if ( ! isset( $rtmedia->options[ 'allowedTypes_' . $type['name'] . '_enabled' ] ) ) {
 					continue;
-				if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
+				}
+				if ( ! $rtmedia->options[ 'allowedTypes_' . $type['name'] . '_enabled' ] ) {
 					continue;
+				}
 				$name       = strtoupper( $type['name'] );
 				$type_label = __( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], 'buddypress-media' );
 
 				$sub_nav[] = array(
-					'name'            => $type_label,
+					'name'            => $type_label . '<span>' . ( isset ( $profile_counts['total'][ $type['name'] ] ) ? $profile_counts['total'][ $type['name'] ] : 0 ) . '</span>',
 					'slug'            => constant( 'RTMEDIA_' . $name . '_SLUG' ),
 					'parent_url'      => $media_page_link,
 					'parent_slug'     => $slug,
@@ -327,8 +336,8 @@ class RTMediaBPComponent extends BP_Component {
 			if ( ! empty( $bp->current_action ) ) {
 				$query_param['id'] = $bp->current_action;
 			}
-		//} elseif ( $this->is_album_gallery_screen ) {
-		//	$query_param['media_type'] = 'album';
+			//} elseif ( $this->is_album_gallery_screen ) {
+			//	$query_param['media_type'] = 'album';
 		} else {
 			if ( ! empty( $bp->current_action ) && $bp->current_action != 'all' ) {
 				$query_param['media_type'] = $bp->current_action;
@@ -342,7 +351,10 @@ class RTMediaBPComponent extends BP_Component {
 
 	function init() {
 		add_filter( 'rtmedia_query_filter', array( $this, 'remove_page_no_from_query' ), 10, 1 );
-		add_filter( 'rtmedia_action_query_in_populate_media', array( $this, 'add_current_page_in_fetch_media' ), 10, 2 );
+		add_filter( 'rtmedia_action_query_in_populate_media', array(
+			$this,
+			'add_current_page_in_fetch_media'
+		), 10, 2 );
 
 		// Filter BP settings admin nav
 		add_filter( 'bp_settings_admin_nav', array( $this, 'setup_settings_privacy_nav' ), 3 );
@@ -350,15 +362,15 @@ class RTMediaBPComponent extends BP_Component {
 
 	function setup_settings_privacy_nav( $wp_admin_nav ) {
 
-		if( is_rtmedia_privacy_user_overide() ) {
+		if ( is_rtmedia_privacy_user_overide() ) {
 			$settings_link = trailingslashit( bp_loggedin_user_domain() . bp_get_settings_slug() );
 
 			// Add "Privacy" subnav item into BP "Settings" admin nav
 			$wp_admin_nav[] = array(
 				'parent' => 'my-account-' . buddypress()->settings->id,
-				'id' => 'my-account-' . buddypress()->settings->id . '-privacy',
-				'title' => _x( 'Privacy', 'My Account Privacy sub nav', 'buddypress-media' ),
-				'href' => trailingslashit( $settings_link . 'privacy' )
+				'id'     => 'my-account-' . buddypress()->settings->id . '-privacy',
+				'title'  => _x( 'Privacy', 'My Account Privacy sub nav', 'buddypress-media' ),
+				'href'   => trailingslashit( $settings_link . 'privacy' )
 			);
 		}
 
