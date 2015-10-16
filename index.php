@@ -68,7 +68,7 @@ if ( ! defined( 'RTMEDIA_TEXT_DOMAIN' ) ) {
 	 * Textdomain for rtMedia
 	 *
 	 */
-	define( 'RTMEDIA_TEXT_DOMAIN', 'rtmedia' );
+	define( 'RTMEDIA_TEXT_DOMAIN', 'buddypress-media' );
 }
 
 /**

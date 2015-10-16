@@ -41,7 +41,7 @@ class RTMediaBPComponent extends BP_Component {
 			'root_slug'             => isset(
 				$bp->pages->{$this->id}->slug ) ?
 				$bp->pages->{$this->id}->slug : RTMEDIA_MEDIA_SLUG,
-			'search_string'         => __( 'Search Media...', RTMEDIA_TEXT_DOMAIN ),
+			'search_string'         => __( 'Search Media...', 'buddypress-media' ),
 			'notification_callback' => 'rtmedia_bp_notifications_callback'
 		);
 		parent::setup_globals( $globals );
@@ -127,7 +127,7 @@ class RTMediaBPComponent extends BP_Component {
 			$pos_index = 0;
 
 			$sub_nav[] = array(
-				'name'            => __( 'All', RTMEDIA_TEXT_DOMAIN ),
+				'name'            => __( 'All', 'buddypress-media' ),
 				'slug'            => 'all',
 				'parent_url'      => $media_page_link,
 				'parent_slug'     => $slug,
@@ -136,7 +136,7 @@ class RTMediaBPComponent extends BP_Component {
 			);
 
 			if ( is_rtmedia_album_enable() ) {
-				$album_label = __( defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', RTMEDIA_TEXT_DOMAIN );
+				$album_label = __( defined( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) ? constant( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'buddypress-media' );
 				$sub_nav[]   = array(
 					'name'            => $album_label,
 					'slug'            => constant( 'RTMEDIA_ALBUM_SLUG' ),
@@ -154,7 +154,7 @@ class RTMediaBPComponent extends BP_Component {
 				if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
 					continue;
 				$name       = strtoupper( $type['name'] );
-				$type_label = __( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], RTMEDIA_TEXT_DOMAIN );
+				$type_label = __( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], 'buddypress-media' );
 
 				$sub_nav[] = array(
 					'name'            => $type_label,

@@ -91,7 +91,7 @@ function get_rtmedia_gallery_title() {
 		}
 	}
 	if( isset( $rtmedia_query ) && $rtmedia_query->is_single_edit() ){
-		$title = __( 'Edit Media', 'rtmedia' );
+		$title = __( 'Edit Media', 'buddypress-media' );
 	}
 	$title = apply_filters( 'rtmedia_gallery_title', $title );
 
