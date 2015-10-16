@@ -343,6 +343,26 @@ class RTMediaBPComponent extends BP_Component {
 	function init() {
 		add_filter( 'rtmedia_query_filter', array( $this, 'remove_page_no_from_query' ), 10, 1 );
 		add_filter( 'rtmedia_action_query_in_populate_media', array( $this, 'add_current_page_in_fetch_media' ), 10, 2 );
+
+		// Filter BP settings admin nav
+		add_filter( 'bp_settings_admin_nav', array( $this, 'setup_settings_privacy_nav' ), 3 );
+	}
+
+	function setup_settings_privacy_nav( $wp_admin_nav ) {
+
+		if( is_rtmedia_privacy_user_overide() ) {
+			$settings_link = trailingslashit( bp_loggedin_user_domain() . bp_get_settings_slug() );
+
+			// Add "Privacy" subnav item into BP "Settings" admin nav
+			$wp_admin_nav[] = array(
+				'parent' => 'my-account-' . buddypress()->settings->id,
+				'id' => 'my-account-' . buddypress()->settings->id . '-privacy',
+				'title' => _x( 'Privacy', 'My Account Privacy sub nav', 'buddypress-media' ),
+				'href' => trailingslashit( $settings_link . 'privacy' )
+			);
+		}
+
+		return $wp_admin_nav;
 	}
 
 	function handle_media_actions() {
