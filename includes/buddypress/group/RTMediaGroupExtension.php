@@ -21,7 +21,7 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 			parent::init( $args );
 		}
 
-		function display( $group_id = null ){
+		function display( $group_id = null ) {
 			?>
 			<div class="item-list-tabs no-ajax" id="subnav">
 				<ul>
@@ -40,83 +40,6 @@ if ( class_exists( 'BP_Group_Extension' ) ) :// Recommended, to prevent problems
 			do_action( 'rtm_bp_before_template' );
 			include( $rtmedia_template->set_template() );
 			do_action( 'rtm_bp_after_template' );
-		}
-
-		public function sub_nav () {
-			global $rtmedia, $rtmedia_query;
-			$nav = new RTMediaNav();
-			global $bp;
-			$counts = $nav->actual_counts ( $bp->groups->current_group->id, "group" );
-
-			$default = false;
-			$link = get_rtmedia_group_link ( bp_get_group_id () );
-			$model = new RTMediaModel();
-			$other_count = $model->get_other_album_count ( bp_get_group_id (), "group" );
-
-			$all = '';
-			if ( ! isset ( $rtmedia_query->action_query->media_type )) {
-				$all = 'class="current selected"';
-			}
-			echo apply_filters ( 'rtmedia_sub_nav_all', '<li id="rtmedia-nav-item-all-li" ' . $all . '><a id="rtmedia-nav-item-all" href="' . trailingslashit ( $link ) . RTMEDIA_MEDIA_SLUG . '/">' . __ ( "All", 'buddypress-media' ) . '<span>' . ((isset ( $counts[ 'total' ][ 'all' ] )) ? $counts[ 'total' ][ 'all' ] : 0 ) . '</span>' . '</a></li>' );
-
-			if ( ! isset ( $rtmedia_query->action_query->action ) || empty ( $rtmedia_query->action_query->action ) ) {
-				$default = true;
-			}
-			//print_r($rtmedia_query->action_query);
-
-			$global_album = '';
-			$albums = '';
-			if ( isset ( $rtmedia_query->action_query->media_type ) && $rtmedia_query->action_query->media_type == 'album' ) {
-				$albums = 'class="current selected"';
-			}
-
-			//$other_count = 0;
-			if ( is_rtmedia_album_enable () ) {
-
-				if ( ! isset ( $counts[ 'total' ][ "album" ] ) ) {
-					$counts[ 'total' ][ "album" ] = 0;
-				}
-
-				$counts[ 'total' ][ "album" ] = $counts[ 'total' ][ "album" ] + $other_count;
-				$album_label = __( defined('RTMEDIA_ALBUM_PLURAL_LABEL') ? constant ( 'RTMEDIA_ALBUM_PLURAL_LABEL' ) : 'Albums', 'buddypress-media' );
-				echo apply_filters ( 'rtmedia_sub_nav_albums', '<li id="rtmedia-nav-item-albums-li" ' . $albums . '><a id="rtmedia-nav-item-albums" href="' . trailingslashit ( $link ) . RTMEDIA_MEDIA_SLUG . '/album/">' . $album_label . '<span>' . ((isset ( $counts[ 'total' ][ "album" ] )) ? $counts[ 'total' ][ "album" ] : 0 ) . '</span>' . '</a></li>' );
-			}
-
-			foreach ( $rtmedia->allowed_types as $type ) {
-				//print_r($type);
-				if( ! isset( $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] ) )
-					continue;
-				if ( ! $rtmedia->options[ 'allowedTypes_' . $type[ 'name' ] . '_enabled' ] )
-					continue;
-
-				$selected = '';
-
-				if ( isset ( $rtmedia_query->action_query->media_type ) && $type[ 'name' ] == $rtmedia_query->action_query->media_type ) {
-					$selected = ' class="current selected"';
-				} else {
-					$selected = '';
-				}
-
-				$context = isset ( $rtmedia_query->query[ 'context' ] ) ? $rtmedia_query->query[ 'context' ] : 'default';
-				$context_id = isset ( $rtmedia_query->query[ 'context_id' ] ) ? $rtmedia_query->query[ 'context_id' ] : 0;
-				$name = strtoupper ( $type[ 'name' ] );
-				$is_group = true;
-				$profile = $context_id;
-
-
-				$profile_link = trailingslashit ( get_rtmedia_group_link ( $profile ) );
-
-				$type_label = __( defined('RTMEDIA_' . $name . '_PLURAL_LABEL') ? constant ( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type[ 'plural_label' ], 'buddypress-media' );
-				echo apply_filters ( 'rtmedia_sub_nav_' . $type[ 'name' ], '<li id="rtmedia-nav-item-' . $type[ 'name' ]
-				                                                           . '-' . $context . '-' . $context_id . '-li" ' . $selected
-				                                                           . '><a id="rtmedia-nav-item-' . $type[ 'name' ] . '" href="'
-				                                                           . $profile_link . RTMEDIA_MEDIA_SLUG . '/'
-				                                                           . constant ( 'RTMEDIA_' . $name . '_SLUG' ) . '/' . '">'
-				                                                           . $type_label . '<span>' . ((isset ( $counts[ 'total' ][ $type[ 'name' ] ] )) ? $counts[ 'total' ][ $type[ 'name' ] ] : 0) . '</span>' . '</a></li>', $type[ 'name' ]
-				);
-			}
-
-			do_action("add_extra_sub_nav");
 		}
 
 		function create_screen( $group_id = null ) {
