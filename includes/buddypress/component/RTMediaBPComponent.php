@@ -75,8 +75,9 @@ class RTMediaBPComponent extends BP_Component {
 		$this->is_custom_gallery_screen = false;
 
 		//todo filter "is_media_gallery_screen", "is_album_gallery_screen" and "is_single_media_screen" and "is_custom_gallery_screen"
-
-		if ( $bp->current_component == $this->id ) {
+		if ( $bp->current_component == $this->id    // profile
+			|| ( bp_is_group() && $bp->current_action == $this->id )    // group
+		) {
 			$this->setup_current_media_page_no();
 			$this->init_interaction();
 			$this->init_media_query();
@@ -101,25 +102,34 @@ class RTMediaBPComponent extends BP_Component {
 //		echo '</pre>';
 
 		if ( $bp->current_component ) {
-			// Determine user to use
-			if ( bp_displayed_user_domain() ) {
-				$user_domain = bp_displayed_user_domain();
-			} elseif ( bp_loggedin_user_domain() ) {
-				$user_domain = bp_loggedin_user_domain();
+
+			if( bp_is_group() ){
+				// group
+				$domain = get_rtmedia_group_link( bp_get_current_group_id() );
 			} else {
-				return;
+				// profile
+				if ( bp_displayed_user_domain() ) {
+					$domain = bp_displayed_user_domain();
+				} elseif ( bp_loggedin_user_domain() ) {
+					$domain = bp_loggedin_user_domain();
+				} else {
+					return;
+				}
 			}
 
-			$slug            = apply_filters( 'rtmedia_media_tab_slug', RTMEDIA_MEDIA_SLUG );
-			$media_page_link = trailingslashit( $user_domain . $slug );
-			$nav_count       = new RTMediaNav();
-			$profile_counts  = $nav_count->actual_counts( $bp->displayed_user->id );
+			// Determine user to use
+
+
+			$slug = apply_filters( 'rtmedia_media_tab_slug', RTMEDIA_MEDIA_SLUG );
+			$media_page_link = trailingslashit( $domain . $slug );
+			$nav = new RTMediaNav();
+			$counts  = $nav->actual_counts( $bp->displayed_user->id );
 
 			global $rtmedia;
 
 			// set up nav
 			$main_nav = array(
-				'name'                => RTMEDIA_MEDIA_LABEL . '<span>' . ( isset( $profile_counts['total']['all'] ) ? $profile_counts['total']['all'] : 0 ) . '</span>',
+				'name'                => RTMEDIA_MEDIA_LABEL . '<span>' . ( isset( $counts['total']['all'] ) ? $counts['total']['all'] : 0 ) . '</span>',
 				'slug'                => $slug,
 				'position'            => apply_filters( 'rtmedia_media_tab_position', 99 ),
 				'screen_function'     => array( $this, 'media_gallery_screen' ),
@@ -129,7 +139,7 @@ class RTMediaBPComponent extends BP_Component {
 			$pos_index = 0;
 
 			$sub_nav[] = array(
-				'name'            => __( 'All', 'buddypress-media' ) . '<span>' . ( isset( $profile_counts['total']['all'] ) ? $profile_counts['total']['all'] : 0 ) . '</span>',
+				'name'            => __( 'All', 'buddypress-media' ) . '<span>' . ( isset( $counts['total']['all'] ) ? $counts['total']['all'] : 0 ) . '</span>',
 				'slug'            => 'all',
 				'parent_url'      => $media_page_link,
 				'parent_slug'     => $slug,
@@ -139,7 +149,7 @@ class RTMediaBPComponent extends BP_Component {
 
 			if ( is_rtmedia_album_enable() ) {
 
-				$user_album_count = isset( $profile_counts['total']['album'] ) ? $profile_counts['total']['album'] : 0;
+				$user_album_count = isset( $counts['total']['album'] ) ? $counts['total']['album'] : 0;
 				$other_album_count = $rtmedia->model->get_other_album_count ( bp_displayed_user_id (), "profile" );
 				$user_album_count += $other_album_count;
 
@@ -166,7 +176,7 @@ class RTMediaBPComponent extends BP_Component {
 				$type_label = __( defined( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) ? constant( 'RTMEDIA_' . $name . '_PLURAL_LABEL' ) : $type['plural_label'], 'buddypress-media' );
 
 				$sub_nav[] = array(
-					'name'            => $type_label . '<span>' . ( isset ( $profile_counts['total'][ $type['name'] ] ) ? $profile_counts['total'][ $type['name'] ] : 0 ) . '</span>',
+					'name'            => $type_label . '<span>' . ( isset ( $counts['total'][ $type['name'] ] ) ? $counts['total'][ $type['name'] ] : 0 ) . '</span>',
 					'slug'            => constant( 'RTMEDIA_' . $name . '_SLUG' ),
 					'parent_url'      => $media_page_link,
 					'parent_slug'     => $slug,
@@ -307,11 +317,16 @@ class RTMediaBPComponent extends BP_Component {
 	function init_interaction() {
 		global $rtmedia_interaction, $bp;
 
-		if ( ! ( $bp->current_action == 'all' ) ) {
-			$params = array_merge( (array) $bp->current_action, $bp->action_variables );
-		} else {
+		if( bp_is_group() ){
 			$params = $bp->action_variables;
+		} else {
+			if ( ! ( $bp->current_action == 'all' ) ) {
+				$params = array_merge( (array) $bp->current_action, $bp->action_variables );
+			} else {
+				$params = $bp->action_variables;
+			}
 		}
+
 		if ( ! $rtmedia_interaction ) {
 			$rtmedia_interaction = new RTMediaInteraction();
 		}
@@ -327,7 +342,10 @@ class RTMediaBPComponent extends BP_Component {
 
 		$query_param = array();
 
-		if ( bp_is_user() ) {
+		if ( bp_is_group() ) {
+			$query_param['context']    = 'group';
+			$query_param['context_id'] = bp_get_current_group_id();
+		} else {
 			$query_param['context']    = 'profile';
 			$query_param['context_id'] = bp_displayed_user_id();
 		}
@@ -339,8 +357,15 @@ class RTMediaBPComponent extends BP_Component {
 			//} elseif ( $this->is_album_gallery_screen ) {
 			//	$query_param['media_type'] = 'album';
 		} else {
-			if ( ! empty( $bp->current_action ) && $bp->current_action != 'all' ) {
-				$query_param['media_type'] = $bp->current_action;
+			if( bp_is_group() ){
+				if ( ! empty( $bp->action_variables ) ) {
+					$query_param['media_type'] = $bp->action_variables[0];
+				}
+
+			} else {
+				if ( ! empty( $bp->current_action ) && $bp->current_action != 'all' ) {
+					$query_param['media_type'] = $bp->current_action;
+				}
 			}
 		}
 
@@ -401,7 +426,13 @@ class RTMediaBPComponent extends BP_Component {
 	function is_single_media() {
 		global $bp;
 
-		return apply_filters( 'rtm_bp_is_single_media', is_numeric( $bp->current_action ) );
+		if( bp_is_group() ){
+			$is_single = ! empty( $bp->action_variables ) && is_numeric( $bp->action_variables[0] );
+		} else {
+			$is_single = is_numeric( $bp->current_action );
+		}
+
+		return apply_filters( 'rtm_bp_is_single_media', $is_single );
 	}
 
 	function add_current_page_in_fetch_media( $action_query, $media_for_total_count ) {
@@ -425,11 +456,21 @@ class RTMediaBPComponent extends BP_Component {
 
 	function setup_current_media_page_no() {
 		global $bp;
-		if ( $bp->current_component == $this->id && ! empty( $bp->action_variables ) && is_array( $bp->action_variables ) ) {
-			if ( $bp->current_action == 'pg' ) {
-				$this->current_media_page = $bp->action_variables[0];
-			} elseif ( $bp->action_variables[0] == 'pg' ) {
+
+		if ( ( bp_is_group() && $bp->current_action == $this->id )
+		     && ! empty( $bp->action_variables ) && is_array( $bp->action_variables ) ) {   // group
+			if ( $bp->action_variables[0] == 'pg' ) {
 				$this->current_media_page = $bp->action_variables[1];
+			} elseif ( $bp->action_variables[1] == 'pg' ) {
+				$this->current_media_page = $bp->action_variables[2];
+			}
+		} else {
+			if ( $bp->current_component == $this->id && ! empty( $bp->action_variables ) && is_array( $bp->action_variables ) ) {
+				if ( $bp->current_action == 'pg' ) {
+					$this->current_media_page = $bp->action_variables[0];
+				} elseif ( $bp->action_variables[0] == 'pg' ) {
+					$this->current_media_page = $bp->action_variables[1];
+				}
 			}
 		}
 	}
