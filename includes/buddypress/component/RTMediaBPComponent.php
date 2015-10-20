@@ -358,7 +358,10 @@ class RTMediaBPComponent extends BP_Component {
 			//	$query_param['media_type'] = 'album';
 		} else {
 			if( bp_is_group() ){
-				if ( ! empty( $bp->action_variables ) ) {
+				if ( ! empty( $bp->action_variables )
+				     && $bp->action_variables[0] != 'pg'    // in case of group media next page
+				                                            // todo need to find a better way for such fixes
+				) {
 					$query_param['media_type'] = $bp->action_variables[0];
 				}
 
