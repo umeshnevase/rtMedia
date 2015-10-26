@@ -123,7 +123,12 @@ class RTMediaBPComponent extends BP_Component {
 			$slug = apply_filters( 'rtmedia_media_tab_slug', RTMEDIA_MEDIA_SLUG );
 			$media_page_link = trailingslashit( $domain . $slug );
 			$nav = new RTMediaNav();
-			$counts  = $nav->actual_counts( $bp->displayed_user->id );
+			if( bp_is_group() ){
+				$counts  = $nav->actual_counts( bp_get_current_group_id(), 'group' );
+			} else {
+				$counts  = $nav->actual_counts( $bp->displayed_user->id );
+			}
+
 
 			global $rtmedia;
 
