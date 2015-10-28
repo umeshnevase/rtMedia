@@ -1006,6 +1006,17 @@ class RTMediaFormHandler {
 				),
 				'group' => 10,
 			),
+                        'rtmedia-enable-notification' => array(
+				'title' => __( 'Enable media notification', 'rtmedia' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args' => array(
+					'key' => 'buddypress_enableNotification',
+					'value' => $options[ 'buddypress_enableNotification' ],
+					'desc' => __( 'This will enable notifications to media authors for media likes and comments.', 'rtmedia' ),
+					
+				),
+				'group' => 10,
+			),
 			'general_enableAlbums' => array(
 				'title' => __( 'Organize media into albums', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
