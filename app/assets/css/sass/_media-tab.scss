@@ -209,6 +209,13 @@ a.rtmedia-upload-media-link {
 	}
 }
 
+.rtmedia-single-container {
+	button.rtmedia-like {
+		background-color: transparent;
+		color: inherit;
+	}
+}
+
 .buddypress{
     #rtm-single-media-nav-personal-li {
         display: none;
