@@ -274,27 +274,29 @@ class RTMediaTemplate {
             if ( isset( $_POST[ 'rtmedia-filepath-old' ] ) ) {
                 $is_valid_url = preg_match( "/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i", $_POST[ 'rtmedia-filepath-old' ] );
                 
-                if ( $is_valid_url ) {
+                if ( $is_valid_url && bp_is_active( 'activity' ) ) {
                     $thumbnailinfo = wp_get_attachment_image_src( $rtmedia_query->media[ 0 ]->media_id, 'rt_media_activity_image' );
                     $activity_id = rtmedia_activity_id( $rtmedia_query->media[ 0 ]->id );
 
                     if ( $rtmedia_query->media[ 0 ]->media_id && !empty( $activity_id ) ) {
-                        global $wpdb;
-                        
-                        $related_media_data = $media->model->get( array( 'activity_id' => $activity_id ) );
-	                    $related_media = array();
-	                    foreach( $related_media_data as $activity_media ){
-							$related_media[] = $activity_media->id;
+                        global $wpdb, $bp;
+
+	                    if( !empty( $bp->activity ) ){
+		                    $related_media_data = $media->model->get( array( 'activity_id' => $activity_id ) );
+		                    $related_media = array();
+		                    foreach( $related_media_data as $activity_media ){
+			                    $related_media[] = $activity_media->id;
+		                    }
+		                    $activity_text = bp_activity_get_meta( $activity_id, 'bp_activity_text' );
+
+		                    $activity = new RTMediaActivity ( $related_media, 0, $activity_text );
+
+		                    $activity_content_new = $activity->create_activity_html();
+		                    // Replacing the filename with new effected filename
+		                    $activity_content = str_replace( $_POST[ 'rtmedia-filepath-old' ], $thumbnailinfo[ 0 ], $activity_content_new );
+
+		                    $wpdb->update( $bp->activity->table_name, array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
 	                    }
-	                    $activity_text = bp_activity_get_meta( $activity_id, 'bp_activity_text' );
-
-                        $activity = new RTMediaActivity ( $related_media, 0, $activity_text );
-
-                        $activity_content_new = $activity->create_activity_html();
-                        // Replacing the filename with new effected filename
-                        $activity_content = str_replace( $_POST[ 'rtmedia-filepath-old' ], $thumbnailinfo[ 0 ], $activity_content_new );
-                        
-                        $wpdb->update( $wpdb->prefix . 'bp_activity', array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
                     }
                 }
             }

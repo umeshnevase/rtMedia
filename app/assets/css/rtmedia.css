@@ -2400,6 +2400,11 @@ a.rtmedia-upload-media-link {
   color: #FFFFFF;
 }
 
+.rtmedia-single-container button.rtmedia-like {
+  background-color: transparent;
+  color: inherit;
+}
+
 #buddypress .mejs-controls button {
   padding: 4px 8px;
   border: none;
@@ -2426,6 +2431,11 @@ a.rtmedia-upload-media-link {
 
 .mejs-container .mejs-controls .mejs-time {
   padding: 10px 3px 0;
+  content: '';
+}
+
+.rtmedia-activity-container .mejs-playpause-button.mejs-play button:before, .rtmedia-activity-container .mejs-playpause-button.mejs-pause button:before, .rtmedia-activity-container .mejs-volume-button.mejs-mute button:before, .rtmedia-activity-container .mejs-fullscreen-button button:before, .rtmedia-media .mejs-playpause-button.mejs-play button:before, .rtmedia-media .mejs-playpause-button.mejs-pause button:before, .rtmedia-media .mejs-volume-button.mejs-mute button:before, .rtmedia-media .mejs-fullscreen-button button:before {
+  content: '';
 }
 
 @media only screen and (min-width: 1025px) {
