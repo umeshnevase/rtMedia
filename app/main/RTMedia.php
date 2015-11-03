@@ -99,8 +99,6 @@ class RTMedia {
 		add_action( 'plugins_loaded', array( $this, 'admin_init' ) );
 		add_action( 'plugins_loaded', array( $this, 'load_translation' ), 10 );
 		add_action( 'plugins_loaded', array( $this, 'init' ), 20 );
-		add_action( 'wp_enqueue_scripts', array( 'RTMediaGalleryShortcode', 'register_scripts' ) );
-		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts_styles' ), 999 );
 		include( RTMEDIA_PATH . 'includes/template/rt-template-functions.php' );
 		add_filter( 'intermediate_image_sizes_advanced', array( $this, 'filter_image_sizes_details' ) );
 		add_filter( 'intermediate_image_sizes', array( $this, 'filter_image_sizes' ) );
@@ -717,6 +715,7 @@ class RTMedia {
             'LoginPopup' => false,
 			'CommentNotification' => false,
 			'LikeNotification' => false,
+			'scripts' => true,
 		);
 		global $rtmedia_nav;
 
@@ -889,174 +888,6 @@ class RTMedia {
 		global $rtmedia_error;
 		$rtmedia_error = true;
 		echo "<div class='error'><p><strong>rtMedia</strong>" . __( ": Can't Create Database table. Please check create table permission.", 'buddypress-media' ) . "</p></div>";
-	}
-
-	function enqueue_scripts_styles() {
-		global $rtmedia;
-		if ( wp_script_is( 'wp-mediaelement', 'registered' ) ) {
-			wp_enqueue_style( 'wp-mediaelement' );
-			wp_enqueue_script( 'wp-mediaelement' );
-		} else {
-			wp_enqueue_script( 'wp-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
-			wp_enqueue_style( 'wp-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer.min.css', '', RTMEDIA_VERSION );
-			wp_enqueue_script( 'wp-mediaelement-start', RTMEDIA_URL . 'lib/media-element/wp-mediaelement.js', 'wp-mediaelement', RTMEDIA_VERSION, true );
-		}
-
-
-		// Dashicons: Needs if not loaded by WP
-		wp_enqueue_style( 'dashicons' );
-
-		// Dont enqueue rtmedia.min.css if default styles is checked false in rtmedia settings
-		$suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
-
-		if ( ! ( isset( $rtmedia->options ) && isset( $rtmedia->options[ 'styles_enabled' ] ) && $rtmedia->options[ 'styles_enabled' ] == 0) ) {
-			wp_enqueue_style( 'rtmedia-main', RTMEDIA_URL . 'app/assets/css/rtmedia' . $suffix . '.css', '', RTMEDIA_VERSION );
-		}
-
-		if( $suffix === '' ) {
-			wp_enqueue_script( 'rtmedia-magnific-popup', RTMEDIA_URL . 'app/assets/js/vendors/magnific-popup.js', array( 'jquery', 'wp-mediaelement' ), RTMEDIA_VERSION );
-			wp_enqueue_script( 'rtmedia-admin-tabs', RTMEDIA_URL . 'app/assets/admin/js/vendors/tabs.js', array( 'jquery', 'wp-mediaelement' ), RTMEDIA_VERSION );
-			wp_enqueue_script( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtMedia.js', array( 'jquery', 'wp-mediaelement' ), RTMEDIA_VERSION );
-		} else {
-			wp_enqueue_script( 'rtmedia-main', RTMEDIA_URL . 'app/assets/js/rtmedia.min.js', array( 'jquery', 'wp-mediaelement' ), RTMEDIA_VERSION );
-		}
-
-		wp_localize_script( 'rtmedia-main', 'rtmedia_ajax_url', admin_url( 'admin-ajax.php' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_media_slug', RTMEDIA_MEDIA_SLUG );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_lightbox_enabled', strval( $this->options[ "general_enableLightbox" ] ) );
-        
-        $direct_upload = ( isset( $this->options[ "general_direct_upload" ] ) ? $this->options[ "general_direct_upload" ] : '0' );
-        
-        wp_localize_script( 'rtmedia-main', 'rtmedia_direct_upload_enabled', $direct_upload );
-		//gallery reload after media upload, by default true
-		wp_localize_script( 'rtmedia-main', 'rtmedia_gallery_reload_on_upload', '1' );
-
-		//javascript messages
-		wp_localize_script( 'rtmedia-magnific', 'rtmedia_load_more', __( 'Loading media', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_activity_msg', __( 'Please enter some content to post.', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_comment_msg', __( 'Empty Comment is not allowed.', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_media_delete_confirmation', __( 'Are you sure you want to delete this media?', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_media_comment_delete_confirmation', __( 'Are you sure you want to delete this comment?', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_album_delete_confirmation', __( 'Are you sure you want to delete this Album?', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_drop_media_msg', __( 'Drop files here', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_album_created_msg', ' ' . __( 'album created successfully.', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_something_wrong_msg', __( 'Something went wrong. Please try again.', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_empty_album_name_msg', __( 'Enter an album name.', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_max_file_msg', __( 'Max file Size Limit : ', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_allowed_file_formats', __( 'Allowed File Formats', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_select_all_visible', __( 'Select All Visible', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_unselect_all_visible', __( 'Unselect All Visible', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_no_media_selected', __( 'Please select some media.', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_selected_media_delete_confirmation', __( 'Are you sure you want to delete the selected media?', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_selected_media_move_confirmation', __( 'Are you sure you want to move the selected media?', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_waiting_msg', __( 'Waiting', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_uploaded_msg', __( 'Uploaded', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_uploading_msg', __( 'Uploading', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_upload_failed_msg', __( 'Failed', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_close', __( 'Close', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_edit', __( 'Edit', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_delete', __( 'Delete', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_edit_media', __( 'Edit Media', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_remove_from_queue', __( 'Remove from queue', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_add_more_files_msg', __( 'Add more files', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_file_extension_error_msg', __( 'File not supported', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_more', __( 'more', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_less', __( 'less', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtmedia_delete_uploaded_media', __( 'This media is uploaded. Are you sure you want to delete this media?', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-main', 'rtm_wp_version', get_bloginfo( 'version' ) );
-		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_media', RTMEDIA_URL . "app/assets/admin/img/boxspinner.gif" );
-		$rtmedia_media_thumbs = array();
-		foreach ( $this->allowed_types as $key_type => $value_type ) {
-			$rtmedia_media_thumbs[ $key_type ] = $value_type[ 'thumbnail' ];
-		}
-		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_thumbs', $rtmedia_media_thumbs );
-		wp_localize_script( 'rtmedia-backbone', 'rtmedia_set_featured_image_msg', __( 'Featured media set successfully.', 'buddypress-media' ) );
-		wp_localize_script( 'rtmedia-backbone', 'rtmedia_unset_featured_image_msg', __( 'Featured media removed successfully.', 'buddypress-media' ) );
-
-//      We are not using it anymore and hence commenting
-//		global $rtmedia_query;
-//		if( class_exists('BuddyPress') ) {
-//			$rtmedia_user_domain  = trailingslashit ( bp_displayed_user_domain() . constant('RTMEDIA_MEDIA_SLUG') );
-//		} else {
-//			$rtmedia_user_domain = trailingslashit( trailingslashit( get_author_posts_url($rtmedia_query->query['context_id'] ) ). constant('RTMEDIA_MEDIA_SLUG') );
-//		}
-//		wp_localize_script ( 'rtmedia-backbone', 'rtmedia_user_domain', $rtmedia_user_domain );
-		// Enqueue touchswipe
-		wp_enqueue_script( 'rtmedia-touchswipe', RTMEDIA_URL . 'lib/touchswipe/jquery.touchSwipe.min.js', array( 'jquery' ), RTMEDIA_VERSION, true );
-
-		if ( isset( $rtmedia->options ) && isset( $rtmedia->options[ 'general_masonry_layout' ] ) && $rtmedia->options[ 'general_masonry_layout' ] == 1 ) {
-			if ( wp_script_is( "jquery-masonry", "registered" ) ) {
-				wp_enqueue_style( 'jquery-masonry' );
-				wp_enqueue_script( 'jquery-masonry' );
-				wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout', 'true' );
-			} else {
-				wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout', 'false' );
-			}
-		} else {
-			wp_localize_script( 'rtmedia-main', 'rtmedia_masonry_layout', 'false' );
-		}
-
-		if ( isset( $rtmedia->options[ 'general_display_media' ] ) ) {
-			wp_localize_script( 'rtmedia-backbone', 'rtmedia_load_more_or_pagination', ( string ) $rtmedia->options[ 'general_display_media' ] );
-		} else {
-			wp_localize_script( 'rtmedia-backbone', 'rtmedia_load_more_or_pagination', 'load_more' );
-		}
-
-		if ( isset( $rtmedia->options[ 'buddypress_enableOnActivity' ] ) ) {
-			wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp_enable_activity', ( string ) $rtmedia->options[ 'buddypress_enableOnActivity' ] );
-		} else {
-			wp_localize_script( 'rtmedia-backbone', 'rtmedia_bp_enable_activity', '0' );
-		}
-
-		wp_localize_script( 'rtmedia-backbone', 'rtmedia_upload_progress_error_message', __( "There are some uploads in progress. Do you want to cancel them?", 'buddypress-media' ) );
-
-		// localise media size config
-		$media_size_config = array(
-			'photo' => array(
-				'thumb' => array(
-					'width' => $rtmedia->options[ 'defaultSizes_photo_thumbnail_width' ],
-					'height' => $rtmedia->options[ 'defaultSizes_photo_thumbnail_height' ],
-					'crop' => $rtmedia->options[ 'defaultSizes_photo_thumbnail_crop' ],
-				),
-				'medium' => array(
-					'width' => $rtmedia->options[ 'defaultSizes_photo_medium_width' ],
-					'height' => $rtmedia->options[ 'defaultSizes_photo_medium_height' ],
-					'crop' => $rtmedia->options[ 'defaultSizes_photo_medium_crop' ],
-				),
-				'large' => array(
-					'width' => $rtmedia->options[ 'defaultSizes_photo_large_width' ],
-					'height' => $rtmedia->options[ 'defaultSizes_photo_large_height' ],
-					'crop' => $rtmedia->options[ 'defaultSizes_photo_large_crop' ],
-				),
-			),
-			'video' => array(
-				'activity_media' => array(
-					'width' => $rtmedia->options[ 'defaultSizes_video_activityPlayer_width' ],
-					'height' => $rtmedia->options[ 'defaultSizes_video_activityPlayer_height' ],
-				),
-				'single_media' => array(
-					'width' => $rtmedia->options[ 'defaultSizes_video_singlePlayer_width' ],
-					'height' => $rtmedia->options[ 'defaultSizes_video_singlePlayer_height' ],
-				),
-			),
-			'music' => array(
-				'activity_media' => array(
-					'width' => $rtmedia->options[ 'defaultSizes_music_activityPlayer_width' ],
-				),
-				'single_media' => array(
-					'width' => $rtmedia->options[ 'defaultSizes_music_singlePlayer_width' ],
-				),
-			),
-			'featured' => array(
-				'default' => array(
-					'width' => $rtmedia->options[ 'defaultSizes_featured_default_width' ],
-					'height' => $rtmedia->options[ 'defaultSizes_featured_default_height' ],
-					'crop' => $rtmedia->options[ 'defaultSizes_featured_default_crop' ],
-				)
-			),
-		);
-		wp_localize_script( 'rtmedia-main', 'rtmedia_media_size_config', $media_size_config );
-
 	}
 
 	function set_bp_bar() {

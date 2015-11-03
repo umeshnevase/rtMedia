@@ -24,7 +24,6 @@ class RTMediaGalleryShortcode {
 		add_shortcode( 'rtmedia_gallery', array( 'RTMediaGalleryShortcode', 'render' ) );
 		add_action( 'wp_ajax_rtmedia_get_template', array( &$this, 'ajax_rtmedia_get_template' ) );
 		add_action( 'wp_ajax_nopriv_rtmedia_get_template', array( &$this, 'ajax_rtmedia_get_template' ) );
-		//add_action('init', array($this, 'register_scripts'));
 		//add_action('wp_footer', array($this, 'print_script'));
 
 		add_action( 'init', array( $this, 'handle_load_more_media' ) );
