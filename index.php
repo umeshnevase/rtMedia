@@ -96,7 +96,6 @@ function rtmedia_autoloader( $class_name ) {
 		'app/main/routers/query/' . $class_name . '.php',
 		'app/main/controllers/upload/' . $class_name . '.php',
 		'app/main/controllers/upload/processors/' . $class_name . '.php',
-		'app/main/controllers/shortcodes/' . $class_name . '.php',
 		'app/main/controllers/media/' . $class_name . '.php',
 		'app/main/controllers/group/' . $class_name . '.php',
 		'app/main/controllers/privacy/' . $class_name . '.php',
@@ -115,6 +114,7 @@ function rtmedia_autoloader( $class_name ) {
 		'includes/buddypress/component/' . $class_name . '.php',
 		'includes/buddypress/group/' . $class_name . '.php',
 		'includes/template/' . $class_name . '.php',
+		'includes/shortcodes/' . $class_name . '.php',
 	);
 	foreach ( $rtlibpath as $path ) {
 		$path = RTMEDIA_PATH . $path;
