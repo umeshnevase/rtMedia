@@ -86,6 +86,13 @@ class RTMedia {
 	public $model;
 
 	/**
+	 * @var bool
+	 *
+	 * Holds whether BuddyPress is active or not
+	 */
+	public $is_bp_active = false;
+
+	/**
 	 * Constructs the class
 	 * Defines constants and excerpt lengths, initiates admin notices,
 	 * loads and initiates the plugin, loads translations.
@@ -660,6 +667,11 @@ class RTMedia {
 	 * @global BPMediaAdmin $bp_media_admin
 	 */
 	function init() {
+
+		// set whether BuddyPress is active or not
+		if( class_exists( 'BuddyPress' ) ){
+			$this->is_bp_active = true;
+		}
 		// set metatable in $wpdb
 		$this->set_rtmedia_meta_wpdbfix();
 

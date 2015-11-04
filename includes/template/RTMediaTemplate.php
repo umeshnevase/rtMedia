@@ -12,35 +12,7 @@ class RTMediaTemplate {
 
     public $media_args;
 
-    function __construct() {
-        global $rtmedia_query;
-        
-        if ( $rtmedia_query ) {
-            add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-            add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_image_editor_scripts' ) );
-        }
-    }
-
-    /**
-     * Enqueues required scripts on the page
-     */
-    function enqueue_scripts() {
-        wp_enqueue_script( 'rtmedia-backbone' );
-        
-        $is_album = is_rtmedia_album() ? true : false;
-        $is_edit_allowed = is_rtmedia_edit_allowed() ? true : false;
-        
-        wp_localize_script( 'rtmedia-backbone', 'is_album', array( $is_album ) );
-        wp_localize_script( 'rtmedia-backbone', 'is_edit_allowed', array( $is_edit_allowed ) );
-    }
-
-    function enqueue_image_editor_scripts() {
-        $suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
-        
-        wp_enqueue_script( 'wp-ajax-response' );
-        wp_enqueue_script( 'rtmedia-image-edit', admin_url( "js/image-edit$suffix.js" ), array( 'jquery', 'json2', 'imgareaselect' ), false, 1 );
-        wp_enqueue_style( 'rtmedia-image-area-select', includes_url( '/js/imgareaselect/imgareaselect.css' ) );
-    }
+    function __construct() {}
 
     /**
      * redirects to the template according to the page request

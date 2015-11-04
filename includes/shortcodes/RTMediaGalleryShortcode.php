@@ -26,15 +26,33 @@ class RTMediaGalleryShortcode {
 		add_action( 'wp_ajax_nopriv_rtmedia_get_template', array( &$this, 'ajax_rtmedia_get_template' ) );
 		//add_action('wp_footer', array($this, 'print_script'));
 
-		add_action( 'init', array( $this, 'handle_load_more_media' ) );
+		add_action( 'init', array( $this, 'handle_shortcode_load_more_req' ) );
 	}
 
-	function handle_load_more_media(){
-		if( isset( $_GET['rtmedia_shortcode'] ) && $_GET['rtmedia_shortcode']
-		    && isset( $_GET['json'] ) && $_GET['json'] ){
+	function handle_shortcode_load_more_req() {
+		global $rtmedia;
+		if ( $rtmedia->is_bp_active
+		     && isset( $_GET['rtmedia_shortcode'] ) && $_GET['rtmedia_shortcode']
+		     && isset( $_GET['json'] ) && $_GET['json']
+		) {
 			// this is gallery shortcode load more media request
 
+			// Set page no for media gallery load more
+			add_filter( 'rtmedia_action_query_in_populate_media', create_function( '$action_query, $media_for_total_count', '
+				if ( isset( $action_query->page ) && isset( $_GET["rtmedia_page"] ) ) {
+					$action_query->page = $_GET["rtmedia_page"];
+				}
+				return $action_query;
+			' ), 10, 2 );
 
+			global $rtmedia_query;
+			$query_param = $_GET;
+
+			$query_param   = apply_filters( "rtmedia_query_filter", $query_param );
+			$rtmedia_query = new RTMediaQuery( $query_param );
+
+			$rtmedia_template = new RTMediaTemplate();
+			$rtmedia_template->set_template();
 		}
 	}
 
@@ -48,84 +66,6 @@ class RTMediaGalleryShortcode {
 
 
 	static function register_scripts() {
-		if ( ! wp_script_is( 'plupload-all' ) ) {
-			wp_enqueue_script( 'plupload-all' );
-		}
-		wp_enqueue_script( 'rtmedia-backbone', RTMEDIA_URL . 'app/assets/js/rtMedia.backbone.js', array(
-			'plupload-all',
-			'backbone'
-		), RTMEDIA_VERSION, true );
-
-		if ( is_rtmedia_album_gallery() ) {
-			$template_url = esc_url( add_query_arg( array(
-				"action"   => 'rtmedia_get_template',
-				"template" => "album-gallery-item"
-			), admin_url( "admin-ajax.php" ) ), null, '' );
-		} else {
-			$template_url = esc_url( add_query_arg( array(
-				"action"   => 'rtmedia_get_template',
-				"template" => apply_filters( 'rtmedia_backbone_template_filter', "media-gallery-item" )
-			), admin_url( "admin-ajax.php" ) ), null, '' );
-		}
-		wp_localize_script( 'rtmedia-backbone', 'template_url', $template_url );
-		$url          = trailingslashit( $_SERVER["REQUEST_URI"] );
-		$rtmedia_slug = "/" . RTMEDIA_MEDIA_SLUG;
-		// check position of media slug from end of the URL
-		if ( strrpos( $url, $rtmedia_slug ) !== false ) {
-			// split the url upto the last occurance of media slug
-			$url_upload = substr( $url, 0, strrpos( $url, $rtmedia_slug ) );
-			$url        = trailingslashit( $url_upload ) . "upload/";
-		} else {
-			$url = trailingslashit( $url ) . "upload/";
-		}
-
-		$params = array(
-			'url'                 => $url,
-			'runtimes'            => 'html5,flash,html4',
-			'browse_button'       => 'rtMedia-upload-button',
-			'container'           => 'rtmedia-upload-container',
-			'drop_element'        => 'drag-drop-area',
-			'filters'             => apply_filters( 'rtmedia_plupload_files_filter', array(
-				array(
-					'title'      => "Media Files",
-					'extensions' => get_rtmedia_allowed_upload_type()
-				)
-			) ),
-			'max_file_size'       => ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M',
-			'multipart'           => true,
-			'urlstream_upload'    => true,
-			'flash_swf_url'       => includes_url( 'js/plupload/plupload.flash.swf' ),
-			'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
-			'file_data_name'      => 'rtmedia_file', // key passed to $_FILE.
-			'multi_selection'     => true,
-			'multipart_params'    => apply_filters( 'rtmedia-multi-params', array(
-				'redirect'             => 'no',
-				'action'               => 'wp_handle_upload',
-				'_wp_http_referer'     => $_SERVER['REQUEST_URI'],
-				'mode'                 => 'file_upload',
-				'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true )
-			) ),
-			'max_file_size_msg'   => apply_filters( "rtmedia_plupload_file_size_msg", min( array(
-				ini_get( 'upload_max_filesize' ),
-				ini_get( 'post_max_size' )
-			) ) )
-		);
-		if ( wp_is_mobile() ) {
-			$params['multi_selection'] = false;
-		}
-
-		$params = apply_filters( "rtmedia_modify_upload_params", $params );
-
-		global $rtmedia;
-		$rtmedia_extns = array();
-
-		foreach ( $rtmedia->allowed_types as $allowed_types_key => $allowed_types_value ) {
-			$rtmedia_extns[ $allowed_types_key ] = $allowed_types_value['extn'];
-		}
-
-		wp_localize_script( 'rtmedia-backbone', 'rtmedia_exteansions', $rtmedia_extns );
-		wp_localize_script( 'rtmedia-backbone', 'rtMedia_plupload_config', $params );
-		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_file', admin_url( "/images/loading.gif" ) );
 	}
 
 	/**

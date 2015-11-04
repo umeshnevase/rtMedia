@@ -14,6 +14,7 @@ class RTMediaScripts {
 		//todo register all the scripts and styles in this class
 		add_action( 'wp_enqueue_scripts', array( $this, 'register_uploader_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts_styles' ), 999 );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_image_editor_scripts' ) );
 	}
 
 	public function register_uploader_scripts() {
@@ -95,6 +96,26 @@ class RTMediaScripts {
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_exteansions', $rtmedia_extns );
 		wp_localize_script( 'rtmedia-backbone', 'rtMedia_plupload_config', $params );
 		wp_localize_script( 'rtmedia-backbone', 'rMedia_loading_file', admin_url( "/images/loading.gif" ) );
+
+		$is_album = is_rtmedia_album() ? true : false;
+		$is_edit_allowed = is_rtmedia_edit_allowed() ? true : false;
+
+		wp_localize_script( 'rtmedia-backbone', 'is_album', array( $is_album ) );
+		wp_localize_script( 'rtmedia-backbone', 'is_edit_allowed', array( $is_edit_allowed ) );
+	}
+
+	function enqueue_image_editor_scripts() {
+
+		global $rtmedia_query;
+
+		if ( ! $rtmedia_query ) {
+			return;
+		}
+		$suffix = ( function_exists( 'rtm_get_script_style_suffix' ) ) ? rtm_get_script_style_suffix() : '.min';
+
+		wp_enqueue_script( 'wp-ajax-response' );
+		wp_enqueue_script( 'rtmedia-image-edit', admin_url( "js/image-edit$suffix.js" ), array( 'jquery', 'json2', 'imgareaselect' ), false, 1 );
+		wp_enqueue_style( 'rtmedia-image-area-select', includes_url( '/js/imgareaselect/imgareaselect.css' ) );
 	}
 
 	function enqueue_scripts_styles() {

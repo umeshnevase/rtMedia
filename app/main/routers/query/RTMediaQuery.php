@@ -440,7 +440,7 @@ class RTMediaQuery {
 					unset ( $query_data[ $key ] );
 				}
 			}
-			$this->query = wp_parse_args( $query_data, $this->query );
+			$this->query = $query_data;
 		} else {
 			if ( isset( $this->is_gallery_shortcode ) && $this->is_gallery_shortcode === true ){
 				foreach ( $this->query as $key => $val ) {
