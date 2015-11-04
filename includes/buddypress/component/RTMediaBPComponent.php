@@ -78,7 +78,6 @@ class RTMediaBPComponent extends BP_Component {
 		if ( $bp->current_component == $this->id    // profile
 			|| ( bp_is_group() && $bp->current_action == $this->id )    // group
 		) {
-			$this->setup_current_media_page_no();
 			$this->init_interaction();
 			$this->init_media_query();
 			$this->init_templates();
@@ -384,10 +383,6 @@ class RTMediaBPComponent extends BP_Component {
 
 	function init() {
 		add_filter( 'rtmedia_query_filter', array( $this, 'remove_page_no_from_query' ), 10, 1 );
-		add_filter( 'rtmedia_action_query_in_populate_media', array(
-			$this,
-			'add_current_page_in_fetch_media'
-		), 10, 2 );
 
 		// Filter BP settings admin nav
 		add_filter( 'bp_settings_admin_nav', array( $this, 'setup_settings_privacy_nav' ), 3 );
@@ -443,15 +438,6 @@ class RTMediaBPComponent extends BP_Component {
 		return apply_filters( 'rtm_bp_is_single_media', $is_single );
 	}
 
-	function add_current_page_in_fetch_media( $action_query, $media_for_total_count ) {
-
-		if ( isset( $action_query->page ) ) {
-			$action_query->page = $this->current_media_page;
-		}
-
-		return $action_query;
-	}
-
 	function remove_page_no_from_query( $query_param ) {
 		global $bp;
 
@@ -461,28 +447,6 @@ class RTMediaBPComponent extends BP_Component {
 
 		return $query_param;
 	}
-
-	function setup_current_media_page_no() {
-		global $bp;
-
-		if ( ( bp_is_group() && $bp->current_action == $this->id )
-		     && ! empty( $bp->action_variables ) && is_array( $bp->action_variables ) ) {   // group
-			if ( $bp->action_variables[0] == 'pg' ) {
-				$this->current_media_page = $bp->action_variables[1];
-			} elseif ( $bp->action_variables[1] == 'pg' ) {
-				$this->current_media_page = $bp->action_variables[2];
-			}
-		} else {
-			if ( $bp->current_component == $this->id && ! empty( $bp->action_variables ) && is_array( $bp->action_variables ) ) {
-				if ( $bp->current_action == 'pg' ) {
-					$this->current_media_page = $bp->action_variables[0];
-				} elseif ( $bp->action_variables[0] == 'pg' ) {
-					$this->current_media_page = $bp->action_variables[1];
-				}
-			}
-		}
-	}
-
 }
 
 function rtmedia_bp_notifications_callback( $action, $media_id, $initiator_id, $total_items ) {
