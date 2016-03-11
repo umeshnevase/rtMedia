@@ -48,6 +48,17 @@
 	}
 }
 
+.rtmedia-list-item {
+	.rtmedia-album-media-count {
+		position: absolute;
+		top:0;
+		right:0;
+		background-color: black;
+		color: white;
+		padding: 0 5px;
+	}
+}
+
 // Uploader
 #rtmedia-uploader-form .rtm-plupload-list, #rtmedia_uploader_filelist {
 	list-style: none;

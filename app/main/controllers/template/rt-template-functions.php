@@ -2897,3 +2897,33 @@ function rtm_modify_document_title_parts( $title = array() ) {
 }
 
 add_filter( 'document_title_parts', 'rtm_modify_document_title_parts', 30, 1 );
+
+/**
+ * HTML markup for displaying Media Count of album in album list gallery
+ */
+function rtm_album_media_count() {
+	?>
+	<div class="rtmedia-album-media-count" title="<?php echo rtm_get_album_media_count( rtmedia_id() ) . ' ' . RTMEDIA_MEDIA_LABEL; ?>"><?php echo rtm_get_album_media_count( rtmedia_id() ); ?></div>
+	<?php
+}
+
+add_action( 'rtmedia_after_album_gallery_item', 'rtm_album_media_count' );
+
+/**
+ * @param $album_id
+ *
+ * @return array
+ */
+function rtm_get_album_media_count( $album_id ) {
+	global $rtmedia_query;
+
+	$args = array(
+		'album_id' => $album_id,
+		'context' => $rtmedia_query->query['context'],
+		'context_id' => $rtmedia_query->query['context_id']
+	);
+	$rtmedia_model = new RTMediaModel();
+	$count = $rtmedia_model->get( $args, false, false, 'media_id desc', true );
+
+	return $count;
+}
