@@ -90,6 +90,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				if ( is_multisite() ) {
 					add_action( 'network_admin_edit_rtmedia', array( $this, 'save_multisite_options' ) );
 				}
+
+				add_filter( 'posts_join', array( $this, 'filter_media_library_query_join' ), 10, 2 );
+				add_filter( 'posts_where', array( $this, 'filter_media_library_query_where' ), 10, 2 );
 			}
 
 			$this->rtmedia_settings = new RTMediaSettings();
@@ -2056,6 +2059,42 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				$removable_query_args[] = 'settings-saved';
 			}
 			return $removable_query_args;
+		}
+
+		public function filter_media_library_query_join( $join, $query ){
+			global $wpdb;
+
+			if( $this->is_admin_media_screen() ){
+				$media_model = new RTMediaModel();
+				$table_name = $media_model->table_name;
+				$join .= " LEFT JOIN {$table_name} ON ( {$wpdb->posts}.ID = {$table_name}.media_id )";
+				unset( $media_model );
+			}
+
+			return $join;
+		}
+
+		public function filter_media_library_query_where( $where, $query ){
+
+			if( $this->is_admin_media_screen() ){
+				$media_model = new RTMediaModel();
+				$table_name = $media_model->table_name;
+				$where .= " AND ( {$table_name}.media_id IS NULL )";
+				unset( $media_model );
+			}
+
+			return $where;
+		}
+
+		public function is_admin_media_screen(){
+			global $pagenow;
+
+			$return = false;
+			if( 'upload.php' == $pagenow ){
+				$return = true;
+			}
+
+			return $return;
 		}
 
 	}
