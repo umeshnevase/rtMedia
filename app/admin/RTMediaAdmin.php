@@ -940,12 +940,10 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				'settings_page',
 			) );
 
-			if ( ! is_rtmedia_vip_plugin() ) {
-				add_submenu_page( 'rtmedia-settings', esc_html__( 'Addons', 'buddypress-media' ), esc_html__( 'Addons', 'buddypress-media' ), 'manage_options', 'rtmedia-addons', array(
-					$this,
-					'addons_page',
-				) );
-			}
+			add_submenu_page( 'rtmedia-settings', esc_html__( 'Addons', 'buddypress-media' ), esc_html__( 'Addons', 'buddypress-media' ), 'manage_options', 'rtmedia-addons', array(
+				$this,
+				'addons_page',
+			) );
 
 			add_submenu_page( 'rtmedia-settings', esc_html__( 'Support', 'buddypress-media' ), esc_html__( 'Support', 'buddypress-media' ), 'manage_options', 'rtmedia-support', array(
 				$this,
@@ -1529,15 +1527,14 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					'name' => esc_html__( 'Settings', 'buddypress-media' ),
 					'slug' => 'rtmedia-settings',
 				),
-			);
-
-			if ( ! is_rtmedia_vip_plugin() ) {
-				$tabs[] = array(
+				array(
 					'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-addons' ), 'admin.php' ) ) ),
 					'name' => esc_html__( 'Addons', 'buddypress-media' ),
 					'slug' => 'rtmedia-addons',
-				);
+				),
+			);
 
+			if ( ! is_rtmedia_vip_plugin() ) {
 				$tabs[] = array(
 					'href' => get_admin_url( null, esc_url( add_query_arg( array( 'page' => 'rtmedia-themes' ), 'admin.php' ) ) ),
 					'name' => esc_html__( 'Themes', 'buddypress-media' ),

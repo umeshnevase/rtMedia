@@ -75,13 +75,16 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		public function get_addons() {
 			$tabs = array();
 			global $rtmedia_admin;
-			$tabs[] = array(
-				'title'    => esc_html__( 'Plugins', 'buddypress-media' ),
-				'name'     => esc_html__( 'Plugins', 'buddypress-media' ),
-				'href'     => '#rtm-plugins',
-				'icon'     => 'dashicons-admin-plugins',
-				'callback' => array( $this, 'plugins_content' ),
-			);
+
+			if ( ! is_rtmedia_vip_plugin() ) {
+				$tabs[] = array(
+					'title'    => esc_html__( 'Plugins', 'buddypress-media' ),
+					'name'     => esc_html__( 'Plugins', 'buddypress-media' ),
+					'href'     => '#rtm-plugins',
+					'icon'     => 'dashicons-admin-plugins',
+					'callback' => array( $this, 'plugins_content' ),
+				);
+			}
 
 			$tabs[] = array(
 				'title'    => esc_html__( 'Audio/Video  Encoding', 'buddypress-media' ),
