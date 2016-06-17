@@ -1568,7 +1568,7 @@ function rtmedia_uploader( $attr = '' ) {
 			}
 		}
 	} else {
-		echo "<div class='rtmedia-upload-not-allowed'>" . esc_html( apply_filters( 'rtmedia_upload_not_allowed_message', esc_html__( 'You are not allowed to upload/attach media.', 'buddypress-media' ), 'media_gallery' ) ) . '</div>';
+		echo "<div class='rtmedia-upload-not-allowed'>" . wp_kses( apply_filters( 'rtmedia_upload_not_allowed_message', esc_html__( 'You are not allowed to upload/attach media.', 'buddypress-media' ), 'media_gallery' ), RTMediaUpload::$wp_kses_allowed_tags ) . '</div>';
 	}
 }
 
@@ -2323,7 +2323,7 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 	$mediamodel = new RTMediaModel();
 	$actions    = $mediamodel->get( array( 'id' => rtmedia_id( $rtmedia_id ) ) );
 	$privacy    = '';
-	if ( ! empty( $actions[0]->privacy ) ) {
+	if ( intval( $actions[0]->privacy ) >= 0 ) {
 		$title = $icon = '';
 
 		switch ( $actions[0]->privacy ) {
