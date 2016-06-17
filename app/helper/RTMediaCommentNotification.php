@@ -111,8 +111,11 @@ class RTMediaCommentNotification extends RTMediaNotification {
 	 */
 	function remove_comment_notification( $comment_id ) {
 		$comment_notification_id = (int) get_comment_meta( $comment_id, 'comment_notification_id', true );
-		BP_Notifications_Notification::delete( array( 'id' => $comment_notification_id ) );
-		delete_comment_meta( $comment_id, 'comment_notification_id' );
+
+		if ( $comment_notification_id > 0 ) {
+			BP_Notifications_Notification::delete( array( 'id' => $comment_notification_id ) );
+			delete_comment_meta( $comment_id, 'comment_notification_id' );
+		}
 	}
 }
 

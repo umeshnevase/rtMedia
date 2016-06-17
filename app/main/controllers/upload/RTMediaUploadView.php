@@ -62,8 +62,16 @@ class RTMediaUploadView {
 		     || ( isset( $rtmedia_query->is_upload_shortcode ) && ! isset( $this->attributes['privacy'] ) )
 		) {
 			if ( ( isset( $rtmedia_query->query['context'] ) && 'group' === $rtmedia_query->query['context'] ) || ( function_exists( 'bp_is_groups_component' ) && bp_is_groups_component() ) ) {
-				// if the context is group, then set the media privacy to public
-				$privacy = "<input type='hidden' name='privacy' value='0'/>";
+				$group_status         = bp_get_group_status();
+				$privacy_levels_array = array(
+					'public'  => 0,
+					'private' => 20,
+					'hidden'  => 20
+				);
+				$privacy_levels_array = apply_filters( 'rtmedia_group_privacy_levels', $privacy_levels_array );
+				$privacy_val          = $privacy_levels_array[ $group_status ];
+
+				$up_privacy = $privacy = "<input type='hidden' name='privacy' value='" . $privacy_val . "' />";
 			} else {
 				$up_privacy = new RTMediaPrivacy( false );
 				$up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy' );
@@ -79,7 +87,7 @@ class RTMediaUploadView {
 				'class'   => array( 'rtm-upload-tab', 'active' ),
 				'content' => '<div class="rtm-upload-tab-content" data-id="rtm-upload-tab">'
 				             . apply_filters( 'rtmedia_uploader_before_select_files', '' )
-				             . '<div class="rtm-select-files"><input id="rtMedia-upload-button" value="' . esc_attr__( 'Select your files', 'buddypress-media' ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
+				             . '<div class="rtm-select-files"><input id="' . esc_attr( apply_filters( 'rtmedia_upload_button_id', 'rtMedia-upload-button' ) ) . '" value="' . esc_attr__( 'Select your files', 'buddypress-media' ) . '" type="button" class="rtmedia-upload-input rtmedia-file" />'
 				             . '<span class="rtm-seperator">' . esc_html__( 'or', 'buddypress-media' ) . '</span><span class="drag-drop-info">' . esc_html__( 'Drop your files here', 'buddypress-media' ) . '</span> <i class="rtm-file-size-limit rtmicon-info-circle rtmicon-fw"></i></div>'
 				             . apply_filters( 'rtmedia_uploader_after_select_files', '' )
 				             . '</div>',
@@ -107,7 +115,7 @@ class RTMediaUploadView {
 		}
 		global $rtmedia;
 		//Render UPLOAD button only if direct upload is disabled
-		$upload_button = ( ! ( isset( $rtmedia->options['general_direct_upload'] ) && 1 === intval( $rtmedia->options['general_direct_upload'] ) ) ? '<input type="button" class="start-media-upload" value="' . esc_attr__( 'Start upload', 'buddypress-media' ) . '"/>' : '' );
+		$upload_button = '<input type="button" class="start-media-upload" value="' . __( 'Start upload', 'buddypress-media' ) . '"/>';
 		$tabs          = array(
 			'file_upload' => array(
 				'default'  => array(
@@ -123,7 +131,8 @@ class RTMediaUploadView {
 						. apply_filters( 'rtmedia_uploader_after_start_upload_button', '' )
 						. '</div>'
 						. '<div class="clearfix">'
-						. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul></div>'
+						. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist"></ul>'
+						. '</div>'
 						. '</div>',
 				),
 				'activity' => array(
@@ -142,6 +151,7 @@ class RTMediaUploadView {
 						. $up_privacy
 						. '</div>'
 						. '</div>'
+						. apply_filters( 'rtmedia_uploader_after_activity_upload_button', "" )
 						. '<div class="rtmedia-plupload-notice">'
 						. '<ul class="plupload_filelist_content ui-sortable rtm-plupload-list clearfix" id="rtmedia_uploader_filelist">'
 						. '</ul>'

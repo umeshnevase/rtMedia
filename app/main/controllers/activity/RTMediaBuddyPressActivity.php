@@ -270,39 +270,20 @@ class RTMediaBuddyPressActivity {
 		}
 		if ( rtmedia_is_uploader_view_allowed( true, 'activity' ) ) {
 			$params = array(
-				'url'                 => $url,
-				'runtimes'            => 'html5,flash,html4',
-				'browse_button'       => 'rtmedia-add-media-button-post-update',
-				// browse button assigned to "Attach Files" Button.
-				'container'           => 'rtmedia-whts-new-upload-container',
-				'drop_element'        => 'whats-new-textarea',
-				// drag-drop area assigned to activity update textarea
-				'filters'             => apply_filters( 'rtmedia_plupload_files_filter', array(
-					array(
-						'title'      => esc_html__( 'Media Files', 'buddypress-media' ),
-						'extensions' => get_rtmedia_allowed_upload_type(),
-					),
-				) ),
-				'max_file_size'       => ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M',
-				'multipart'           => true,
-				'urlstream_upload'    => true,
-				'flash_swf_url'       => includes_url( 'js/plupload/plupload.flash.swf' ),
+				'url'             => $url,
+				'runtimes' => 'html5,flash,html4',
+				'browse_button' => apply_filters( 'rtmedia_upload_button_id', 'rtmedia-add-media-button-post-update' ), // browse button assigned to "Attach Files" Button.
+				'container'       => 'rtmedia-whts-new-upload-container',
+				'drop_element' => 'whats-new-textarea', // drag-drop area assigned to activity update textarea
+				'filters'         => apply_filters( 'rtmedia_plupload_files_filter', array( array( 'title' => __( 'Media Files', 'buddypress-media' ), 'extensions' => get_rtmedia_allowed_upload_type() ) ) ),
+				'max_file_size' => ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M',
+				'multipart' => true, 'urlstream_upload' => true,
+				'flash_swf_url' => includes_url( 'js/plupload/plupload.flash.swf' ),
 				'silverlight_xap_url' => includes_url( 'js/plupload/plupload.silverlight.xap' ),
-				'file_data_name'      => 'rtmedia_file',
-				// key passed to $_FILE.
-				'multi_selection'     => true,
-				'multipart_params'    => apply_filters( 'rtmedia-multi-params', array(
-					'redirect'             => 'no',
-					'rtmedia_update'       => 'true',
-					'action'               => 'wp_handle_upload',
-					'_wp_http_referer'     => $url_raw,
-					'mode'                 => 'file_upload',
-					'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true ),
-				) ),
-				'max_file_size_msg'   => apply_filters( 'rtmedia_plupload_file_size_msg', min( array(
-					ini_get( 'upload_max_filesize' ),
-					ini_get( 'post_max_size' ),
-				) ) ),
+				'file_data_name' => 'rtmedia_file', // key passed to $_FILE.
+				'multi_selection' => true,
+				'multipart_params' => apply_filters( 'rtmedia-multi-params', array( 'redirect' => 'no', 'rtmedia_update' => 'true', 'action' => 'wp_handle_upload', '_wp_http_referer' => $_SERVER['REQUEST_URI'], 'mode' => 'file_upload', 'rtmedia_upload_nonce' => RTMediaUploadView::upload_nonce_generator( false, true ) ) ),
+				'max_file_size_msg' => apply_filters( 'rtmedia_plupload_file_size_msg', min( array( ini_get( 'upload_max_filesize' ), ini_get( 'post_max_size' ) ) ) )
 			);
 			if ( wp_is_mobile() ) {
 				$params['multi_selection'] = false;
@@ -433,39 +414,42 @@ class RTMediaBuddyPressActivity {
 
 				// Generating user_link with name
 				$user_link = '<a href="' . esc_url( $activities[ $index ]->primary_link ) . '">' . esc_html( $matches[1] ) . '</a>';
-				// Counting media linked with activity
-				$count = count( $rtmedia_media_type_array[ $activities[ $index ]->id ] );
-				// Getting constant with single label or plural label
-				$media_const = 'RTMEDIA_' . strtoupper( $rtmedia_media_type_array[ $activities[ $index ]->id ][0] );
-				if ( $count > 1 ) {
-					$media_const .= '_PLURAL';
-				}
-				$media_const .= '_LABEL';
-				if ( defined( $media_const ) ) {
-					$media_str = constant( $media_const );
-				} else {
-					$media_str = RTMEDIA_MEDIA_SLUG;
-				}
 
-				$action = '';
-				$user   = get_userdata( $activities[ $index ]->user_id );
-				// Updating activity based on count
-				if ( 1 === $count ) {
-					$action = sprintf( esc_html__( '%s added a %s', 'buddypress-media' ), $user_link, $media_str );
-				} else {
-					// Checking all the media linked with activity are of same type
-					if ( isset( $rtmedia_media_type_array[ $activities[ $index ]->id ] )
-					     && ! empty( $rtmedia_media_type_array[ $activities[ $index ]->id ] )
-					     && count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) === 1
-					) {
-						$action = sprintf( esc_html__( '%s added %d %s', 'buddypress-media' ), $user_link, $count, $media_str );
-					} else {
-						$action = sprintf( esc_html__( '%s added %d %s', 'buddypress-media' ), $user_link, $count, RTMEDIA_MEDIA_SLUG );
+				if( isset( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) {
+					// Counting media linked with activity
+					$count = count( $rtmedia_media_type_array[ $activities[ $index ]->id ] );
+					// Getting constant with single label or plural label
+					$media_const = 'RTMEDIA_' . strtoupper( $rtmedia_media_type_array[ $activities[ $index ]->id ][0] );
+					if ( $count > 1 ) {
+						$media_const .= '_PLURAL';
 					}
-				}
+					$media_const .= '_LABEL';
+					if ( defined( $media_const ) ) {
+						$media_str = constant( $media_const );
+					} else {
+						$media_str = RTMEDIA_MEDIA_SLUG;
+					}
 
-				$action                       = apply_filters( 'rtmedia_bp_activity_action_text', $action, $user_link, $count, $user, $rtmedia_media_type_array[ $activities[ $index ]->id ][0], $activities[ $index ]->id );
-				$activities[ $index ]->action = $action;
+					$action = '';
+					$user   = get_userdata( $activities[ $index ]->user_id );
+					// Updating activity based on count
+					if ( 1 === $count ) {
+						$action = sprintf( esc_html__( '%s added a %s', 'buddypress-media' ), $user_link, $media_str );
+					} else {
+						// Checking all the media linked with activity are of same type
+						if ( isset( $rtmedia_media_type_array[ $activities[ $index ]->id ] )
+							&& ! empty( $rtmedia_media_type_array[ $activities[ $index ]->id ] )
+							&& count( array_unique( $rtmedia_media_type_array[ $activities[ $index ]->id ] ) ) === 1
+						) {
+							$action = sprintf( esc_html__( '%s added %d %s', 'buddypress-media' ), $user_link, $count, $media_str );
+						} else {
+							$action = sprintf( esc_html__( '%s added %d %s', 'buddypress-media' ), $user_link, $count, RTMEDIA_MEDIA_SLUG );
+						}
+					}
+
+					$action                       = apply_filters( 'rtmedia_bp_activity_action_text', $action, $user_link, $count, $user, $rtmedia_media_type_array[ $activities[ $index ]->id ][0], $activities[ $index ]->id );
+					$activities[ $index ]->action = $action;
+				}
 			}
 		}
 

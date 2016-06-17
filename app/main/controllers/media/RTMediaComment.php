@@ -40,7 +40,6 @@ class RTMediaComment {
 	function get_current_id() {
 
 		global $current_user;
-		get_currentuserinfo();
 		return $current_user->ID;
 	}
 
@@ -53,7 +52,6 @@ class RTMediaComment {
 	function get_current_author() {
 
 		global $current_user;
-		get_currentuserinfo();
 		return $current_user->user_login;
 	}
 

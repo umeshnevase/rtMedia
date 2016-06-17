@@ -582,13 +582,11 @@ table.rtmedia-edit-media-list tr td.rtm-edit-media-list-delete span {
 }
 
 .mfp-zoom-out-cur, .mfp-zoom-out-cur .mfp-image-holder .mfp-close {
-  cursor: -webkit-zoom-out;
   cursor: zoom-out;
 }
 
 .mfp-zoom {
   cursor: pointer;
-  cursor: -webkit-zoom-in;
   cursor: zoom-in;
 }
 
@@ -1122,7 +1120,7 @@ img.mfp-img {
   position: absolute;
   left: 0;
   top: 38px;
-  width: 180px;
+  width: 190px;
   z-index: 10;
 }
 .rtm-options li {
@@ -2233,6 +2231,11 @@ span.imgedit-scale-warn {
 .bp-media-image-editor-cotnainer div.updated p {
   margin: .5em 0;
   padding: 2px;
+}
+
+body article.bp_members.bp_member .entry-content,
+body div.bp_members.bp_member .entry-content {
+  width: 100%;
 }
 
 .rtm-media-gallery-uploader {

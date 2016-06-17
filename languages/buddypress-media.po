@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 3.10.3\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 3.10.8\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2016-03-03 14:34:37+00:00\n"
+"POT-Creation-Date: 2016-06-17 09:35:31+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -40,9 +40,9 @@ msgstr ""
 msgid "We have released 30+ premium add-ons for rtMedia plugin. Read more about it "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:225 app/admin/RTMediaAdmin.php:1148
-#: app/admin/RTMediaAdmin.php:1820 app/admin/RTMediaAdmin.php:1838
-#: app/admin/RTMediaAdmin.php:1856 app/admin/RTMediaFormHandler.php:435
+#: app/admin/RTMediaAdmin.php:225 app/admin/RTMediaAdmin.php:1146
+#: app/admin/RTMediaAdmin.php:1817 app/admin/RTMediaAdmin.php:1835
+#: app/admin/RTMediaAdmin.php:1853 app/admin/RTMediaFormHandler.php:435
 #: app/admin/RTMediaFormHandler.php:446 app/helper/RTMediaSettings.php:296
 #: app/helper/RTMediaSupport.php:368 app/helper/RTMediaSupport.php:636
 msgid "here"
@@ -142,46 +142,45 @@ msgstr ""
 
 #: app/admin/RTMediaAdmin.php:708 app/admin/RTMediaAdmin.php:780
 #: app/admin/RTMediaAdmin.php:783 app/admin/RTMediaAdmin.php:938
-#: app/admin/RTMediaAdmin.php:1529
+#: app/admin/RTMediaAdmin.php:1527
 msgid "Settings"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:710 app/admin/RTMediaAdmin.php:804
-#: app/admin/RTMediaAdmin.php:807 app/admin/RTMediaAdmin.php:950
-#: app/admin/RTMediaAdmin.php:1556 app/helper/RTMediaSettings.php:220
+#: app/admin/RTMediaAdmin.php:807 app/admin/RTMediaAdmin.php:948
+#: app/admin/RTMediaAdmin.php:1553 app/helper/RTMediaSettings.php:220
 #: app/helper/RTMediaSupport.php:52 app/helper/RTMediaSupport.php:53
-#: lib/freemius/includes/i18n.php:39
 msgid "Support"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:730 app/admin/RTMediaAdmin.php:979
-#: app/admin/RTMediaAdmin.php:1031
+#: app/admin/RTMediaAdmin.php:730 app/admin/RTMediaAdmin.php:977
+#: app/admin/RTMediaAdmin.php:1029
 msgid "Regenerate Thumbnail"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:773 app/admin/RTMediaAdmin.php:1501
-#: app/admin/RTMediaAdmin.php:1502 app/importers/RTMediaActivityUpgrade.php:116
-#: app/importers/RTMediaMigration.php:68 app/main/RTMedia.php:912
+#: app/admin/RTMediaAdmin.php:773 app/admin/RTMediaAdmin.php:1499
+#: app/admin/RTMediaAdmin.php:1500 app/importers/RTMediaActivityUpgrade.php:116
+#: app/importers/RTMediaMigration.php:68 app/main/RTMedia.php:913
 msgid "rtMedia"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:792 app/admin/RTMediaAdmin.php:795
-#: app/admin/RTMediaAdmin.php:944 app/admin/RTMediaAdmin.php:1537
+#: app/admin/RTMediaAdmin.php:943 app/admin/RTMediaAdmin.php:1532
 msgid "Addons"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:816 app/admin/RTMediaAdmin.php:819
-#: app/admin/RTMediaAdmin.php:956 app/admin/RTMediaAdmin.php:1543
+#: app/admin/RTMediaAdmin.php:954 app/admin/RTMediaAdmin.php:1540
 msgid "Themes"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:829 app/admin/RTMediaAdmin.php:832
-#: app/admin/RTMediaAdmin.php:963 app/admin/RTMediaAdmin.php:1549
+#: app/admin/RTMediaAdmin.php:961 app/admin/RTMediaAdmin.php:1546
 msgid "Hire Us"
 msgstr ""
 
 #: app/admin/RTMediaAdmin.php:842 app/admin/RTMediaAdmin.php:845
-#: app/admin/RTMediaAdmin.php:970 app/admin/RTMediaAdmin.php:1563
+#: app/admin/RTMediaAdmin.php:968 app/admin/RTMediaAdmin.php:1560
 msgid "Licenses"
 msgstr ""
 
@@ -221,252 +220,252 @@ msgstr ""
 msgid "Are you sure you want to enable the encoding service?"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:979
+#: app/admin/RTMediaAdmin.php:977
 msgid "Regen. Thumbnail "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1000
+#: app/admin/RTMediaAdmin.php:998
 msgid "rtMedia: Regenerate Video Thumbnails"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1022
+#: app/admin/RTMediaAdmin.php:1020
 msgid "You can see this page because you have "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1023
+#: app/admin/RTMediaAdmin.php:1021
 msgid "subscribed"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1024
+#: app/admin/RTMediaAdmin.php:1022
 msgid " for "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1025
+#: app/admin/RTMediaAdmin.php:1023
 msgid "rtMedia audio/video encoding service"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1028
+#: app/admin/RTMediaAdmin.php:1026
 msgid "You can regenerate thumbnails of a specific video by visiting "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1029
+#: app/admin/RTMediaAdmin.php:1027
 msgid "media page"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1030
+#: app/admin/RTMediaAdmin.php:1028
 msgid " and clicking the "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1032
+#: app/admin/RTMediaAdmin.php:1030
 msgid " option for that particular video."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1035
+#: app/admin/RTMediaAdmin.php:1033
 msgid "Click "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1036 app/admin/RTMediaAdmin.php:1041
+#: app/admin/RTMediaAdmin.php:1034 app/admin/RTMediaAdmin.php:1039
 msgid "Regenerate Pending Thumbnails"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1037
+#: app/admin/RTMediaAdmin.php:1035
 msgid " to regenerate thumbnails of pending videos."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1053
+#: app/admin/RTMediaAdmin.php:1051
 msgid "Total Videos"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1057
+#: app/admin/RTMediaAdmin.php:1055
 msgid "Sent of regenerate thumbails"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1060
+#: app/admin/RTMediaAdmin.php:1058
 msgid "Fail to regenerate thumbails"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1101
+#: app/admin/RTMediaAdmin.php:1099
 msgid "Regenerate Video Thumbnails Done"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1147
+#: app/admin/RTMediaAdmin.php:1145
 msgid "You have %s videos without thumbnails. Click "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1149
+#: app/admin/RTMediaAdmin.php:1147
 msgid " to generate thumbnails."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1232
+#: app/admin/RTMediaAdmin.php:1230
 msgid "not a video ..."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1383
+#: app/admin/RTMediaAdmin.php:1381
 msgid "Empowering The Web With WordPress"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1404
+#: app/admin/RTMediaAdmin.php:1402
 msgid "Settings saved successfully!"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1410 app/admin/RTMediaAdmin.php:1439
+#: app/admin/RTMediaAdmin.php:1408 app/admin/RTMediaAdmin.php:1437
 msgid "Save Settings"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1637 app/admin/RTMediaAdmin.php:1638
+#: app/admin/RTMediaAdmin.php:1634 app/admin/RTMediaAdmin.php:1635
 msgid "Display"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1646
+#: app/admin/RTMediaAdmin.php:1643
 msgid "rtMedia BuddyPress"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1647
+#: app/admin/RTMediaAdmin.php:1644
 msgid "BuddyPress"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1655
+#: app/admin/RTMediaAdmin.php:1652
 msgid "rtMedia Types"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1656
+#: app/admin/RTMediaAdmin.php:1653
 msgid "Types"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1663
+#: app/admin/RTMediaAdmin.php:1660
 msgid "rtMedia Sizes"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1664
+#: app/admin/RTMediaAdmin.php:1661
 msgid "Media Sizes"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1671
+#: app/admin/RTMediaAdmin.php:1668
 msgid "rtMedia Privacy"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1672
-#: app/main/controllers/privacy/RTMediaPrivacy.php:416
+#: app/admin/RTMediaAdmin.php:1669
+#: app/main/controllers/privacy/RTMediaPrivacy.php:417
 msgid "Privacy"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1678
+#: app/admin/RTMediaAdmin.php:1675
 msgid "rtMedia Custom CSS"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1679
+#: app/admin/RTMediaAdmin.php:1676
 msgid "Custom CSS"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1688 app/admin/RTMediaAdmin.php:1689
+#: app/admin/RTMediaAdmin.php:1685 app/admin/RTMediaAdmin.php:1686
 msgid "Other Settings"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1736
+#: app/admin/RTMediaAdmin.php:1733
 msgid "I use @rtMediaWP http://rt.cx/rtmedia on %s"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1738
+#: app/admin/RTMediaAdmin.php:1735
 msgid "Post to Twitter Now"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1738
+#: app/admin/RTMediaAdmin.php:1735
 msgid "Post to Twitter"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1739
+#: app/admin/RTMediaAdmin.php:1736
 msgid "Share on Facebook Now"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1739
+#: app/admin/RTMediaAdmin.php:1736
 msgid "Share on Facebook"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1740
+#: app/admin/RTMediaAdmin.php:1737
 msgid "Rate rtMedia on Wordpress.org"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1740
+#: app/admin/RTMediaAdmin.php:1737
 msgid "Rate on Wordpress.org"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1741
+#: app/admin/RTMediaAdmin.php:1738
 msgid "Subscribe to our Feeds"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1744
+#: app/admin/RTMediaAdmin.php:1741
 msgid "Spread the Word"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1750 app/admin/RTMediaAdmin.php:1757
+#: app/admin/RTMediaAdmin.php:1747 app/admin/RTMediaAdmin.php:1754
 msgid "Subscribe"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1788
+#: app/admin/RTMediaAdmin.php:1785
 msgid "Thank you for your time."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1801
+#: app/admin/RTMediaAdmin.php:1798
 msgid "Premium Add-ons"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1819
+#: app/admin/RTMediaAdmin.php:1816
 msgid ""
 "You have images enabled on rtMedia but your network allowed filetypes do "
 "not permit uploading of %s. Click "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1821 app/admin/RTMediaAdmin.php:1839
-#: app/admin/RTMediaAdmin.php:1857
+#: app/admin/RTMediaAdmin.php:1818 app/admin/RTMediaAdmin.php:1836
+#: app/admin/RTMediaAdmin.php:1854
 msgid " to change your settings manually."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1823 app/admin/RTMediaAdmin.php:1841
-#: app/admin/RTMediaAdmin.php:1859
+#: app/admin/RTMediaAdmin.php:1820 app/admin/RTMediaAdmin.php:1838
+#: app/admin/RTMediaAdmin.php:1856
 msgid "Recommended:"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1824 app/admin/RTMediaAdmin.php:1842
-#: app/admin/RTMediaAdmin.php:1860
+#: app/admin/RTMediaAdmin.php:1821 app/admin/RTMediaAdmin.php:1839
+#: app/admin/RTMediaAdmin.php:1857
 msgid "Update Network Settings Automatically"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1837
+#: app/admin/RTMediaAdmin.php:1834
 msgid ""
 "You have video enabled on BuddyPress Media but your network allowed "
 "filetypes do not permit uploading of mp4. Click "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1855
+#: app/admin/RTMediaAdmin.php:1852
 msgid ""
 "You have audio enabled on BuddyPress Media but your network allowed "
 "filetypes do not permit uploading of mp3. Click "
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1876
+#: app/admin/RTMediaAdmin.php:1873
 msgid "Network settings updated successfully."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1988
+#: app/admin/RTMediaAdmin.php:1985
 msgid "Video is sent to generate thumbnails."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:1990
+#: app/admin/RTMediaAdmin.php:1987
 msgid "Video cannot be sent to generate thumbnails."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:2004
+#: app/admin/RTMediaAdmin.php:2001
 msgid "Regenerate Video Thumbnails"
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:2016
+#: app/admin/RTMediaAdmin.php:2013
 msgid ""
 "Please update rtMedia template files if you have overridden the default "
 "rtMedia templates in your theme. If not, you can ignore and hide this "
 "notice."
 msgstr ""
 
-#: app/admin/RTMediaAdmin.php:2016
+#: app/admin/RTMediaAdmin.php:2013
 #: app/importers/RTMediaMediaSizeImporter.php:73
 #: app/importers/RTMediaMigration.php:68
 msgid "Hide"
@@ -865,416 +864,415 @@ msgstr ""
 msgid "User's Favorites:"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:79 app/helper/RTMediaAddon.php:80
-#: lib/freemius/includes/i18n.php:90
+#: app/helper/RTMediaAddon.php:81 app/helper/RTMediaAddon.php:82
 msgid "Plugins"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:87 app/helper/RTMediaAddon.php:88
+#: app/helper/RTMediaAddon.php:90 app/helper/RTMediaAddon.php:91
 msgid "Audio/Video  Encoding"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:110
+#: app/helper/RTMediaAddon.php:113
 msgid "SEO"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:113
+#: app/helper/RTMediaAddon.php:116
 msgid ""
 "Generate an XML sitemap for all the public media files uploaded via rtMedia "
 "plugin. These sitemaps can be useful to index search engine to improve "
 "website SEO."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:121
+#: app/helper/RTMediaAddon.php:124
 msgid "Moderation"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:124
+#: app/helper/RTMediaAddon.php:127
 msgid ""
 "Report media if they find offensive. Set number of reports to automatically "
 "take down media from site."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:132
+#: app/helper/RTMediaAddon.php:135
 msgid "Custom Attributes"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:135
+#: app/helper/RTMediaAddon.php:138
 msgid ""
 "Categories media based on attributes. Site owner need to create attributes. "
 "When user upload a media, can select in which attribute that media can add."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:143
+#: app/helper/RTMediaAddon.php:146
 msgid "Docs and Other files"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:146
+#: app/helper/RTMediaAddon.php:149
 msgid ""
 "Allow users to upload documents and other file type using rtMedia upload "
 "box. This addon support all the file extensions which WordPress allows."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:154
+#: app/helper/RTMediaAddon.php:157
 msgid "Default Albums"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:157
+#: app/helper/RTMediaAddon.php:160
 msgid ""
 "This plugin allows the creation of multiple default albums for rtMedia "
 "uploads. One of these albums can be set as the default global album."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:165
+#: app/helper/RTMediaAddon.php:168
 msgid "Podcast (RSS and Atom feeds)"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:168
+#: app/helper/RTMediaAddon.php:171
 msgid ""
 "Read rtMedia uploads from iTunes as well as any RSS feed-reader/podcasting "
 "software."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:176
+#: app/helper/RTMediaAddon.php:179
 msgid "Playlists"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:179
+#: app/helper/RTMediaAddon.php:182
 msgid ""
 "Audio can be grouped into playlists. Once the user upload any audio file, "
 "can create a playlist or use existing one to manage audio files."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:187
+#: app/helper/RTMediaAddon.php:190
 msgid "Favorites"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:190
+#: app/helper/RTMediaAddon.php:193
 msgid ""
 "Users can create their list of favorite media in which they can add media "
 "previously uploaded by any user."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:198
+#: app/helper/RTMediaAddon.php:201
 msgid "Restrictions"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:201
+#: app/helper/RTMediaAddon.php:204
 msgid ""
 "Site admin can set an upload limit on the basis of time span, file size "
 "(MB) and number of files user can upload."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:209
+#: app/helper/RTMediaAddon.php:212
 msgid "bbPress Attachments"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:212
+#: app/helper/RTMediaAddon.php:215
 msgid "Attach media files to bbPress forum topics and replies."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:220
+#: app/helper/RTMediaAddon.php:223
 msgid "WordPress Sitewide Gallery"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:223
+#: app/helper/RTMediaAddon.php:226
 msgid ""
 "Site admin can create and upload media into WordPress album. Create album "
 "without being dependent on BuddyPress."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:231
+#: app/helper/RTMediaAddon.php:234
 msgid "WordPress Comment Attachments"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:234
+#: app/helper/RTMediaAddon.php:237
 msgid ""
 "Allow users to upload a media file in WordPress comment attachment box. It "
 "will display a thumbnail of attached file."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:242
+#: app/helper/RTMediaAddon.php:245
 msgid "Social Sharing"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:245
+#: app/helper/RTMediaAddon.php:248
 msgid ""
 "Share uploaded media on social network sites like Facebook, twitter, "
 "linkedin, Google +. This addon integrate with rtSocial plugin."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:253
+#: app/helper/RTMediaAddon.php:256
 msgid "Sidebar Widgets"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:256
+#: app/helper/RTMediaAddon.php:259
 msgid ""
 "This addon provide widgets to upload media and display gallery for rtMedia "
 "plugin."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:264
+#: app/helper/RTMediaAddon.php:267
 msgid "5 Star Ratings"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:267
+#: app/helper/RTMediaAddon.php:270
 msgid ""
 "Display 5 star rating for all the uploaded media. User can rate the media "
 "files from 1 to 5 star."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:275
+#: app/helper/RTMediaAddon.php:278
 msgid "Edit Mp3 Info (ID3 Tags)"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:278
+#: app/helper/RTMediaAddon.php:281
 msgid "Allow user to edit MP3 FIle Audio tags (ID 3 tags)."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:286
+#: app/helper/RTMediaAddon.php:289
 msgid "Media Sorting"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:289
+#: app/helper/RTMediaAddon.php:292
 msgid ""
 "Sort uploaded media based on file size, ascending/descending title, upload "
 "date of media."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:297
+#: app/helper/RTMediaAddon.php:300
 msgid "Bulk Edit"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:300
+#: app/helper/RTMediaAddon.php:303
 msgid ""
 "Bulk edit option will allow user to quickly select media files and do "
 "required actions like move files from one album to another, change "
 "attributes, change privacy, delete files."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:308
+#: app/helper/RTMediaAddon.php:311
 msgid "BuddyPress Profile Picture"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:311
+#: app/helper/RTMediaAddon.php:314
 msgid "User can easily set his/her profile picture from media uploaded via rtMedia."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:319
+#: app/helper/RTMediaAddon.php:322
 msgid "Album Cover Art"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:322
+#: app/helper/RTMediaAddon.php:325
 msgid "User can easily set any of the image of the album as album cover photo"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:330
+#: app/helper/RTMediaAddon.php:333
 msgid "Direct Download Link"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:333
+#: app/helper/RTMediaAddon.php:336
 msgid ""
 "User can download media from website. Site owner can restrict which media "
 "type can be allowed to download."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:341
+#: app/helper/RTMediaAddon.php:344
 msgid "Upload by URL"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:344
+#: app/helper/RTMediaAddon.php:347
 msgid ""
 "Users do not need to download media files from a URL and then upload it "
 "with rtMedia. Just provide the absolute URL for the media and it will "
 "upload on site."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:352
+#: app/helper/RTMediaAddon.php:355
 msgid "Media Likes"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:355
+#: app/helper/RTMediaAddon.php:358
 msgid ""
 "This add-on let you know who liked the media. User can also see which media "
 "they liked under their profile."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:363
+#: app/helper/RTMediaAddon.php:366
 msgid "Activity URL Preview"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:366
+#: app/helper/RTMediaAddon.php:369
 msgid ""
 "This addon provides a preview of the URL that is shared in BuddyPress "
 "activity. Just enter the URL you want to share on your site and see a "
 "preview of it before it is shared."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:374
+#: app/helper/RTMediaAddon.php:377
 msgid "View Counter"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:377
+#: app/helper/RTMediaAddon.php:380
 msgid ""
 "Enable view count for all the uploaded media. Whenever user open that media "
 "file in lightbox or in single media view, that view count will be "
 "calculated and display next to media file."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:385
+#: app/helper/RTMediaAddon.php:388
 msgid "Shortcode Generator"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:388
+#: app/helper/RTMediaAddon.php:391
 msgid ""
 "This add-on will add shortcode generator button in WordPress post and page "
 "editor for all the rtMedia shortcodes."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:396
+#: app/helper/RTMediaAddon.php:399
 msgid "Album Privacy"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:399
+#: app/helper/RTMediaAddon.php:402
 msgid ""
 "Set album privacy when user create an album or change album privacy when "
 "editing existing albums. The privacy levels are Public, Logged in user, "
 "Friends and Private."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:407
+#: app/helper/RTMediaAddon.php:410
 msgid "BuddyPress Group Media Control"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:410
+#: app/helper/RTMediaAddon.php:413
 msgid "This add-on allows group owner to manage media upload feature group wise."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:418
+#: app/helper/RTMediaAddon.php:421
 msgid "Set Custom Thumbnail for Audio/Video"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:421
+#: app/helper/RTMediaAddon.php:424
 msgid ""
 "Allow media owner to change the thumbnail of uploaded audio/video files. "
 "The File Upload box will be provided to change media thumbnail."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:429
+#: app/helper/RTMediaAddon.php:432
 msgid "myCRED"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:432
+#: app/helper/RTMediaAddon.php:435
 msgid ""
 "This plugin integrates rtMedia and myCRED plugin, users can be can award "
 "virtual points for various rtMedia activities, like media upload, likes, "
 "deleted etc."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:440
+#: app/helper/RTMediaAddon.php:443
 msgid "Upload terms"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:443
+#: app/helper/RTMediaAddon.php:446
 msgid ""
 "User must have to check the terms and conditions checkbox before uploading "
 "the media."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:451
+#: app/helper/RTMediaAddon.php:454
 msgid "CubePoints"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:454
+#: app/helper/RTMediaAddon.php:457
 msgid ""
 "If you are using CubePoints plugin on your website than rtMedia CubePoint "
 "add-on can be integrate with that plugin to setup point management system "
 "for rtMedia related activities."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:462
+#: app/helper/RTMediaAddon.php:465
 msgid "Social Sync"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:465
+#: app/helper/RTMediaAddon.php:468
 msgid "rtMedia Social Sync allows you to import media from your Facebook account."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:473
+#: app/helper/RTMediaAddon.php:476
 msgid "Photo Watermark"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:476
+#: app/helper/RTMediaAddon.php:479
 msgid ""
 "rtMedia Photo Watermark let you add watermark on your images uploaded using "
 "rtMedia."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:484
+#: app/helper/RTMediaAddon.php:487
 msgid "Photo Tagging"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:487
+#: app/helper/RTMediaAddon.php:490
 msgid ""
 "rtMedia Photo Tagging enable users to tag their friends on photos uploaded "
 "using rtMedia."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:495
+#: app/helper/RTMediaAddon.php:498
 msgid "Photo Filters"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:498
+#: app/helper/RTMediaAddon.php:501
 msgid ""
 "rtMedia Photo Filters adds Instagram like filters to images uploaded with "
 "rtMedia."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:506
+#: app/helper/RTMediaAddon.php:509
 msgid "Kaltura Add-on"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:509
+#: app/helper/RTMediaAddon.php:512
 msgid ""
 "Add support for more video formats using Kaltura video solution. It works "
 "with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:517
+#: app/helper/RTMediaAddon.php:520
 msgid "FFMPEG Add-on"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:520
+#: app/helper/RTMediaAddon.php:523
 msgid ""
 "Add supports for more audio & video formats using open-source media-node. "
 "Media node comes with automated setup script for Ubuntu/Debian."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:528
+#: app/helper/RTMediaAddon.php:531
 msgid "Membership Add-on"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:531
+#: app/helper/RTMediaAddon.php:534
 msgid ""
 "rtMedia Membership add-on provides membership functionality in your site in "
 "terms of media upload."
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:571
+#: app/helper/RTMediaAddon.php:574
 msgid "Coming Soon !!"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:604
+#: app/helper/RTMediaAddon.php:607
 msgid "Purchased"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:606 app/helper/RTMediaThemes.php:141
+#: app/helper/RTMediaAddon.php:609 app/helper/RTMediaThemes.php:141
 #: app/helper/RTMediaThemes.php:185 app/helper/RTMediaThemes.php:294
 #: app/helper/RTMediaThemes.php:338 app/importers/BPMediaAlbumimporter.php:177
 msgid "Buy Now"
 msgstr ""
 
-#: app/helper/RTMediaAddon.php:638 app/helper/RTMediaThemes.php:139
+#: app/helper/RTMediaAddon.php:641 app/helper/RTMediaThemes.php:139
 #: app/helper/RTMediaThemes.php:183 app/helper/RTMediaThemes.php:292
 #: app/helper/RTMediaThemes.php:336 app/importers/BPMediaAlbumimporter.php:178
 msgid "Live Demo"
@@ -1320,7 +1318,7 @@ msgstr ""
 msgid "Activate / Deactivate License"
 msgstr ""
 
-#: app/helper/RTMediaLicense.php:98 lib/freemius/includes/i18n.php:106
+#: app/helper/RTMediaLicense.php:98
 msgid "Deactivate License"
 msgstr ""
 
@@ -1493,7 +1491,7 @@ msgid ""
 "a new issue on %s"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:438 lib/freemius/includes/i18n.php:86
+#: app/helper/RTMediaSupport.php:438
 msgid "Name"
 msgstr ""
 
@@ -1501,7 +1499,7 @@ msgstr ""
 msgid "Use actual user name which used during purchased."
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:450 lib/freemius/includes/i18n.php:87
+#: app/helper/RTMediaSupport.php:450
 msgid "Email"
 msgstr ""
 
@@ -1517,8 +1515,7 @@ msgstr ""
 msgid "Subject"
 msgstr ""
 
-#: app/helper/RTMediaSupport.php:478 lib/freemius/includes/i18n.php:49
-#: templates/media/album-single-edit.php:20
+#: app/helper/RTMediaSupport.php:478 templates/media/album-single-edit.php:20
 #: templates/media/media-single-edit.php:17
 msgid "Details"
 msgstr ""
@@ -1826,11 +1823,11 @@ msgstr ""
 msgid "Start Import"
 msgstr ""
 
-#: app/importers/BPMediaAlbumimporter.php:79 lib/freemius/includes/i18n.php:95
+#: app/importers/BPMediaAlbumimporter.php:79
 msgid "Users"
 msgstr ""
 
-#: app/importers/BPMediaAlbumimporter.php:89 app/main/RTMedia.php:596
+#: app/importers/BPMediaAlbumimporter.php:89 app/main/RTMedia.php:597
 #: app/services/RTMediaEncoding.php:601
 msgid "Media"
 msgstr ""
@@ -2043,166 +2040,166 @@ msgstr ""
 msgid "No time remaining."
 msgstr ""
 
-#: app/main/RTMedia.php:327
+#: app/main/RTMedia.php:328
 msgid "Photo"
 msgstr ""
 
-#: app/main/RTMedia.php:328
+#: app/main/RTMedia.php:329
 msgid "Photos"
 msgstr ""
 
-#: app/main/RTMedia.php:336
+#: app/main/RTMedia.php:337
 msgid "Video"
 msgstr ""
 
-#: app/main/RTMedia.php:337
+#: app/main/RTMedia.php:338
 msgid "Videos"
 msgstr ""
 
-#: app/main/RTMedia.php:345 app/main/RTMedia.php:346
+#: app/main/RTMedia.php:346 app/main/RTMedia.php:347
 msgid "Music"
 msgstr ""
 
-#: app/main/RTMedia.php:437
+#: app/main/RTMedia.php:438
 msgid "Private - Visible only to the user"
 msgstr ""
 
-#: app/main/RTMedia.php:438
+#: app/main/RTMedia.php:439
 msgid "Friends - Visible to user's friends"
 msgstr ""
 
-#: app/main/RTMedia.php:439
+#: app/main/RTMedia.php:440
 msgid "Logged in Users - Visible to registered users"
 msgstr ""
 
-#: app/main/RTMedia.php:440
+#: app/main/RTMedia.php:441
 msgid "Public - Visible to the world"
 msgstr ""
 
-#: app/main/RTMedia.php:604 app/main/controllers/template/RTMediaNav.php:182
+#: app/main/RTMedia.php:605 app/main/controllers/template/RTMediaNav.php:182
 #: app/main/controllers/template/rt-template-functions.php:86
 msgid "All"
 msgstr ""
 
-#: app/main/RTMedia.php:616 app/main/controllers/media/RTMediaAlbum.php:54
+#: app/main/RTMedia.php:617 app/main/controllers/media/RTMediaAlbum.php:54
 #: app/main/controllers/template/rt-template-functions.php:1456
 #: app/main/controllers/upload/RTMediaUploadView.php:52
 #: app/main/controllers/upload/RTMediaUploadView.php:55
 msgid "Album"
 msgstr ""
 
-#: app/main/RTMedia.php:620 app/main/controllers/media/RTMediaAlbum.php:53
+#: app/main/RTMedia.php:621 app/main/controllers/media/RTMediaAlbum.php:53
 #: app/main/controllers/media/RTMediaAlbum.php:65
 msgid "Albums"
 msgstr ""
 
-#: app/main/RTMedia.php:630 app/main/controllers/media/RTMediaLoginPopup.php:38
+#: app/main/RTMedia.php:631 app/main/controllers/media/RTMediaLoginPopup.php:38
 #: app/main/controllers/template/rt-template-functions.php:2216
 #: app/main/controllers/template/rt-template-functions.php:2220
 msgid "Upload"
 msgstr ""
 
-#: app/main/RTMedia.php:635
+#: app/main/RTMedia.php:636
 msgid "Wall Post"
 msgstr ""
 
-#: app/main/RTMedia.php:859 app/main/RTMedia.php:868
+#: app/main/RTMedia.php:860 app/main/RTMedia.php:869
 msgid "Wall Posts"
 msgstr ""
 
-#: app/main/RTMedia.php:912
+#: app/main/RTMedia.php:913
 msgid ": Can't Create Database table. Please check create table permission."
 msgstr ""
 
-#: app/main/RTMedia.php:967
+#: app/main/RTMedia.php:968
 msgid "Loading media"
 msgstr ""
 
-#: app/main/RTMedia.php:968
+#: app/main/RTMedia.php:969
 msgid "Please enter some content to post."
 msgstr ""
 
-#: app/main/RTMedia.php:969
+#: app/main/RTMedia.php:970
 msgid "Empty Comment is not allowed."
 msgstr ""
 
-#: app/main/RTMedia.php:970
+#: app/main/RTMedia.php:971
 msgid "Are you sure you want to delete this media?"
 msgstr ""
 
-#: app/main/RTMedia.php:971
+#: app/main/RTMedia.php:972
 msgid "Are you sure you want to delete this comment?"
 msgstr ""
 
-#: app/main/RTMedia.php:972
+#: app/main/RTMedia.php:973
 msgid "Are you sure you want to delete this Album?"
 msgstr ""
 
-#: app/main/RTMedia.php:973
+#: app/main/RTMedia.php:974
 msgid "Drop files here"
 msgstr ""
 
-#: app/main/RTMedia.php:974
+#: app/main/RTMedia.php:975
 msgid "album created successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:975
+#: app/main/RTMedia.php:976
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: app/main/RTMedia.php:976
+#: app/main/RTMedia.php:977
 msgid "Enter an album name."
 msgstr ""
 
-#: app/main/RTMedia.php:977
+#: app/main/RTMedia.php:978
 msgid "Max file Size Limit : "
 msgstr ""
 
-#: app/main/RTMedia.php:978
+#: app/main/RTMedia.php:979
 msgid "Allowed File Formats"
 msgstr ""
 
-#: app/main/RTMedia.php:979 templates/media/album-single-edit.php:73
+#: app/main/RTMedia.php:980 templates/media/album-single-edit.php:73
 msgid "Select All Visible"
 msgstr ""
 
-#: app/main/RTMedia.php:980
+#: app/main/RTMedia.php:981
 msgid "Unselect All Visible"
 msgstr ""
 
-#: app/main/RTMedia.php:981
+#: app/main/RTMedia.php:982
 msgid "Please select some media."
 msgstr ""
 
-#: app/main/RTMedia.php:982
+#: app/main/RTMedia.php:983
 msgid "Are you sure you want to delete the selected media?"
 msgstr ""
 
-#: app/main/RTMedia.php:983
+#: app/main/RTMedia.php:984
 msgid "Are you sure you want to move the selected media?"
 msgstr ""
 
-#: app/main/RTMedia.php:984
+#: app/main/RTMedia.php:985
 msgid "Waiting"
 msgstr ""
 
-#: app/main/RTMedia.php:985
+#: app/main/RTMedia.php:986
 msgid "Uploaded"
 msgstr ""
 
-#: app/main/RTMedia.php:986
+#: app/main/RTMedia.php:987
 msgid "Uploading"
 msgstr ""
 
-#: app/main/RTMedia.php:987
+#: app/main/RTMedia.php:988
 msgid "Failed"
 msgstr ""
 
-#: app/main/RTMedia.php:988
+#: app/main/RTMedia.php:989
 msgid "Close"
 msgstr ""
 
-#: app/main/RTMedia.php:989
+#: app/main/RTMedia.php:990
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:63
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:80
 #: app/main/controllers/template/rt-template-functions.php:778
@@ -2210,7 +2207,7 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: app/main/RTMedia.php:990
+#: app/main/RTMedia.php:991
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:67
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:80
 #: app/main/controllers/template/rt-template-functions.php:1537
@@ -2219,95 +2216,95 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: app/main/RTMedia.php:991 templates/media/media-single-edit.php:8
+#: app/main/RTMedia.php:992 templates/media/media-single-edit.php:8
 msgid "Edit Media"
 msgstr ""
 
-#: app/main/RTMedia.php:992
+#: app/main/RTMedia.php:993
 msgid "Remove from queue"
 msgstr ""
 
-#: app/main/RTMedia.php:993
+#: app/main/RTMedia.php:994
 msgid "Add more files"
 msgstr ""
 
-#: app/main/RTMedia.php:994
+#: app/main/RTMedia.php:995
 msgid "File not supported"
 msgstr ""
 
-#: app/main/RTMedia.php:995
+#: app/main/RTMedia.php:996
 msgid "more"
 msgstr ""
 
-#: app/main/RTMedia.php:996
+#: app/main/RTMedia.php:997
 msgid "less"
 msgstr ""
 
-#: app/main/RTMedia.php:997
+#: app/main/RTMedia.php:998
 msgid "This media is uploaded. Are you sure you want to delete this media?"
 msgstr ""
 
-#: app/main/RTMedia.php:1005
+#: app/main/RTMedia.php:1006
 msgid "Featured media set successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:1006
+#: app/main/RTMedia.php:1007
 msgid "Featured media removed successfully."
 msgstr ""
 
-#: app/main/RTMedia.php:1008
+#: app/main/RTMedia.php:1009
 msgid "Title:"
 msgstr ""
 
-#: app/main/RTMedia.php:1009
+#: app/main/RTMedia.php:1010
 msgid "Description:"
 msgstr ""
 
-#: app/main/RTMedia.php:1039
+#: app/main/RTMedia.php:1040
 msgid "There are some uploads in progress. Do you want to cancel them?"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:282
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:278
 msgid "Media Files"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:321
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:302
 #: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:100
 #: app/main/controllers/template/rt-template-functions.php:1571
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:454
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:437
 msgid "%s added a %s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:461
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:463
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:444
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:446
 #: app/main/controllers/upload/RTMediaUploadEndpoint.php:122
 msgid "%s added %d %s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:514
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:498
 msgid "%1$s liked a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:517
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:501
 msgid "%1$s liked their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:521
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:505
 msgid "%1$s liked %2$s's %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:602
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:586
 msgid "%1$s commented on a %2$s in the group %3$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:605
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:589
 msgid "%1$s commented on their %2$s"
 msgstr ""
 
-#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:609
+#: app/main/controllers/activity/RTMediaBuddyPressActivity.php:593
 msgid "%1$s commented on %2$s's %3$s"
 msgstr ""
 
@@ -2553,7 +2550,7 @@ msgid "Group Admin only"
 msgstr ""
 
 #: app/main/controllers/group/RTMediaGroupExtension.php:116
-#: app/main/controllers/privacy/RTMediaPrivacy.php:408
+#: app/main/controllers/privacy/RTMediaPrivacy.php:409
 #: templates/media/album-single-edit.php:55
 msgid "Save Changes"
 msgstr ""
@@ -2688,23 +2685,23 @@ msgstr ""
 msgid "Error creating attachment for the media file, please try again"
 msgstr ""
 
-#: app/main/controllers/media/RTMediaMedia.php:643
+#: app/main/controllers/media/RTMediaMedia.php:646
 msgid "%1$s added a %2$s"
 msgstr ""
 
-#: app/main/controllers/media/RTMediaMedia.php:643
+#: app/main/controllers/media/RTMediaMedia.php:646
 msgid "%1$s added %4$d %3$s"
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:370
+#: app/main/controllers/privacy/RTMediaPrivacy.php:371
 msgid "No changes were made to your account."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:373
+#: app/main/controllers/privacy/RTMediaPrivacy.php:374
 msgid "Your default privacy settings saved successfully."
 msgstr ""
 
-#: app/main/controllers/privacy/RTMediaPrivacy.php:397
+#: app/main/controllers/privacy/RTMediaPrivacy.php:398
 msgid "Default Privacy"
 msgstr ""
 
@@ -2926,41 +2923,40 @@ msgid "WordPress/BuddyPress Plugin Development"
 msgstr ""
 
 #: app/main/controllers/template/rt-template-functions.php:2803
-#: lib/freemius/includes/i18n.php:37
 msgid "Contact Us"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:71
+#: app/main/controllers/upload/RTMediaUploadView.php:79
 msgid "Privacy: "
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:78
-#: app/main/controllers/upload/RTMediaUploadView.php:114
-#: app/main/controllers/upload/RTMediaUploadView.php:130
+#: app/main/controllers/upload/RTMediaUploadView.php:86
+#: app/main/controllers/upload/RTMediaUploadView.php:122
+#: app/main/controllers/upload/RTMediaUploadView.php:139
 msgid "File Upload"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:82
+#: app/main/controllers/upload/RTMediaUploadView.php:90
 msgid "Select your files"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:83
+#: app/main/controllers/upload/RTMediaUploadView.php:91
 msgid "or"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:83
+#: app/main/controllers/upload/RTMediaUploadView.php:91
 msgid "Drop your files here"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:110
+#: app/main/controllers/upload/RTMediaUploadView.php:118
 msgid "Start upload"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:137
+#: app/main/controllers/upload/RTMediaUploadView.php:146
 msgid "Attach Media"
 msgstr ""
 
-#: app/main/controllers/upload/RTMediaUploadView.php:153
+#: app/main/controllers/upload/RTMediaUploadView.php:163
 msgid "Insert from URL"
 msgstr ""
 
@@ -3108,7 +3104,6 @@ msgid "Feature\\Plan"
 msgstr ""
 
 #: app/services/RTMediaEncoding.php:386 app/services/RTMediaEncoding.php:438
-#: lib/freemius/includes/i18n.php:61
 msgid "Free"
 msgstr ""
 
@@ -3228,855 +3223,6 @@ msgstr ""
 msgid "Encoding enabled successfully."
 msgstr ""
 
-#: lib/freemius/includes/fs-plugin-functions.php:118
-msgid "Plugin Install"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:251
-msgid "Version:"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:255
-msgid "Author:"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:259
-msgid "Last Updated:"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:261
-msgid "%s ago"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:266
-msgid "Requires WordPress Version:"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:266
-msgid "%s or higher"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:270
-msgid "Compatible up to:"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:274
-msgid "Downloaded:"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:274
-msgid "%s time"
-msgid_plural "%s times"
-msgstr[0] ""
-msgstr[1] ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:279
-msgid "WordPress.org Plugin Page &#187;"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:284
-msgid "Plugin Homepage &#187;"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:289
-#: lib/freemius/includes/fs-plugin-functions.php:346
-msgid "Donate to this plugin &#187;"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:295
-msgid "Average Rating"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:301
-msgid "(based on %s rating)"
-msgid_plural "(based on %s ratings)"
-msgstr[0] ""
-msgstr[1] ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:314
-msgid "Click to see reviews that provided a rating of %d star"
-msgid_plural "Click to see reviews that provided a rating of %d stars"
-msgstr[0] ""
-msgstr[1] ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:314
-msgid "%d star"
-msgid_plural "%d stars"
-msgstr[0] ""
-msgstr[1] ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:325
-msgid "Contributors"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:353
-#: lib/freemius/includes/fs-plugin-functions.php:355
-msgid "Warning:"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:353
-msgid "This plugin has not been tested with your current version of WordPress."
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:355
-msgid ""
-"This plugin has not been marked as compatible with your version of "
-"WordPress."
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:392
-#: lib/freemius/includes/i18n.php:111
-msgid "Install Now"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:397
-#: lib/freemius/includes/i18n.php:112
-msgid "Install Update Now"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:401
-msgid "Newer Version (%s) Installed"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:404
-msgid "Latest Version Installed"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:35
-msgid "Account"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:36
-msgid "Add On"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:38
-msgid "Change Ownership"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:40
-msgid "Support Forum"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:41
-msgid "Add Ons"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:43
-msgid "Awesome"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:46
-msgid "Unlimited Updates"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:48
-msgid "Free Trial"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:50
-msgid "Account Details"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:52
-msgid "Delete Account"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:55
-msgid "Change Plan"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:60
-msgid "New"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:64
-msgid "Single Site License"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:65
-msgid "Unlimited Licenses"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:66
-msgid "Up to %s Sites"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:67
-msgid "%sRenew your license now%s to access version %s features and support."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:69
-msgid "You are just one step away - %s"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:71
-msgid "We made a few tweaks to the plugin, %s"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:72
-msgid "Opt-in to make \"%s\" Better!"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:73
-msgid "Error"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:74
-msgid ""
-"Freemius SDK couldn't find the plugin's main file. Please contact "
-"sdk@freemius.com with the current error."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:78
-msgid "not verified"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:79
-msgid "Verify Email"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:82
-msgid "No expiration"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:83
-msgid "Expired"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:84
-msgid "In %s"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:88
-msgid "Verified"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:89
-msgid "Plugin"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:92
-msgid "Title"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:94
-msgid "ID"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:96
-msgid "Plugin Installs"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:98
-msgid "User ID"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:99
-msgid "Site ID"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:100
-msgid "Public Key"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:101
-msgid "Secret Key"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:103
-msgid "No ID"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:107
-msgid "Activate"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:108 lib/freemius/includes/i18n.php:130
-msgid "Deactivate"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:113
-msgid "More information about %s"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:114
-msgid "Localhost"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:116
-msgid "What is your %s?"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:117
-msgid "Activate this add-on"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:118
-msgid ""
-"Deactivating your license will block all premium features, but will enable "
-"you to activate the license on another site. Are you sure you want to "
-"proceed?"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:119
-msgid ""
-"Deleting the account will automatically deactivate your %s plan license so "
-"you can use it on other sites. If you want to terminate the recurring "
-"payments as well, click the \"Cancel\" button, and first \"Downgrade\" your "
-"account. Are you sure you would like to continue with the deletion?"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:120
-msgid ""
-"Deletion is not temporary. Only delete if you no longer want to use this "
-"plugin anymore. Are you sure you would like to continue with the deletion?"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:121
-msgid ""
-"Downgrading your plan will immediately stop all future recurring payments "
-"and your %s plan license will expire in %s."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:122
-msgid ""
-"You can still enjoy all %s features but you will not have access to plugin "
-"updates and support."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:123
-msgid ""
-"Once your license expire you can still use the Free version but you will "
-"NOT have access to the %s features."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:124
-msgid "Are you sure you want to proceed?"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:127
-msgid "Add Ons for %s"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:129
-msgid "If you have a moment, please let us know why you are deactivating"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:131
-msgid "Yes - Deactivate"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:132
-msgid "Submit & Deactivate"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:134
-msgid "I no longer need the plugin"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:135
-msgid "I found a better plugin"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:136
-msgid "I only needed the plugin for a short period"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:137
-msgid "The plugin broke my site"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:138
-msgid "The plugin suddenly stopped working"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:139
-msgid "I can't pay for it anymore"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:141
-msgid "What's the plugin's name?"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:142
-msgid "What price would you feel comfortable paying?"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:143
-msgid "I couldn't understand how to make it work"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:144
-msgid "The plugin is great, but I need specific feature that you don't support"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:145
-msgid "The plugin is not working"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:146
-msgid "It's not what I was looking for"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:147
-msgid "The plugin didn't work as expected"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:148
-msgid "What feature?"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:149
-msgid "Kindly share what didn't work so we can fix it for future users..."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:150
-msgid "What you've been looking for?"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:151
-msgid "What did you expect?"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:152
-msgid "The plugin didn't work"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:153
-msgid "I don't like to share my information with you"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:159
-msgid ""
-"In order to enjoy all our features and functionality, %s needs to connect "
-"your user, %s at %s, to %s"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:160
-msgid ""
-"Please help us improve %2$s! If you opt-in, some data about your usage of "
-"%2$s will be sent to %5$s. If you skip this, that's okay! %2$s will still "
-"work just fine."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:161
-msgid ""
-"You should receive an activation email for %s to your mailbox at %s. Please "
-"make sure you click the activation button in that email to complete the "
-"install."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:162
-msgid "What permissions are being granted?"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:163
-msgid "Your Profile Overview"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:164
-msgid "Name and email address"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:165
-msgid "Your Site Overview"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:166
-msgid "Site address, WordPress version, PHP Version"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:167
-msgid "Plugin Events"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:168
-msgid "Activation, deactivation and uninstall"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:169
-msgid "Newsletter"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:170
-msgid "Updates, announcements, marketing, no spam"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:171
-msgid "Privacy Policy"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:172
-msgid "Terms of Service"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:176
-msgid "Re-send activation email"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:180
-msgid "Screenshots"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:181
-msgid "Click to view full-size screenshot %d"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:185
-msgid "Freemius Debug"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:188
-msgid "Freemius State"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:196
-msgid "Add Ons of Plugin %s"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:197
-msgid "Are you sure you want to delete the all Freemius data?"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:198
-msgid "Actions"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:199
-msgid "Delete All Accounts"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:200
-msgid "Clear API Cache"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:201
-msgid "Sync Data From Server"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:211
-msgid "O.K"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:217
-msgid "Seems like you got the latest release."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:218
-msgid "You are all good!"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:219
-msgid ""
-"Sorry, we could not complete the email update. Another user with the same "
-"email is already registered."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:220
-msgid ""
-"If you would like to give up the ownership of the plugin's account to %s "
-"click the Change Ownership button."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:221
-msgid ""
-"Your email was successfully updated. You should receive an email with "
-"confirmation instructions in few moments."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:222
-msgid "Your name was successfully updated."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:223
-msgid "You have successfully updated your %s."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:224
-msgid "Please provide your full name."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:225
-msgid ""
-"Verification mail was just sent to %s. If you can't find it after 5 min, "
-"please check your spam box."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:226
-msgid ""
-"Just letting you know that the add-ons information of %s is being pulled "
-"from external server."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:227
-msgid "No credit card required"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:228
-msgid "Premium plugin version was successfully activated."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:229
-msgid "The upgrade of %s was successfully completed."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:230
-msgid "Your account was successfully activated with the %s plan."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:231
-msgid "Download the latest %s version now"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:232
-msgid "Download the latest version now"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:234
-msgid "Your %s Add-on plan was successfully upgraded."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:235
-msgid "Your email has been successfully verified - you are AWESOME!"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:236
-msgid "Your plan was successfully upgraded."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:237
-msgid "Your plan was successfully changed to %s."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:238
-msgid ""
-"Your license has expired. You can still continue using the free plugin "
-"forever."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:239
-msgid "Your trial has been successfully started."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:240
-msgid "Your license was successfully activated."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:241
-msgid "It looks like your site currently don't have an active license."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:242
-msgid "Your license was successfully deactivated, you are back to the %s plan."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:243
-msgid "It looks like the license deactivation failed."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:244
-msgid "It looks like the license could not be activated."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:245
-msgid "Error received from the server:"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:246
-msgid "Your trial has expired. You can still continue using all our free features."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:247
-msgid ""
-"Your plan was successfully downgraded. Your %s plan license will expire in "
-"%s."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:248
-msgid ""
-"Seems like we are having some temporary issue with your plan downgrade. "
-"Please try again in few minutes."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:249
-msgid ""
-"It looks like you are not in trial mode anymore so there's nothing to "
-"cancel :)"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:250
-msgid "Your %s Plan trial was successfully cancelled."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:252
-msgid "Please download %s."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:254
-msgid ""
-"How do you like %s so far? Test all our %s premium features with a %d-day "
-"free trial."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:256
-msgid ""
-"Seems like we are having some temporary issue with your trial cancellation. "
-"Please try again in few minutes."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:257
-msgid "No commitment for %s days - cancel anytime!"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:258
-msgid ""
-"Your license has expired. You can still continue using all the %s features, "
-"but you'll need to renew your license to continue getting updates and "
-"support."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:259
-msgid "Couldn't activate %s."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:260
-msgid "Please contact us with the following message:"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:261
-msgid ""
-"It looks like your plan did't change. If you did upgrade, it's probably an "
-"issue on our side - sorry."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:262
-msgid "Please contact us here"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:263
-msgid ""
-"I have upgraded my account but when I try to Sync the License, the plan "
-"remains %s."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:266
-msgid "From unknown reason, the API connectivity test fails."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:267
-msgid ""
-"We use PHP cURL library for the API calls, which is a very common library "
-"and usually installed out of the box. Unfortunately, cURL is not installed "
-"on your server."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:268
-msgid "From unknown reason, CloudFlare, the firewall we use, blocks the connection."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:270
-msgid ""
-"It looks like your server is using Squid ACL (access control lists), which "
-"blocks the connection."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:271
-msgid "I don't know what is Squid or ACL, help me!"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:272 lib/freemius/includes/i18n.php:276
-msgid ""
-"We'll make sure to contact your hosting company and resolve the issue. You "
-"will get a follow-up email to %s once we have an update."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:273
-msgid "I'm a system administrator"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:274
-msgid ""
-"Great, please whitelist the following domains: %s. Once you done, "
-"deactivate the plugin and activate it again."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:275
-msgid "I don't know what is cURL or how to install it, help me!"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:277
-msgid ""
-"Great, please install cURL and enable it in your php.ini file. To make sure "
-"it was successfully activated, use 'phpinfo()'. Once activated, deactivate "
-"the plugin and reactivate it back again."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:278
-msgid ""
-"We are sure it's an issue on our side and more than happy to resolve it for "
-"you ASAP if you give us a chance."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:279
-msgid "Yes - I'm giving you a chance to fix it"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:280
-msgid ""
-"We will do our best to whitelist your server and resolve this issue ASAP. "
-"You will get a follow-up email to %s once we have an update."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:281
-msgid "Let's try your previous version"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:282
-msgid "Uninstall this version and install the previous one."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:283
-msgid "That's exhausting, please deactivate"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:284
-msgid ""
-"We feel your frustration and sincerely apologize for the inconvenience. "
-"Hope to see you again in the future."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:285
-msgid ""
-"Thank for giving us the chance to fix it! A message was just sent to our "
-"technical staff. We will get back to you as soon as we have an update to "
-"%s. Appreciate your patience."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:287
-msgid ""
-"It seems like one of the authentication parameters is wrong. Update your "
-"Public Key, Secret Key & User ID, and try again."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:290
-msgid ""
-"Please check your mailbox, you should receive an email via %s to confirm "
-"the ownership change. From security reasons, you must confirm the change "
-"within the next 15 min. If you cannot find the email, please check your "
-"spam folder."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:291
-msgid ""
-"Thanks for confirming the ownership change. An email was just sent to %s "
-"for final approval."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:292
-msgid "%s is the new owner of the account."
-msgstr ""
-
 #: templates/media/album-gallery.php:14
 msgid "Album List"
 msgstr ""
@@ -4187,362 +3333,4 @@ msgstr ""
 #: app/main/controllers/template/RTMediaNav.php:32
 msgctxt "My Account Privacy sub nav"
 msgid "Privacy"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:87
-msgctxt "Plugin installer section title"
-msgid "Description"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:88
-msgctxt "Plugin installer section title"
-msgid "Installation"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:89
-msgctxt "Plugin installer section title"
-msgid "FAQ"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:90
-msgctxt "Plugin installer section title"
-msgid "Screenshots"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:91
-msgctxt "Plugin installer section title"
-msgid "Changelog"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:92
-msgctxt "Plugin installer section title"
-msgid "Reviews"
-msgstr ""
-
-#: lib/freemius/includes/fs-plugin-functions.php:93
-msgctxt "Plugin installer section title"
-msgid "Other Notes"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:297
-msgctxt "Plugin installer section title"
-msgid "Features & Pricing"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:42
-msgctxt "verb"
-msgid "Upgrade"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:47
-msgctxt "verb"
-msgid "Downgrade"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:51
-msgctxt "verb"
-msgid "Delete"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:63
-msgctxt "verb"
-msgid "Purchase"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:175
-msgctxt "verb"
-msgid "Skip"
-msgstr ""
-
-#: lib/freemius/templates/account.php:287
-msgctxt "verb"
-msgid "Edit"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:44
-msgctxt "noun"
-msgid "Pricing"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:45
-msgctxt "noun"
-msgid "Price"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:53
-msgctxt "as close a window"
-msgid "Dismiss"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:54
-msgctxt "as product pricing plan"
-msgid "Plan"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:56
-msgctxt "as download professional version"
-msgid "Download %s Version"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:57
-msgctxt "as download professional version now"
-msgid "Download %s version now"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:58
-msgctxt "as download latest version"
-msgid "Download Latest"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:59
-msgctxt "E.g. you have a professional license."
-msgid "You have a %s license."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:62
-msgctxt "as trial plan"
-msgid "Trial"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:68
-msgctxt "e.g. Professional Plan"
-msgid "%s Plan"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:70
-msgctxt "%s - plugin name. As complete \"Jetpack\" activation now"
-msgid "Complete \"%s\" Activation Now"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:77
-msgctxt "as expiration date"
-msgid "Expiration"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:80
-msgctxt "e.g. expires in 2 months"
-msgid "Expires in %s"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:81
-msgctxt "e.g. auto renews in 2 months"
-msgid "Auto renews in %s"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:85
-msgctxt "as plugin version"
-msgid "Version"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:91
-msgctxt "as file/folder path"
-msgid "Path"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:93
-msgctxt "as WP plugin slug"
-msgid "Slug"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:97
-msgctxt "like websites"
-msgid "Sites"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:102
-msgctxt "as secret encryption key missing"
-msgid "No Secret"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:104
-msgctxt "as synchronize license"
-msgid "Sync License"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:105
-msgctxt "as synchronize"
-msgid "Sync"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:109
-msgctxt "active mode"
-msgid "Active"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:110
-msgctxt "is active mode?"
-msgid "Is Active"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:115
-msgctxt "as activate Professional plan"
-msgid "Activate %s Plan"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:133
-msgctxt "the text of the cancel button of the plugin deactivation dialog box."
-msgid "Cancel"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:140
-msgctxt ""
-"the text of the \"other\" reason for deactivating the plugin that is shown "
-"in the modal box."
-msgid "Other"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:157
-msgctxt "greeting"
-msgid "Hey %s,"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:158
-msgctxt "a greeting. E.g. Thanks John!"
-msgid "Thanks %s!"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:173
-msgctxt "as activating plugin"
-msgid "Activating"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:174
-msgctxt "button label"
-msgid "Allow & Continue"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:186
-msgctxt "as turned on"
-msgid "On"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:187
-msgctxt "as turned off"
-msgid "Off"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:189
-msgctxt "as connection was successful"
-msgid "Connected"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:190
-msgctxt "as connection blocked"
-msgid "Blocked"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:191
-msgctxt "as application program interface"
-msgid "API"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:192
-msgctxt "as software development kit versions"
-msgid "SDK"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:193
-msgctxt "as software development kit versions"
-msgid "SDK Versions"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:194
-msgctxt "as plugin folder path"
-msgid "Plugin Path"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:195
-msgctxt "as sdk path"
-msgid "SDK Path"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:205
-msgctxt "as congratulations"
-msgid "Congrats"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:206
-msgctxt "exclamation"
-msgid "Oops"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:212
-msgctxt "exclamation"
-msgid "Hey"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:207
-msgctxt "interjection expressing joy or exuberance"
-msgid "Yee-haw"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:208
-msgctxt ""
-"(especially in electronic communication) used to express elation, "
-"enthusiasm, or triumph."
-msgid "W00t"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:209
-msgctxt "a positive response"
-msgid "Right on"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:210
-msgctxt ""
-"something somebody says when they are thinking about what you have just "
-"said. "
-msgid "Hmm"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:213
-msgctxt "advance notice of something that will need attention."
-msgid "Heads up"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:233
-msgctxt "%s - product name, e.g. Facebook add-on was successfully..."
-msgid "%s Add-on was successfully purchased."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:251
-msgctxt "%s - numeric version number"
-msgid "Version %s was released."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:253
-msgctxt "%s - plan name, as the latest professional version here"
-msgid "the latest %s version here"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:255
-msgctxt "call to action"
-msgid "Start free trial"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:269
-msgctxt "as pluginX requires an access to our API"
-msgid "%s requires an access to our API."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:286
-msgctxt "%1s - plugin title, %2s - API domain"
-msgid ""
-"Your server is blocking the access to Freemius' API, which is crucial for "
-"%1s synchronization. Please contact your host to whitelist %2s"
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:294
-msgctxt "addonX cannot run without pluginY"
-msgid "%s cannot run without %s."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:295
-msgctxt "addonX cannot run..."
-msgid "%s cannot run without the plugin."
-msgstr ""
-
-#: lib/freemius/includes/i18n.php:296
-msgctxt "pluginX activation was successfully..."
-msgid "%s activation was successfully completed."
 msgstr ""

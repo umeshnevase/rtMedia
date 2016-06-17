@@ -5,8 +5,8 @@ Tags: BuddyPress, media, multimedia, album, audio, songs, music, video, photo, i
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Requires at least: WordPress 3.6
-Tested up to: 4.4.1
-Stable tag: 3.10.3
+Tested up to: 4.5.1
+Stable tag: 3.10.8
 
 Add albums, photo, audio/video encoding, privacy, sharing, front-end uploads & more. All this works on mobile/tablets devices.
 
@@ -140,10 +140,34 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Changelog ==
 
-= 3.10.3 [Jan 28, 2015] =
+= 3.10.8 [Jun 14, 2016] =
+* Fixed database error when deleting comment
+* Changed price for add-ons
+
+= 3.10.7 [May 25, 2016] =
+* Fixed JS issue for tabs in media edit
+* Fixed CSS for twentysixteen theme
+* Code cleanup
+* Updated german language file
+
+= 3.10.6 [May 03, 2016] =
+* Fixed - BuddyPress group privacy now depends on group status (public, private, hidden)
+* Fixed - JS issue for WordPress 4.5
+* Fixed - 404 Error for titles on bbPress templates
+* Fixed - Required changes done for rtmedia.io
+
+= 3.10.5 [Mar 24, 2016] =
+* Code Cleanup
+
+= 3.10.4 [Mar 15, 2016] =
+* Fixed browser title if theme has title-tag support
+* Fixed the video & audio player issue for activity load more
+* Fixed minor bugs
+
+= 3.10.3 [Jan 28, 2016] =
 * Fix issues
 
-= 3.10.2 [Jan 28, 2015] =
+= 3.10.2 [Jan 28, 2016] =
 * Fix XSS vulnerability (thanks to [Brajesh](https://profiles.wordpress.org/sbrajesh/))
 * Updated Freemius SDK
 
@@ -1131,8 +1155,8 @@ http://www.youtube.com/watch?v=dJrykKQGDcs
 
 == Upgrade Notice ==
 
-= 3.10.3 =
-Requires BuddyPress 1.7 or higher, if using BuddyPress. Fix XSS vulnerability.
+= 3.10.8 =
+Requires BuddyPress 1.7 or higher, if using BuddyPress. Fixed database error when deleting comment, changed price for add-ons.
 
 == Sponsors ==
 
