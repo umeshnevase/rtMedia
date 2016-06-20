@@ -66,12 +66,12 @@ class RTMediaUploadView {
 				$privacy_levels_array = array(
 					'public'  => 0,
 					'private' => 20,
-					'hidden'  => 20
+					'hidden'  => 20,
 				);
 				$privacy_levels_array = apply_filters( 'rtmedia_group_privacy_levels', $privacy_levels_array );
 				$privacy_val          = $privacy_levels_array[ $group_status ];
 
-				$up_privacy = $privacy = "<input type='hidden' name='privacy' value='" . $privacy_val . "' />";
+				$up_privacy = $privacy = "<input type='hidden' name='privacy' value='" . esc_attr( $privacy_val ) . "' />";
 			} else {
 				$up_privacy = new RTMediaPrivacy( false );
 				$up_privacy = $up_privacy->select_privacy_ui( false, 'rtSelectPrivacy' );
@@ -115,7 +115,7 @@ class RTMediaUploadView {
 		}
 		global $rtmedia;
 		//Render UPLOAD button only if direct upload is disabled
-		$upload_button = '<input type="button" class="start-media-upload" value="' . __( 'Start upload', 'buddypress-media' ) . '"/>';
+		$upload_button = '<input type="button" class="start-media-upload" value="' . esc_attr__( 'Start upload', 'buddypress-media' ) . '"/>';
 		$tabs          = array(
 			'file_upload' => array(
 				'default'  => array(

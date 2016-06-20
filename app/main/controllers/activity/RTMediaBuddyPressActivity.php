@@ -275,7 +275,7 @@ class RTMediaBuddyPressActivity {
 				'browse_button' => apply_filters( 'rtmedia_upload_button_id', 'rtmedia-add-media-button-post-update' ), // browse button assigned to "Attach Files" Button.
 				'container'       => 'rtmedia-whts-new-upload-container',
 				'drop_element' => 'whats-new-textarea', // drag-drop area assigned to activity update textarea
-				'filters'         => apply_filters( 'rtmedia_plupload_files_filter', array( array( 'title' => __( 'Media Files', 'buddypress-media' ), 'extensions' => get_rtmedia_allowed_upload_type() ) ) ),
+				'filters'         => apply_filters( 'rtmedia_plupload_files_filter', array( array( 'title' => esc_html__( 'Media Files', 'buddypress-media' ), 'extensions' => get_rtmedia_allowed_upload_type() ) ) ),
 				'max_file_size' => ( wp_max_upload_size() ) / ( 1024 * 1024 ) . 'M',
 				'multipart' => true, 'urlstream_upload' => true,
 				'flash_swf_url' => includes_url( 'js/plupload/plupload.flash.swf' ),
