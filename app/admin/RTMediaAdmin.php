@@ -26,40 +26,35 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 		 * @access public
 		 */
 		public function __construct() {
+
 			global $rtmedia;
 
 			// Actions and filters
 			add_action( 'init', array( $this, 'video_transcoding_survey_response' ) );
-			add_filter( 'plugin_action_links_' . RTMEDIA_BASE_NAME, array( &$this, 'plugin_add_settings_link' ) );
+			add_filter( 'plugin_action_links_' . RTMEDIA_BASE_NAME, array( $this, 'plugin_add_settings_link' ) );
 
 			$this->rtmedia_support = new RTMediaSupport();
+
 			add_action( 'wp_ajax_rtmedia_select_request', array( $this->rtmedia_support, 'get_form' ), 1 );
-			add_action( 'wp_ajax_rtmedia_cancel_request', function () {
+			add_action( 'wp_ajax_rtmedia_cancel_request', function() {
 				do_settings_sections( 'rtmedia-support' );
 				die();
 			}, 1 );
 			add_action( 'wp_ajax_rtmedia_submit_request', array( $this->rtmedia_support, 'submit_request' ), 1 );
-
-			add_action( 'wp_ajax_rtmedia_linkback', array( $this, 'linkback' ), 1 ); //fixme : is it being used ?
+			add_action( 'wp_ajax_rtmedia_linkback', array( $this, 'linkback' ), 1 );
 			add_action( 'wp_ajax_rtmedia_rt_album_deactivate', 'BPMediaAlbumimporter::bp_album_deactivate', 1 );
 			add_action( 'wp_ajax_rtmedia_rt_album_import', 'BPMediaAlbumimporter::bpmedia_ajax_import_callback', 1 );
 			add_action( 'wp_ajax_rtmedia_rt_album_import_favorites', 'BPMediaAlbumimporter::bpmedia_ajax_import_favorites', 1 );
 			add_action( 'wp_ajax_rtmedia_rt_album_import_step_favorites', 'BPMediaAlbumimporter::bpmedia_ajax_import_step_favorites', 1 );
 			add_action( 'wp_ajax_rtmedia_rt_album_cleanup', 'BPMediaAlbumimporter::cleanup_after_install' );
-			add_action( 'wp_ajax_rtmedia_convert_videos_form', array( $this, 'convert_videos_mailchimp_send' ), 1 ); //fixme : is it being used ?
+			add_action( 'wp_ajax_rtmedia_convert_videos_form', array( $this, 'convert_videos_mailchimp_send' ), 1 );
 			add_action( 'wp_ajax_rtmedia_correct_upload_filetypes', array( $this, 'correct_upload_filetypes' ), 1 );
 			add_filter( 'plugin_row_meta', array( $this, 'plugin_meta_premium_addon_link' ), 1, 2 );
 			add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widgets' ), 0 );
 			add_filter( 'attachment_fields_to_edit', array( $this, 'edit_video_thumbnail' ), null, 2 );
 			add_filter( 'attachment_fields_to_save', array( $this, 'save_video_thumbnail' ), null, 1 );
-			add_action( 'wp_ajax_rtmedia_hide_video_thumb_admin_notice', array(
-				$this,
-				'rtmedia_hide_video_thumb_admin_notice',
-			), 1 );
-			add_action( 'wp_ajax_rtmedia_hide_addon_update_notice', array(
-				$this,
-				'rtmedia_hide_addon_update_notice',
-			), 1 );
+			add_action( 'wp_ajax_rtmedia_hide_video_thumb_admin_notice', array( $this, 'rtmedia_hide_video_thumb_admin_notice', ), 1 );
+			add_action( 'wp_ajax_rtmedia_hide_addon_update_notice', array( $this, 'rtmedia_hide_addon_update_notice', ), 1 );
 			add_filter( 'media_row_actions', array( $this, 'modify_medialibrary_permalink' ), 10, 2 );
 
 			$obj_encoding = new RTMediaEncoding( true );
@@ -79,6 +74,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 
 			$rtmedia_option = filter_input( INPUT_POST, 'rtmedia-options', FILTER_DEFAULT, FILTER_SANITIZE_NUMBER_INT );
+
 			if ( isset( $rtmedia_option ) ) {
 				if ( isset( $rtmedia_option['general_showAdminMenu'] ) && 1 === intval( $rtmedia_option['general_showAdminMenu'] ) ) {
 					add_action( 'admin_bar_menu', array( $this, 'admin_bar_menu' ), 100, 1 );
@@ -106,25 +102,19 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 				add_action( 'admin_init', array( $this, 'check_permalink_admin_notice' ) );
 			}
 
-			add_action( 'wp_ajax_rtmedia_hide_template_override_notice', array(
-				$this,
-				'rtmedia_hide_template_override_notice',
-			), 1 );
+			add_action( 'wp_ajax_rtmedia_hide_template_override_notice', array( $this, 'rtmedia_hide_template_override_notice' ), 1 );
 			add_action( 'admin_init', array( $this, 'rtmedia_bp_add_update_type' ) );
-			add_action( 'wp_ajax_rtmedia_hide_inspirebook_release_notice', array(
-				$this,
-				'rtmedia_hide_inspirebook_release_notice',
-			), 1 );
-			add_action( 'wp_ajax_rtmedia_hide_social_sync_notice', array(
-				$this,
-				'rtmedia_hide_social_sync_notice',
-			), 1 );
+			add_action( 'wp_ajax_rtmedia_hide_inspirebook_release_notice', array( $this, 'rtmedia_hide_inspirebook_release_notice' ), 1 );
+			add_action( 'wp_ajax_rtmedia_hide_social_sync_notice', array( $this, 'rtmedia_hide_social_sync_notice' ), 1 );
 			add_action( 'wp_ajax_rtmedia_hide_pro_split_notice', array( $this, 'rtmedia_hide_pro_split_notice' ), 1 );
 
-			new RTMediaMediaSizeImporter(); // do not delete this line. We only need to create object of this class if we are in admin section
+			// do not delete this line. We only need to create object of this class if we are in admin section
+			new RTMediaMediaSizeImporter();
+
 			if ( class_exists( 'BuddyPress' ) ) {
 				new RTMediaActivityUpgrade();
 			}
+
 			add_action( 'admin_notices', array( $this, 'rtmedia_admin_notices' ) );
 			add_action( 'network_admin_notices', array( $this, 'rtmedia_network_admin_notices' ) );
 			add_action( 'admin_init', array( $this, 'rtmedia_addon_license_save_hook' ) );
@@ -135,7 +125,13 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_action( 'admin_footer', array( $this, 'rtm_admin_templates' ) );
 		}
 
-		function rtm_admin_templates() {
+		/**
+		 * To load admin templates using wp-util
+		 *
+		 * @access	public
+		 */
+		public function rtm_admin_templates() {
+
 			foreach ( glob( RTMEDIA_PATH . 'app/admin/templates/*.php' ) as $filename ) {
 				$slug = rtrim( basename( $filename ), '.php' );
 
@@ -145,7 +141,18 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 		}
 
-		function modify_medialibrary_permalink( $action, $post ) {
+		/**
+		 * Adding view link in WordPress media library
+		 *
+		 * @access	public
+		 *
+		 * @param 	array	$action
+		 * @param 	object	$post
+		 *
+		 * @return 	array	$action
+		 */
+		public function modify_medialibrary_permalink( $action, $post ) {
+
 			$rtm_id = rtmedia_id( $post->ID );
 
 			if ( $rtm_id ) {
@@ -155,6 +162,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 
 			return $action;
+			
 		}
 
 		function rtmedia_migration() {
