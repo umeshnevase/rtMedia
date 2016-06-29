@@ -4,7 +4,7 @@
  * Description of RTMediaAdmin
  *
  * @package    RTMedia
- * @subpackage Admin
+ * @subpackage RTMedia/Admin
  *
  */
 if ( ! class_exists( 'RTMediaAdmin' ) ) {
@@ -53,8 +53,8 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			add_action( 'wp_dashboard_setup', array( $this, 'add_dashboard_widgets' ), 0 );
 			add_filter( 'attachment_fields_to_edit', array( $this, 'edit_video_thumbnail' ), null, 2 );
 			add_filter( 'attachment_fields_to_save', array( $this, 'save_video_thumbnail' ), null, 1 );
-			add_action( 'wp_ajax_rtmedia_hide_video_thumb_admin_notice', array( $this, 'rtmedia_hide_video_thumb_admin_notice', ), 1 );
-			add_action( 'wp_ajax_rtmedia_hide_addon_update_notice', array( $this, 'rtmedia_hide_addon_update_notice', ), 1 );
+			add_action( 'wp_ajax_rtmedia_hide_video_thumb_admin_notice', array( $this, 'rtmedia_hide_video_thumb_admin_notice' ), 1 );
+			add_action( 'wp_ajax_rtmedia_hide_addon_update_notice', array( $this, 'rtmedia_hide_addon_update_notice' ), 1 );
 			add_filter( 'media_row_actions', array( $this, 'modify_medialibrary_permalink' ), 10, 2 );
 
 			$obj_encoding = new RTMediaEncoding( true );
@@ -162,42 +162,51 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			}
 
 			return $action;
-			
-		}
 
-		function rtmedia_migration() {
-			new RTMediaMigration();
-		}
-
-		function rtmedia_addon_license_save_hook() {
-			do_action( 'rtmedia_addon_license_save_hook' );
 		}
 
 		/**
-		 * Show rtmedia network admin notices.
+		 * To initialize migration class
 		 *
-		 * @access public
+		 * @access	public
+		 */
+		public function rtmedia_migration() {
+
+			new RTMediaMigration();
+
+		}
+
+		/**
+		 * RTMedia License save hook for add-ons
 		 *
-		 * @param  void
+		 * @access	public
+		 */
+		public function rtmedia_addon_license_save_hook() {
+
+			do_action( 'rtmedia_addon_license_save_hook' );
+
+		}
+
+		/**
+		 * Show rtMedia network admin notices.
 		 *
-		 * @return void
+		 * @access	public
 		 */
 		public function rtmedia_network_admin_notices() {
+
 			if ( is_multisite() ) {
 				$this->upload_filetypes_error();
 			}
+
 		}
 
 		/**
-		 * Show rtmedia admin notices.
+		 * Show rtMedia admin notices.
 		 *
-		 * @access public
-		 *
-		 * @param  void
-		 *
-		 * @return void
+		 * @access	public
 		 */
 		public function rtmedia_admin_notices() {
+
 			if ( current_user_can( 'list_users' ) ) {
 				$this->upload_filetypes_error();
 				$this->rtmedia_regenerate_thumbnail_notice();
@@ -213,12 +222,16 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 					}
 				}
 			}
+
 		}
 
-		/*
+		/**
 		 * rtMedia Pro split release admin notice
+		 *
+		 * @access	public
 		 */
 		public function rtmedia_pro_split_release_notice() {
+
 			$site_option = rtmedia_get_site_option( 'rtmedia_pro_split_release_notice' );
 
 			if ( ( ! $site_option || 'hide' !== $site_option ) ) {
@@ -229,47 +242,55 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						<span>
 							<b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
 							<?php esc_html_e( 'We have released 30+ premium add-ons for rtMedia plugin. Read more about it ', 'buddypress-media' ); ?>
-							<a href="https://rtmedia.io/blog/rtmedia-pro-splitting-major-change/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media"
-							   target="_blank"><?php esc_html_e( 'here', 'buddypress-media' ) ?></a>.
+							<a href="https://rtmedia.io/blog/rtmedia-pro-splitting-major-change/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank"><?php esc_html_e( 'here', 'buddypress-media' ) ?></a>.
 						</span>
-						<a href="#"
-						   onclick="rtmedia_hide_pro_split_notice('<?php echo esc_js( wp_create_nonce( 'rtcamp_pro_split' ) ); ?>');"
-						   style="float:right">Dismiss</a>
+						<a href="#" onclick="rtmedia_hide_pro_split_notice( '<?php echo esc_js( wp_create_nonce( 'rtcamp_pro_split' ) ); ?>' );" style="float:right;">Dismiss</a>
 					</p>
 				</div>
 				<script type="text/javascript">
-					function rtmedia_hide_pro_split_notice(nonce) {
-						var data = {action: 'rtmedia_hide_pro_split_notice', _rtm_nonce: nonce };
-						jQuery.post(ajaxurl, data, function (response) {
+					function rtmedia_hide_pro_split_notice( nonce ) {
+						var data = {
+							action: 'rtmedia_hide_pro_split_notice',
+							_rtm_nonce: nonce
+						};
+
+						jQuery.post( ajaxurl, data, function( response ) {
 							response = response.trim();
 
-							if (response === "1")
-								jQuery('.rtmedia-pro-split-notice').remove();
-						});
+							if ( "1" === response ) {
+								jQuery( '.rtmedia-pro-split-notice' ).remove();
+							}
+						} );
 					}
 				</script>
 				<?php
 			}
 		}
 
-		/*
-		 * Hide pro split release notice
+		/**
+		 * Hide rtMedia Pro split release admin notice
+		 *
+		 * @access	public
 		 */
+		public function rtmedia_hide_pro_split_notice() {
 
-		function rtmedia_hide_pro_split_notice() {
 			if ( check_ajax_referer( 'rtcamp_pro_split', '_rtm_nonce' ) && rtmedia_update_site_option( 'rtmedia_pro_split_release_notice', 'hide' ) ) {
 				echo '1';
 			} else {
 				echo '0';
 			}
+
 			die();
+
 		}
 
-		/*
-		 *  Show social sync release notice admin notice.
+		/**
+		 * Show social sync release notice admin notice.
+		 *
+		 * @access	public
 		 */
+		public function rtmedia_social_sync_release_notice() {
 
-		function rtmedia_social_sync_release_notice() {
 			$site_option                         = rtmedia_get_site_option( 'rtmedia_social_sync_release_notice' );
 			$check_rtmedia_social_sync_installed = file_exists( trailingslashit( WP_PLUGIN_DIR ) . 'rtmedia-social-sync/index.php' );
 
@@ -281,63 +302,68 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						<span>
 						    <b><?php esc_html_e( 'rtMedia: ', 'buddypress-media' ); ?></b>
 							<?php esc_html_e( 'Meet ', 'buddypress-media' ); ?>
-							<a href="https://rtmedia.io/products/rtmedia-social-sync/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media"
-							   target="_blank">
+							<a href="https://rtmedia.io/products/rtmedia-social-sync/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media" target="_blank">
 								<b><?php esc_html_e( 'rtMedia Social Sync', 'buddypress-media' ) ?></b>
 							</a>
 							<?php esc_html_e( ' which allows you to import media from your Facebook account.', 'buddypress-media' ); ?>
 						</span>
-						<a href="#"
-						   onclick="rtmedia_hide_social_sync_notice('<?php echo esc_js( wp_create_nonce( 'social_sync' ) ); ?>')"
-						   style="float:right">Dismiss</a>
+						<a href="#" onclick="rtmedia_hide_social_sync_notice( '<?php echo esc_js( wp_create_nonce( 'social_sync' ) ); ?>' )" style="float:right">Dismiss</a>
 					</p>
 				</div>
 				<script type="text/javascript">
-					function rtmedia_hide_social_sync_notice(nonce) {
-						var data = {action: 'rtmedia_hide_social_sync_notice', _rtm_nonce: nonce};
-						jQuery.post(ajaxurl, data, function (response) {
+					function rtmedia_hide_social_sync_notice( nonce ) {
+						var data = {
+							action: 'rtmedia_hide_social_sync_notice',
+							_rtm_nonce: nonce
+						};
+
+						jQuery.post( ajaxurl, data, function( response ) {
 							response = response.trim();
-							if (response === "1")
-								jQuery('.rtmedia-social-sync-notice').remove();
-						});
+
+							if ( "1" === response ) {
+								jQuery( '.rtmedia-social-sync-notice' ).remove();
+							}
+						} );
 					}
 				</script>
 				<?php
 			}
+
 		}
 
-		/*
-		 * Hide social sync release notice
+		/**
+		 * Hide social sync release notice admin notice.
+		 * 
+		 * @access	public
 		 */
+		public function rtmedia_hide_social_sync_notice() {
 
-		function rtmedia_hide_social_sync_notice() {
 			if ( check_ajax_referer( 'social_sync', '_rtm_nonce' ) && rtmedia_update_site_option( 'rtmedia_social_sync_release_notice', 'hide' ) ) {
 				echo '1';
 			} else {
 				echo '0';
 			}
+
 			die();
+
 		}
 
 		/**
-		 * Show rtmedia inspirebook release notice.
+		 * Show rtMedia InspireBook release notice.
 		 *
-		 * @access public
-		 *
-		 * @param  void
-		 *
-		 * @return void
+		 * @access	public
 		 */
 		public function rtmedia_inspirebook_release_notice() {
+
 			$site_option = rtmedia_get_site_option( 'rtmedia_inspirebook_release_notice' );
+
 			if ( ( ! $site_option || 'hide' !== $site_option ) && ( 'inspirebook' !== get_stylesheet() ) ) {
 				rtmedia_update_site_option( 'rtmedia_inspirebook_release_notice', 'show' );
 				?>
 				<div class="updated rtmedia-inspire-book-notice">
 					<p>
 						<span>
-							<a href="https://rtmedia.io/products/inspirebook/"
-							   target="_blank">
+							<a href="https://rtmedia.io/products/inspirebook/" target="_blank">
 								<b><?php esc_html_e( 'Meet InspireBook', 'buddypress-media' ) ?></b>
 							</a>
 							<?php esc_html_e( ' - First official rtMedia premium theme.', 'buddypress-media' ); ?>
@@ -352,25 +378,25 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 							action: 'rtmedia_hide_inspirebook_release_notice',
 							_rtm_nonce: jQuery('#rtmedia_hide_inspirebook_nonce').val()
 						};
-						jQuery.post(ajaxurl, data, function (response) {
+
+						jQuery.post( ajaxurl, data, function( response ) {
 							response = response.trim();
-							if (response === "1")
-								jQuery('.rtmedia-inspire-book-notice').remove();
-						});
+
+							if ( "1" === response ) {
+								jQuery( '.rtmedia-inspire-book-notice' ).remove();
+							}
+						} );
 					}
 				</script>
 				<?php
 			}
+
 		}
 
 		/**
-		 * Hide rtmedia inspirebook release notice.
+		 * Hide rtMedia InspireBook release notice.
 		 *
-		 * @access public
-		 *
-		 * @param  void
-		 *
-		 * @return void
+		 * @access	public
 		 */
 		public function rtmedia_hide_inspirebook_release_notice() {
 
@@ -379,7 +405,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 			} else {
 				echo '0';
 			}
+
 			die();
+
 		}
 
 		/**
