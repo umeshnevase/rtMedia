@@ -7,25 +7,32 @@
  */
 class RTMediaEncoding {
 
-	protected $api_url = 'http://api.rtcamp.com/';
+	protected $api_url = 'http://api-rtmedia.rtcamp.info/api/v1/';
+	protected $edd_api_url = 'http://edd.rtcamp.info/';
+	protected $free_product_id = 33;
 	protected $sandbox_testing = 0;
 	protected $merchant_id = 'paypal@rtcamp.com';
 	public $uploaded = array();
 	public $api_key = false;
 	public $stored_api_key = false;
+	public $edd_api_public_key = false;
+	public $edd_api_token_key = false;
 	public $video_extensions = ',mov,m4v,m2v,avi,mpg,flv,wmv,mkv,webm,ogv,mxf,asf,vob,mts,qt,mpeg,x-msvideo';
 	public $music_extensions = ',wma,ogg,wav,m4a';
 
 	public function __construct( $no_init = false ) {
+		//var_dump(debug_backtrace());
 		$this->api_key        = get_site_option( 'rtmedia-encoding-api-key' );
 		$this->stored_api_key = get_site_option( 'rtmedia-encoding-api-key-stored' );
+		$this->edd_api_public_key 	= get_site_option( 'edd-api-public-key' ) ? get_site_option( 'edd-api-public-key' ) : "NA";
+		$this->edd_api_token_key	= get_site_option( 'edd-api-token-key' ) ? get_site_option( 'edd-api-token-key' ) : "NA";
+
 		if ( $no_init ) {
 			return;
 		}
 		if ( is_admin() && $this->api_key ) {
 			add_action( 'rtmedia_before_default_admin_widgets', array( $this, 'usage_widget' ) );
 		}
-
 		add_action( 'admin_init', array( $this, 'save_api_key' ), 1 );
 		if ( $this->api_key ) {
 			// store api key as different db key if user disable encoding service
@@ -35,7 +42,6 @@ class RTMediaEncoding {
 			}
 			add_filter( 'rtmedia_allowed_types', array( $this, 'allowed_types_admin_settings' ), 10, 1 );
 			$usage_info = get_site_option( 'rtmedia-encoding-usage' );
-
 			if ( $usage_info ) {
 				if ( isset( $usage_info[ $this->api_key ]->status ) && $usage_info[ $this->api_key ]->status ) {
 					if ( isset( $usage_info[ $this->api_key ]->remaining ) && $usage_info[ $this->api_key ]->remaining > 0 ) {
@@ -47,7 +53,7 @@ class RTMediaEncoding {
 						if ( ! class_exists( 'RTMediaFFMPEG' ) && ! class_exists( 'RTMediaKaltura' ) ) {
 							add_filter( 'rtmedia_after_add_media', array( $this, 'encoding' ), 10, 3 );
 						}
-						$blacklist = array( 'localhost', '127.0.0.1' );
+						$blacklist = array( 'localhosts', '127.0.10.1' );
 						if ( ! in_array( wp_unslash( $_SERVER['HTTP_HOST'] ), $blacklist, true ) ) { // @codingStandardsIgnoreLine
 							add_filter( 'rtmedia_plupload_files_filter', array( $this, 'allowed_types' ), 10, 1 );
 							add_filter( 'rtmedia_allowed_types', array(
@@ -80,9 +86,12 @@ class RTMediaEncoding {
 	 */
 	function encoding( $media_ids, $file_object, $uploaded, $autoformat = true ) {
 		foreach ( $file_object as $key => $single ) {
+
 			$type_arry        = explode( '.', $single['url'] );
 			$type             = strtolower( $type_arry[ count( $type_arry ) - 1 ] );
 			$not_allowed_type = array( 'mp3' );
+			preg_match( '/video|audio/i', $single['type'], $type_array );
+
 			if ( preg_match( '/video|audio/i', $single['type'], $type_array ) && ! in_array( $single['type'], array( 'audio/mp3' ) ) && ! in_array( $type, $not_allowed_type ) ) {
 				$options             = rtmedia_get_site_option( 'rtmedia-options' );
 				$options_vedio_thumb = $options['general_videothumbs'];
@@ -90,26 +99,45 @@ class RTMediaEncoding {
 					$options_vedio_thumb = 3;
 				}
 
+				$job_type = 'video';
 				/**  fORMAT * */
 				if ( 'video/mp4' === $single['type'] || 'mp4' === $type ) {
 					$autoformat = 'thumbnails';
+					$job_type = 'thumbnail';
 				}
 
 				$query_args   = array(
-					'url'         => urlencode( $single['url'] ),
+					'file_url'    => urlencode( $single['url'] ),
 					'callbackurl' => urlencode( trailingslashit( home_url() ) . 'index.php' ),
 					'force'       => 0,
-					'size'        => filesize( $single['file'] ),
+					//'size'        => filesize( $single['file'] ),
 					'formats'     => ( true === $autoformat ) ? ( ( 'video' === $type_array[0] ) ? 'mp4' : 'mp3' ) : $autoformat,
-					'thumbs'      => $options_vedio_thumb,
+					'thumb_count' => $options_vedio_thumb,
 					'rt_id'       => $media_ids[ $key ],
 				);
-				$encoding_url = $this->api_url . 'job/new/';
-				$upload_url   = add_query_arg( $query_args, $encoding_url . $this->api_key );
-				$upload_page = wp_remote_get( $upload_url, array( 'timeout' => 200 ) );
+				$args = array(
+				        'method' 	=> 'POST',
+				        'sslverify' => false,
+				        'body' 		=> array(
+			                'api_token' 	=> $this->api_key,
+			                'job_type' 		=> $job_type,
+			                //'email'         => admin_email(),
+			                'file_url'    => urlencode( $single['url'] ),
+							'callback_url' => urlencode( trailingslashit( home_url() ) . 'index.php' ),
+							'force'       => 0,
+							//'size'        => filesize( $single['file'] ),
+							'formats'     => ( true === $autoformat ) ? ( ( 'video' === $type_array[0] ) ? 'mp4' : 'mp3' ) : $autoformat,
+							'thumb_count' => $options_vedio_thumb,
+				        ),
+				);
 
-				if ( ! is_wp_error( $upload_page ) && ( ! isset( $upload_page['headers']['status'] ) || ( isset( $upload_page['headers']['status'] ) && ( 200 === intval( $upload_page['headers']['status'] ) ) ) ) ) {
+				$encoding_url = $this->api_url . 'job/';
+				$upload_url   = add_query_arg( $query_args, $encoding_url . $this->api_key );
+				$upload_page = wp_remote_post( $encoding_url, $args );
+
+				if ( ! is_wp_error( $upload_page ) && ( ( isset( $upload_page['response']['code'] ) && ( 200 === intval( $upload_page['response']['code'] ) ) ) ) ) {
 					$upload_info = json_decode( $upload_page['body'] );
+					print_r($upload_info);
 					if ( isset( $upload_info->status ) && $upload_info->status && isset( $upload_info->job_id ) && $upload_info->job_id ) {
 						$job_id = $upload_info->job_id;
 						update_rtmedia_meta( $media_ids[ $key ], 'rtmedia-encoding-job-id', $job_id );
@@ -133,7 +161,7 @@ class RTMediaEncoding {
 		return $flag;
 	}
 
-	public function is_valid_key( $key ) {
+	public function is_valid_key_old( $key ) {
 		$validate_url    = trailingslashit( $this->api_url ) . 'api/validate/' . $key;
 		$validation_page = wp_remote_get( $validate_url, array( 'timeout' => 20 ) );
 		if ( ! is_wp_error( $validation_page ) ) {
@@ -146,9 +174,23 @@ class RTMediaEncoding {
 		return $status;
 	}
 
+	public function is_valid_key( $key ) {
+		$validate_url    = trailingslashit( $this->edd_api_url ) . 'rt-eddsl-api/?rt-eddsl-license-key=' . $key;
+		$validation_page = wp_remote_get( $validate_url, array( 'timeout' => 20 ) );
+		if ( ! is_wp_error( $validation_page ) ) {
+			$validation_info = json_decode( $validation_page['body'] );
+			$status          = $validation_info->status;
+		} else {
+			$status = false;
+		}
+
+		return $status;
+	}
+
 	public function update_usage( $key ) {
-		$usage_url  = trailingslashit( $this->api_url ) . 'api/usage/' . $key;
+		$usage_url  = trailingslashit( $this->api_url ) . 'usage/' . $key;
 		$usage_page = wp_remote_get( $usage_url, array( 'timeout' => 20 ) );
+
 		if ( ! is_wp_error( $usage_page ) ) {
 			$usage_info = json_decode( $usage_page['body'] );
 		} else {
@@ -209,11 +251,11 @@ class RTMediaEncoding {
 		$apikey = ( isset( $_GET['apikey'] ) ) ? sanitize_text_field( wp_unslash( $_GET['apikey'] ) ) : '';
 		if ( isset( $_GET['apikey'] ) && is_admin() && isset( $_GET['page'] ) && ( 'rtmedia-addons' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) && $this->is_valid_key( $apikey ) ) {
 			if ( $this->api_key && ! ( isset( $_GET['update'] ) && sanitize_text_field( wp_unslash( $_GET['update'] ) ) ) ) {
-				$unsubscribe_url = trailingslashit( $this->api_url ) . 'api/cancel/' . $this->api_key;
+				/*$unsubscribe_url = trailingslashit( $this->api_url ) . 'api/cancel/' . $this->api_key;
 				wp_remote_post( $unsubscribe_url, array(
 					'timeout' => 120,
 					'body'    => array( 'note' => 'Direct URL Input (API Key: ' . $apikey . ')' ),
-				) );
+				) );*/
 			}
 
 			update_site_option( 'rtmedia-encoding-api-key', $apikey );
@@ -222,7 +264,7 @@ class RTMediaEncoding {
 			$usage_info  = $this->update_usage( $apikey );
 			$return_page = add_query_arg( array(
 				'page'            => 'rtmedia-addons',
-				'api_key_updated' => $usage_info->plan->name,
+				'api_key_updated' => $usage_info->plan->name?$usage_info->plan->name:"free",
 			), admin_url( 'admin.php' ) );
 			wp_safe_redirect( esc_url_raw( $return_page ) );
 
@@ -476,7 +518,7 @@ class RTMediaEncoding {
 		$media_id               = $media[0]->id;
 		$largest_thumb          = false;
 		$upload_thumbnail_array = array();
-		foreach ( $post_thumbs_array['thumbs'] as $thumbs => $thumbnail ) {
+		foreach ( $post_thumbs_array['thumbnail'] as $thumbs => $thumbnail ) {
 			$thumbresource            = wp_remote_get( $thumbnail );
 			$thumbinfo                = pathinfo( $thumbnail );
 			$temp_name                = $thumbinfo['basename'];
@@ -509,8 +551,9 @@ class RTMediaEncoding {
 		require_once( ABSPATH . 'wp-admin/includes/image.php' );
 		//todo: nonce required
 		// @codingStandardsIgnoreStart
-		if ( isset( $_REQUEST['job_id'] ) && isset( $_REQUEST['download_url'] ) ) {
-			$has_thumbs = isset( $_POST['thumbs'] ) ? true : false;
+		//print_r($_REQUEST);
+		if ( isset( $_REQUEST['job_id'] ) ) {
+			$has_thumbs = isset( $_POST['thumbnail'] ) ? true : false;
 			$flag       = false;
 			global $wpdb;
 			$model        = new RTDBModel( 'rtm_media_meta', false, 10, true );
@@ -534,50 +577,51 @@ class RTMediaEncoding {
 					$cover_art = $this->add_media_thumbnails( $attachment_id );
 				}
 
-				if ( isset( $_POST['format'] ) && 'thumbnails' === sanitize_text_field( wp_unslash( $_POST['format'] ) ) ) {
+				if ( isset( $_POST['format'] ) && 'thumbnail' === sanitize_text_field( wp_unslash( $_POST['format'] ) ) ) {
 					die();
 				}
+				if(isset( $_REQUEST['download_url'] )){
+					$this->uploaded['context']      = $media[0]->context;
+					$this->uploaded['context_id']   = $media[0]->context_id;
+					$this->uploaded['media_author'] = $media[0]->media_author;
+					$attachemnt_post                = get_post( $attachment_id );
+					$download_url                   = urldecode( urldecode( $_REQUEST['download_url'] ) );
+					$new_wp_attached_file_pathinfo = pathinfo( $download_url );
+					$post_mime_type                = 'mp4' === $new_wp_attached_file_pathinfo['extension'] ? 'video/mp4' : 'audio/mp3';
+					try {
+						$file_bits = file_get_contents( $download_url );
+					} catch ( Exception $e ) {
+						$flag = $e->getMessage();
+					}
+					if ( $file_bits ) {
 
-				$this->uploaded['context']      = $media[0]->context;
-				$this->uploaded['context_id']   = $media[0]->context_id;
-				$this->uploaded['media_author'] = $media[0]->media_author;
-				$attachemnt_post                = get_post( $attachment_id );
-				$download_url                   = urldecode( urldecode( $_REQUEST['download_url'] ) );
-				$new_wp_attached_file_pathinfo = pathinfo( $download_url );
-				$post_mime_type                = 'mp4' === $new_wp_attached_file_pathinfo['extension'] ? 'video/mp4' : 'audio/mp3';
-				try {
-					$file_bits = file_get_contents( $download_url );
-				} catch ( Exception $e ) {
-					$flag = $e->getMessage();
-				}
-				if ( $file_bits ) {
+						$old_attachment_file = get_attached_file( $attachment_id );
+						if( function_exists( 'wp_delete_file' ) ){  // wp_delete_file is introduced in WordPress 4.2
+							wp_delete_file( $old_attachment_file );
+						} else {
+							unlink( $old_attachment_file );
+						}
 
-					$old_attachment_file = get_attached_file( $attachment_id );
-					if( function_exists( 'wp_delete_file' ) ){  // wp_delete_file is introduced in WordPress 4.2
-						wp_delete_file( $old_attachment_file );
+						add_filter( 'upload_dir', array( $this, 'upload_dir' ) );
+						$upload_info = wp_upload_bits( $new_wp_attached_file_pathinfo['basename'], null, $file_bits );
+						$wpdb->update( $wpdb->posts, array(
+							'guid'           => $upload_info['url'],
+							'post_mime_type' => $post_mime_type,
+						), array( 'ID' => $attachment_id ) );
+						$old_wp_attached_file          = get_post_meta( $attachment_id, '_wp_attached_file', true );
+						$old_wp_attached_file_pathinfo = pathinfo( $old_wp_attached_file );
+						update_post_meta( $attachment_id, '_wp_attached_file', str_replace( $old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $old_wp_attached_file ) );
+
+						$activity_id = $media[0]->activity_id;
+						if ( $activity_id ) {
+							$content          = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM {$wpdb->base_prefix}bp_activity WHERE id = %d", $activity_id ) );
+							$activity_content = str_replace( $attachemnt_post->guid, $upload_info['url'], $content );
+							$wpdb->update( $wpdb->base_prefix . 'bp_activity', array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
+						}
 					} else {
-						unlink( $old_attachment_file );
+						$flag = esc_html__( 'Could not read file.', 'buddypress-media' );
+						error_log( $flag );
 					}
-
-					add_filter( 'upload_dir', array( $this, 'upload_dir' ) );
-					$upload_info = wp_upload_bits( $new_wp_attached_file_pathinfo['basename'], null, $file_bits );
-					$wpdb->update( $wpdb->posts, array(
-						'guid'           => $upload_info['url'],
-						'post_mime_type' => $post_mime_type,
-					), array( 'ID' => $attachment_id ) );
-					$old_wp_attached_file          = get_post_meta( $attachment_id, '_wp_attached_file', true );
-					$old_wp_attached_file_pathinfo = pathinfo( $old_wp_attached_file );
-					update_post_meta( $attachment_id, '_wp_attached_file', str_replace( $old_wp_attached_file_pathinfo['basename'], $new_wp_attached_file_pathinfo['basename'], $old_wp_attached_file ) );
-
-					$activity_id = $media[0]->activity_id;
-					if ( $activity_id ) {
-						$content          = $wpdb->get_var( $wpdb->prepare( "SELECT content FROM {$wpdb->base_prefix}bp_activity WHERE id = %d", $activity_id ) );
-						$activity_content = str_replace( $attachemnt_post->guid, $upload_info['url'], $content );
-						$wpdb->update( $wpdb->base_prefix . 'bp_activity', array( 'content' => $activity_content ), array( 'id' => $activity_id ) );
-					}
-				} else {
-					$flag = esc_html__( 'Could not read file.', 'buddypress-media' );
-					error_log( $flag );
 				}
 			} else {
 				$flag = esc_html__( 'Something went wrong. The required attachment id does not exists. It must have been deleted.', 'buddypress-media' );
@@ -621,7 +665,7 @@ class RTMediaEncoding {
 		}
 	}
 
-	public function free_encoding_subscribe() {
+	public function free_encoding_subscribe_old() {
 		$email         = get_site_option( 'admin_email' );
 		$usage_details = get_site_option( 'rtmedia-encoding-usage' );
 		if ( isset( $usage_details[ $this->api_key ]->plan->name ) && ( 'free' === strtolower( $usage_details[ $this->api_key ]->plan->name ) ) ) {
@@ -639,6 +683,66 @@ class RTMediaEncoding {
 				$subscription_info = json_decode( $free_subscribe_page['body'] );
 				if ( isset( $subscription_info->status ) && $subscription_info->status ) {
 					echo wp_json_encode( array( 'apikey' => $subscription_info->apikey ) );
+				} else {
+					echo wp_json_encode( array( 'error' => $subscription_info->message ) );
+				}
+			} else {
+				echo wp_json_encode( array( 'error' => esc_html__( 'Something went wrong please try again.', 'buddypress-media' ) ) );
+			}
+		}
+		die();
+	}
+
+	public function free_encoding_subscribe() {
+		global $current_user;
+		$email         = get_site_option( 'admin_email' );
+		$usage_details = get_site_option( 'rtmedia-encoding-usage' );
+		if ( isset( $usage_details[ $this->api_key ]->plan->name ) && ( 'free' === strtolower( $usage_details[ $this->api_key ]->plan->name ) ) ) {
+			echo wp_json_encode( array( 'error' => 'Your free subscription is already activated.' ) );
+		} else {
+			$free_subscription_url = esc_url_raw( add_query_arg( array( 'email' => urlencode( $email ) ), trailingslashit( $this->api_url ) . 'api/free/' ) );
+			if ( $this->api_key ) {
+				$free_subscription_url = esc_url_raw( add_query_arg( array(
+					'email'  => urlencode( $email ),
+					'apikey' => $this->api_key,
+				), $free_subscription_url ) );
+			}
+			$edd_url = $this->edd_api_url.'edd-external-api/';
+			get_currentuserinfo();
+
+			$args = array(
+			        'method' 	=> 'POST',
+			        'sslverify' => false,
+			        'body' 		=> array(
+		                'key'     		=> $this->edd_api_public_key,
+		                'token'         => $this->edd_api_token_key,
+		                'trans_type'    => 'purchase',
+		                'product_id'    => $this->free_product_id,
+		                'price'         => '0',
+		                'source_name'   => 'EXTERNAL-SITE-NAME',
+		                'source_url'    => 'EXTERNAL-SITE-URL',
+		                'first_name'    => $current_user->user_firstname,
+		                'last_name'     => $current_user->user_lastname,
+		                'email'         => $email,
+		                'receipt'       => true
+			        ),
+			);
+			//print_r($args);
+			$free_subscribe_page = wp_remote_post( $edd_url, $args );
+			//$body           = wp_remote_retrieve_body( $response );
+			//$data           = json_decode( $body );
+			//print_r($free_subscribe_page);
+			//$free_subscribe_page = wp_remote_get( $free_subscription_url, array( 'timeout' => 120 ) );
+			if ( ! is_wp_error( $free_subscribe_page ) && ( isset( $free_subscribe_page['response']['code'] ) && ( 200 === $free_subscribe_page['response']['code'] ) ) ) {
+				$body           	= wp_remote_retrieve_body( $free_subscribe_page );
+				$subscription_info 	= json_decode( $body );
+				//var_dump($subscription_info->download_data[0]->license_key);
+				//print_r($subscription_info);
+				//echo "Inside";
+				if ( isset( $subscription_info->success ) && $subscription_info->success ) {
+					update_site_option( 'edd-api-public-key', $subscription_info->edd_api_public_key );
+					update_site_option( 'edd-api-token-key', $subscription_info->edd_api_token_key );
+					echo wp_json_encode( array( 'apikey' => $subscription_info->download_data[0]->license_key ) );
 				} else {
 					echo wp_json_encode( array( 'error' => $subscription_info->message ) );
 				}

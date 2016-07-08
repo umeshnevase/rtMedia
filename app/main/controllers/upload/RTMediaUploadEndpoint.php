@@ -25,7 +25,6 @@ class RTMediaUploadEndpoint {
 		if ( ! count( $_POST ) ) { // @codingStandardsIgnoreLine
 			include get_404_template();
 		} else {
-
 			$nonce        = $mode = '';
 			$_activity_id = - 1;
 			if ( isset( $_REQUEST['rtmedia_upload_nonce'] ) ) {
