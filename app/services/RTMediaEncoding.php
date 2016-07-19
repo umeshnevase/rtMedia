@@ -9,7 +9,7 @@ class RTMediaEncoding {
 
 	protected $api_url = 'http://api-rtmedia.rtcamp.info/api/v1/';
 	protected $edd_api_url = 'http://edd.rtcamp.info/';
-	protected $free_product_id = 33;
+	protected $free_product_id = 71;
 	protected $sandbox_testing = 0;
 	protected $merchant_id = 'paypal@rtcamp.com';
 	public $uploaded = array();
@@ -34,6 +34,7 @@ class RTMediaEncoding {
 			add_action( 'rtmedia_before_default_admin_widgets', array( $this, 'usage_widget' ) );
 		}
 		add_action( 'admin_init', array( $this, 'save_api_key' ), 1 );
+		add_action( 'admin_init', array( $this, 'transcoding_api_subscribe' ), 1 );
 		if ( $this->api_key ) {
 			// store api key as different db key if user disable encoding service
 			if ( ! $this->stored_api_key ) {
@@ -137,7 +138,6 @@ class RTMediaEncoding {
 
 				if ( ! is_wp_error( $upload_page ) && ( ( isset( $upload_page['response']['code'] ) && ( 200 === intval( $upload_page['response']['code'] ) ) ) ) ) {
 					$upload_info = json_decode( $upload_page['body'] );
-					print_r($upload_info);
 					if ( isset( $upload_info->status ) && $upload_info->status && isset( $upload_info->job_id ) && $upload_info->job_id ) {
 						$job_id = $upload_info->job_id;
 						update_rtmedia_meta( $media_ids[ $key ], 'rtmedia-encoding-job-id', $job_id );
@@ -239,6 +239,40 @@ class RTMediaEncoding {
 		}
 	}
 
+	public function transcoding_api_subscribe(){
+		if ( isset( $_GET['recurring-purchase'] ) && sanitize_text_field( wp_unslash( $_GET['recurring-purchase'] ) ) == true ) {
+
+			$email = get_site_option( 'admin_email' );
+			$edd_redirect = $this->edd_api_url.'edd-external-api/';
+			get_currentuserinfo();
+
+			$edd_args = array(
+					'key'			=> $this->edd_api_public_key,
+	                'token'         => $this->edd_api_token_key,
+	                'trans_type'    => 'recurring-purchase',
+	                'product_id'    => $this->free_product_id,
+	                'price_id'      => isset($_GET['price-id'])?$_GET['price-id']:'2',
+	                'source_name'   => 'EXTERNAL-SITE-NAME',
+	                'source_url'    => 'EXTERNAL-SITE-URL',
+	                'first_name'    => $current_user->user_firstname?$current_user->user_firstname:"Transcoder",
+	                'last_name'     => $current_user->user_lastname?$current_user->user_lastname:"User",
+	                'email'         => $email,
+	                'callback' 		=> urlencode( trailingslashit( home_url() ) ),
+	                'receipt'       => true
+				);
+
+			$edd_redirect = ( add_query_arg( $edd_args, $edd_redirect ) );
+			// Build query
+			//$edd_redirect .= http_build_query( $edd_args );
+
+			// Fix for some sites that encode the entities
+			//$edd_redirect = str_replace( '&amp;', '&', $edd_redirect );
+
+			// Redirect to PayPal
+			wp_redirect( $edd_redirect ); exit;
+		}
+	}
+
 	public function save_api_key() {
 		if ( isset( $_GET['api_key_updated'] ) && sanitize_text_field( wp_unslash( $_GET['api_key_updated'] ) ) ) {
 			if ( is_multisite() ) {
@@ -251,11 +285,17 @@ class RTMediaEncoding {
 		$apikey = ( isset( $_GET['apikey'] ) ) ? sanitize_text_field( wp_unslash( $_GET['apikey'] ) ) : '';
 		if ( isset( $_GET['apikey'] ) && is_admin() && isset( $_GET['page'] ) && ( 'rtmedia-addons' === sanitize_text_field( wp_unslash( $_GET['page'] ) ) ) && $this->is_valid_key( $apikey ) ) {
 			if ( $this->api_key && ! ( isset( $_GET['update'] ) && sanitize_text_field( wp_unslash( $_GET['update'] ) ) ) ) {
-				/*$unsubscribe_url = trailingslashit( $this->api_url ) . 'api/cancel/' . $this->api_key;
-				wp_remote_post( $unsubscribe_url, array(
-					'timeout' => 120,
-					'body'    => array( 'note' => 'Direct URL Input (API Key: ' . $apikey . ')' ),
-				) );*/
+				$unsubscribe_url = trailingslashit( $this->edd_api_url );
+
+				$args = array(
+				        'method' 	=> 'POST',
+				        'sslverify' => false,
+				        'body' 		=> array(
+			                'trans_type'    => 'cancel-license',
+			                'license-key' 	=> $this->api_key
+				        ),
+				);
+				$unsubscribe = wp_remote_post( $unsubscribe_url, $args );
 			}
 
 			update_site_option( 'rtmedia-encoding-api-key', $apikey );
@@ -310,7 +350,7 @@ class RTMediaEncoding {
 		if ( $this->api_key ) {
 			$this->update_usage( $this->api_key );
 		}
-		$action      = $this->sandbox_testing ? 'https://sandbox.paypal.com/cgi-bin/webscr' : 'https://www.paypal.com/cgi-bin/webscr';
+		$action      = '/wp-admin/?recurring-purchase=true&price-id=2';
 		$return_page = esc_url( add_query_arg( array( 'page' => 'rtmedia-addons' ), ( is_multisite() ? network_admin_url( 'admin.php' ) : admin_url( 'admin.php' ) ) ) );
 
 		$usage_details = get_site_option( 'rtmedia-encoding-usage' );
@@ -322,38 +362,6 @@ class RTMediaEncoding {
 						</div>';
 		} else {
 			$form = '<form method="post" action="' . $action . '" class="paypal-button" target="_top">
-					<input type="hidden" name="button" value="subscribe">
-					<input type="hidden" name="item_name" value="' . esc_attr( ucfirst( $name ) ) . '">
-
-					<input type="hidden" name="currency_code" value="USD">
-
-
-					<input type="hidden" name="a3" value="' . esc_attr( $price ) . '">
-					<input type="hidden" name="p3" value="1">
-					<input type="hidden" name="t3" value="M">
-
-					<input type="hidden" name="cmd" value="_xclick-subscriptions">
-
-					<!-- Merchant ID -->
-					<input type="hidden" name="business" value="' . esc_attr( $this->merchant_id ) . '">
-
-
-					<input type="hidden" name="custom" value="' . esc_url( $return_page ) . '">
-
-					<!-- Flag to no shipping -->
-					<input type="hidden" name="no_shipping" value="1">
-
-					<input type="hidden" name="notify_url" value="' . esc_url( trailingslashit( $this->api_url ) ) . 'subscribe/paypal">
-
-					<!-- Flag to post payment return url -->
-					<input type="hidden" name="return" value="' . esc_url( trailingslashit( $this->api_url ) ) . 'payment/process">
-
-
-					<!-- Flag to post payment data to given return url -->
-					<input type="hidden" name="rm" value="2">
-
-					<input type="hidden" name="src" value="1">
-					<input type="hidden" name="sra" value="1">
 
 					<input type="image" src="http://www.paypal.com/en_US/i/btn/btn_subscribe_SM.gif" name="submit" alt="Make payments with PayPal - it\'s fast, free and secure!">
 				</form>';
@@ -528,8 +536,7 @@ class RTMediaEncoding {
 			$thumbinfo['basename']    = $temp_name;
 			$thumb_upload_info        = wp_upload_bits( $thumbinfo['basename'], null, $thumbresource['body'] );
 			$upload_thumbnail_array[] = $thumb_upload_info['url'];
-
-			$current_thumb_size = @filesize( $thumb_upload_info['url'] );
+			$current_thumb_size = @filesize( $thumb_upload_info['file'] );
 			if ( $current_thumb_size >= $largest_thumb_size ) {
 				$largest_thumb_size = $current_thumb_size;
 				$largest_thumb      = $thumb_upload_info['url'];
@@ -698,7 +705,7 @@ class RTMediaEncoding {
 		$email         = get_site_option( 'admin_email' );
 		$usage_details = get_site_option( 'rtmedia-encoding-usage' );
 		if ( isset( $usage_details[ $this->api_key ]->plan->name ) && ( 'free' === strtolower( $usage_details[ $this->api_key ]->plan->name ) ) ) {
-			echo wp_json_encode( array( 'error' => 'Your free subscription is already activated.' ) );
+			//echo wp_json_encode( array( 'error' => 'Your free subscription is already activated.' ) );
 		} else {
 			$free_subscription_url = esc_url_raw( add_query_arg( array( 'email' => urlencode( $email ) ), trailingslashit( $this->api_url ) . 'api/free/' ) );
 			if ( $this->api_key ) {
@@ -707,7 +714,7 @@ class RTMediaEncoding {
 					'apikey' => $this->api_key,
 				), $free_subscription_url ) );
 			}
-			$edd_url = $this->edd_api_url.'edd-external-api/';
+			$edd_redirect = $this->edd_api_url.'edd-external-api/?key='.$this->edd_api_public_key;
 			get_currentuserinfo();
 
 			$args = array(
@@ -716,7 +723,7 @@ class RTMediaEncoding {
 			        'body' 		=> array(
 		                'key'     		=> $this->edd_api_public_key,
 		                'token'         => $this->edd_api_token_key,
-		                'trans_type'    => 'purchase',
+		                'trans_type'    => 'recurring-purchase',
 		                'product_id'    => $this->free_product_id,
 		                'price'         => '0',
 		                'source_name'   => 'EXTERNAL-SITE-NAME',
@@ -727,17 +734,40 @@ class RTMediaEncoding {
 		                'receipt'       => true
 			        ),
 			);
+
+			$edd_args = array(
+	                'token'         => $this->edd_api_token_key,
+	                'trans_type'    => 'recurring-purchase',
+	                'product_id'    => $this->free_product_id,
+	                'price_id'      => '2',
+	                'source_name'   => 'EXTERNAL-SITE-NAME',
+	                'source_url'    => 'EXTERNAL-SITE-URL',
+	                'first_name'    => $current_user->user_firstname?$current_user->user_firstname:"Transcoder",
+	                'last_name'     => $current_user->user_lastname?$current_user->user_lastname:"User",
+	                'email'         => $email,
+	                'callback' 		=> urlencode( trailingslashit( home_url() ) . 'index.php' ),
+	                'receipt'       => true
+				);
+
+			// Build query
+			$edd_redirect .= http_build_query( $edd_args );
+
+			// Fix for some sites that encode the entities
+			$edd_redirect = str_replace( '&amp;', '&', $edd_redirect );
+
+			// Redirect to PayPal
+			wp_redirect( $edd_redirect ); exit;
+
 			//print_r($args);
 			$free_subscribe_page = wp_remote_post( $edd_url, $args );
+			//print_r($free_subscribe_page);
 			//$body           = wp_remote_retrieve_body( $response );
 			//$data           = json_decode( $body );
-			//print_r($free_subscribe_page);
 			//$free_subscribe_page = wp_remote_get( $free_subscription_url, array( 'timeout' => 120 ) );
 			if ( ! is_wp_error( $free_subscribe_page ) && ( isset( $free_subscribe_page['response']['code'] ) && ( 200 === $free_subscribe_page['response']['code'] ) ) ) {
 				$body           	= wp_remote_retrieve_body( $free_subscribe_page );
 				$subscription_info 	= json_decode( $body );
 				//var_dump($subscription_info->download_data[0]->license_key);
-				//print_r($subscription_info);
 				//echo "Inside";
 				if ( isset( $subscription_info->success ) && $subscription_info->success ) {
 					update_site_option( 'edd-api-public-key', $subscription_info->edd_api_public_key );

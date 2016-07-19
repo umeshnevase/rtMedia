@@ -747,9 +747,9 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 
 			$mime_type_array = explode( '/', $post->post_mime_type );
 			if ( is_array( $mime_type_array ) && '' !== $mime_type_array && 'video' === $mime_type_array[0] ) {
-				$actions['reencode'] = '<a class="submitdelete" onclick="return rtmedia_regenerate_thumbs(' . esc_attr( $post->ID ) . ')" href="#">' . esc_html_e( 'Regenerate Thumbnail', 'buddypress-media' ) . '</a>';
+				$text = esc_html__( 'Regenerate Thumbnail', 'buddypress-media' );
+				$actions['reencode'] = '<a class="submitdelete" onclick="return rtmedia_regenerate_thumbs(' . esc_attr( $post->ID ) . ')" href="#re">' . $text . '</a>';
 			}
-
 			return $actions;
 		}
 
@@ -2017,6 +2017,7 @@ if ( ! class_exists( 'RTMediaAdmin' ) ) {
 						if (post_id != "") {
 							var data = {
 								action: 'rt_media_regeneration',
+								_rtm_nonce: '<?php echo wp_create_nonce( '_rt-start-media-regenerate_' ); ?>',
 								media_id: post_id
 							};
 							jQuery.post(ajaxurl, data, function (data) {
