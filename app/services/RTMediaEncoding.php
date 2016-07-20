@@ -300,7 +300,10 @@ class RTMediaEncoding {
 
 			update_site_option( 'rtmedia-encoding-api-key', $apikey );
 			update_site_option( 'rtmedia-encoding-api-key-stored', $apikey );
-
+			if ( isset( $_GET['public-key'] ) && isset( $_GET['token-key'] ) ){
+				update_site_option( 'edd-api-public-key', $_GET['public-key'] );
+				update_site_option( 'edd-api-token-key', $_GET['token-key'] );
+			}
 			$usage_info  = $this->update_usage( $apikey );
 			$return_page = add_query_arg( array(
 				'page'            => 'rtmedia-addons',
@@ -358,7 +361,7 @@ class RTMediaEncoding {
 			$form = '<button data-plan="' . esc_attr( $name ) . '" data-price="' . esc_attr( $price ) . '" type="submit" class="button bpm-unsubscribe">' . esc_html__( 'Unsubscribe', 'buddypress-media' ) . '</button>';
 			$form .= '<div id="bpm-unsubscribe-dialog" title="Unsubscribe">
 						<p>' . esc_html__( 'Just to improve our service we would like to know the reason for you to leave us.', 'buddypress-media' ) . '</p>
-						<p><textarea rows="3" cols="36" id="bpm-unsubscribe-note"></textarea></p>
+						<p><textarea rows="3" cols="18" id="bpm-unsubscribe-note"></textarea></p>
 						</div>';
 		} else {
 			$form = '<form method="post" action="' . $action . '" class="paypal-button" target="_top">
@@ -381,14 +384,32 @@ class RTMediaEncoding {
 				$content .= '<p><span class="encoding-used"></span><strong>' . esc_html__( 'Used', 'buddypress-media' ) . ':</strong> ' . ( ( $used_size = size_format( $usage_details[ $this->api_key ]->used, 2 ) ) ? esc_html( $used_size ) : '0MB' ) . '</p>';
 			}
 			if ( isset( $usage_details[ $this->api_key ]->remaining ) ) {
-				$content .= '<p><span class="encoding-remaining"></span><strong>' . esc_html__( 'Remaining', 'buddypress-media' ) . ':</strong> ' . ( ( $remaining_size = size_format( $usage_details[ $this->api_key ]->remaining, 2 ) ) ? esc_html( $remaining_size ) : '0MB' ) . '</p>';
+				echo $this->edd_api_public_key."\n";
+				echo $this->edd_api_token_key;
+				$content .= '<p><span class="encoding-remaining"></span><strong>' . esc_html__( 'Remaining', 'buddypress-media' ) . ':</strong> ';
+				if( $usage_details[ $this->api_key ]->remaining >= 0 ){
+					$content .= size_format( $usage_details[ $this->api_key ]->remaining, 2 );
+				 // . ( ( $remaining_size = size_format( $usage_details[ $this->api_key ]->remaining, 2 ) ) ? esc_html( $remaining_size ) : ($remaining_size <= -1)?'Unlimited':'0MB' ) . '</p>';
+				} else if( $usage_details[ $this->api_key ]->remaining <= -1 ){
+					$content .= "Unlimited";
+				} else {
+					$content .= "0MB";
+				}
 			}
 			if ( isset( $usage_details[ $this->api_key ]->total ) ) {
-				$content .= '<p><strong>' . esc_html__( 'Total', 'buddypress-media' ) . ':</strong> ' . esc_html( size_format( $usage_details[ $this->api_key ]->total, 2 ) ) . '</p>';
+				$content .= '<p><strong>' . esc_html__( 'Total', 'buddypress-media' ) . ':</strong> '; // . ( ( $total = size_format( $usage_details[ $this->api_key ]->total, 2 ) ) ? esc_html( $total ) : ($total <= -1)?'Unlimited':'' ) . '</p>';
+				// esc_html( size_format( $usage_details[ $this->api_key ]->total, 2 ) )
+				if( $usage_details[ $this->api_key ]->total >= 0 ){
+					$content .= size_format( $usage_details[ $this->api_key ]->total, 2 );
+				} else if( $usage_details[ $this->api_key ]->total <= -1 ){
+					$content .= "Unlimited";
+				} else {
+					$content .= "";
+				}
 			}
 			$usage = new rtProgress();
 			$content .= $usage->progress_ui( $usage->progress( $usage_details[ $this->api_key ]->used, $usage_details[ $this->api_key ]->total ), false );
-			if ( $usage_details[ $this->api_key ]->remaining <= 0 ) {
+			if ( ( $usage_details[ $this->api_key ]->remaining <= 0 ) && ( $usage_details[ $this->api_key ]->remaining != -1 ) ) {
 				$content .= '<div class="error below-h2"><p>' . esc_html__( 'Your usage limit has been reached. Upgrade your plan.', 'buddypress-media' ) . '</p></div>';
 			}
 		} else {
@@ -434,7 +455,7 @@ class RTMediaEncoding {
 			<tr>
 				<th><?php esc_html_e( 'Feature\Plan', 'buddypress-media' ); ?></th>
 				<th><?php esc_html_e( 'Free', 'buddypress-media' ); ?></th>
-				<th><?php esc_html_e( 'Silver', 'buddypress-media' ); ?></th>
+				<th><?php esc_html_e( 'Deluxe', 'buddypress-media' ); ?></th>
 				<th><?php esc_html_e( 'Gold', 'buddypress-media' ); ?></th>
 				<th><?php esc_html_e( 'Platinum', 'buddypress-media' ); ?></th>
 			</tr>
@@ -497,14 +518,18 @@ class RTMediaEncoding {
 				if ( isset( $usage_details[ $this->api_key ]->plan->name ) && ( strtolower( $usage_details[ $this->api_key ]->plan->name ) === 'free' ) ) {
 					echo '<button disabled="disabled" type="submit" class="encoding-try-now button button-primary">' . esc_html__( 'Current Plan', 'buddypress-media' ) . '</button>';
 				} else {
+					$action = '/wp-admin/?recurring-purchase=true&price-id=1';
 					?>
-					<form id="encoding-try-now-form" method="get">
-					<button type="submit"
-							class="encoding-try-now button button-primary"><?php esc_html_e( 'Try Now', 'buddypress-media' ); ?></button>
-						</form><?php }
+					<form id="encoding-try-now-form" action="<?php echo $action; ?>" method="post">
+						<button
+							type="submit"
+							class="button button-primary"><?php esc_html_e( 'Try Now', 'buddypress-media' ); ?>
+						</button>
+					</form>
+				<?php }
 					?>
 				</td>
-				<td><?php echo $this->encoding_subscription_form( 'silver', 9.0 ); // @codingStandardsIgnoreLine ?></td>
+				<td><?php echo $this->encoding_subscription_form( 'deluxe', 9.0 ); // @codingStandardsIgnoreLine ?></td>
 				<td><?php echo $this->encoding_subscription_form( 'gold', 99.0 ); // @codingStandardsIgnoreLine ?></td>
 				<td><?php echo $this->encoding_subscription_form( 'platinum', 999.0 ); // @codingStandardsIgnoreLine ?></td>
 			</tr>
@@ -736,6 +761,7 @@ class RTMediaEncoding {
 			);
 
 			$edd_args = array(
+					'key'     		=> $this->edd_api_public_key,
 	                'token'         => $this->edd_api_token_key,
 	                'trans_type'    => 'recurring-purchase',
 	                'product_id'    => $this->free_product_id,
