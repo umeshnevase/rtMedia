@@ -59,7 +59,4 @@ script:
 - xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --group src/
 notifications:
   slack:
-    on_success: always
-    on_failure: change
-    rooms:
-      secure: fsCtC2b6epuKUf89IbDlDMcQydtwg/WHpyplzY7h1TeGQ/iWYL9lKJmxeaa0KW8nnqMbYBcs0LBw8fT+KsAL90kDOLpA0Y/4EZQ1DPhI9P6V4G6zneeDIYBLxkLIZYXFbTfTsaKuw/8rX6vkwZ6dBLgxIYWG2/9fqYg/a4y6GM8=
+    secure: E9tbxOZ/n4Gcwi8SiCKQ5QVw+5AfwdTq4e/VG4epQF74IqXmJJvaJgQSVKLSVXJm4O1u8JHd+ffN1Xheh1FDaKkscuJYQcT4D+oOc40bHhb0tS71v1fAMzMX7NuyqgEu2a8dbYo7bqVKtdj/EBbOPWnwgfMuA6ylTItVf294spA=
