@@ -58,4 +58,8 @@ script:
 - xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --group src/
 
 notifications:
-  slack: 'rtcamp:$SLACK_TOKEN#rtmedia-development'
+  slack:
+    rooms:
+      - rtcamp:$SLACK_TOKEN
+    on_success: :change
+    on_failure: :change
