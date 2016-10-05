@@ -1,15 +1,15 @@
 sudo: required
 
 language:
-    - php
-    - node_js
+- php
+- node_js
 
 php:
-    - 5.3
-    - 5.4
+- 5.3
+- 5.4
 
 node_js:
-    - 0.10
+- 0.10
 
 env:
 - WP_VERSION=4.0 WP_MULTISITE=0
@@ -19,10 +19,10 @@ before_install:
 - sudo apt-get install xvfb
 
 before_script:
-  - pear install PHP_CodeSniffer
-  - git clone git://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/WordPress
-  - git clone git@github.com:wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
-  - phpenv rehash
+- pear install PHP_CodeSniffer
+- git clone git://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/WordPress
+- git clone git@github.com:wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
+- phpenv rehash
 - export PLUGIN_DIR=$(pwd)
 - sudo rm -rf /etc/mysql/
 - sudo apt-get -qq purge mysql* graphviz*
