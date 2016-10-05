@@ -56,3 +56,6 @@ script:
 - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.6 $(find /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtmedia/ -name '*.php')
 - xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --test res/setup.js
 - xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --group src/
+
+notifications:
+  slack: 'rtmediawp:$SLACK_TOKEN#rtmedia-development'
