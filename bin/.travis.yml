@@ -59,7 +59,7 @@ script:
 
 notifications:
   slack:
+    on_success: always
+    on_failure: change
     rooms:
-      - rtcamp:$SLACK_TOKEN
-    on_success: :change
-    on_failure: :change
+      secure: $SLACK_TOKEN
