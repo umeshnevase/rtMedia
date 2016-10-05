@@ -1,21 +1,17 @@
 sudo: required
-
 language: php
-
 php:
 - 5.3
 - 5.4
-
 env:
 - WP_VERSION=4.0 WP_MULTISITE=0
-
 before_install:
 - rm -rf ~/.gnupg
 - sudo apt-get install xvfb
-
 before_script:
 - pear install PHP_CodeSniffer
-- git clone git://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/WordPress
+- git clone git://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards.git
+  $(pear config-get php_dir)/PHP/CodeSniffer/Standards/WordPress
 - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
 - phpenv rehash
 - export PLUGIN_DIR=$(pwd)
@@ -28,7 +24,8 @@ before_script:
 - source /etc/bash_completion.d/ee_auto.rc
 - sudo ee -v
 - sudo lsb_release  -a
-- sudo ee site create wp.localtest.me --wp --user=ADMINUSER --email=ritesh.patel@rtcamp.com --pass=ADMINPASS
+- sudo ee site create wp.localtest.me --wp --user=ADMINUSER --email=ritesh.patel@rtcamp.com
+  --pass=ADMINPASS
 - sudo chmod 777 -R /var/www
 - sudo cat /etc/mysql/conf.d/my.cnf
 - sudo nginx -t
@@ -44,22 +41,25 @@ before_script:
 - wp plugin activate --all
 - wp --allow-root user create EDITORUSER editor@localtest.me --role=editor --user_pass=EDITORPASS
 - wp --allow-root user create AUTHORUSER author@localtest.me --role=author --user_pass=AUTHORPASS
-- wp --allow-root user create CONTRIBUTORUSER contributor@localtest.me --role=contributor --user_pass=CONTRIBUTORPASS
-- wp --allow-root user create SUBSCRIBERUSER subscriber@localtest.me --role=author --user_pass=SUBSCRIBERPASS
+- wp --allow-root user create CONTRIBUTORUSER contributor@localtest.me --role=contributor
+  --user_pass=CONTRIBUTORPASS
+- wp --allow-root user create SUBSCRIBERUSER subscriber@localtest.me --role=author
+  --user_pass=SUBSCRIBERPASS
 - cd $PLUGIN_DIR
 - cd tests/functional/
 - npm install -g nightwatch
 - npm install
 - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
 script:
-- phpcs --standard=$(if [ -e ruleset.xml ]; then echo ruleset.xml; else echo WordPress; fi) $(find /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtmedia/ -name '*.php')
-- phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.6 $(find /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtmedia/ -name '*.php')
+- phpcs --standard=$(if [ -e ruleset.xml ]; then echo ruleset.xml; else echo WordPress;
+  fi) $(find /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtmedia/ -name '*.php')
+- phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.6 $(find /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtmedia/
+  -name '*.php')
 - xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --test res/setup.js
 - xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --group src/
-
 notifications:
   slack:
     on_success: always
     on_failure: change
     rooms:
-      secure: $SLACK_TOKEN
+      secure: fsCtC2b6epuKUf89IbDlDMcQydtwg/WHpyplzY7h1TeGQ/iWYL9lKJmxeaa0KW8nnqMbYBcs0LBw8fT+KsAL90kDOLpA0Y/4EZQ1DPhI9P6V4G6zneeDIYBLxkLIZYXFbTfTsaKuw/8rX6vkwZ6dBLgxIYWG2/9fqYg/a4y6GM8=
