@@ -1,15 +1,10 @@
 sudo: required
 
-language:
-- php
-- node_js
+language: php
 
 php:
 - 5.3
 - 5.4
-
-node_js:
-- 0.10
 
 env:
 - WP_VERSION=4.0 WP_MULTISITE=0
@@ -57,7 +52,7 @@ before_script:
 - npm install
 - git clone --depth=1 https://github.com/rtCamp/rtmedia-test-data.git test-data
 script:
-  - phpcs --standard=$(if [ -e ruleset.xml ]; then echo ruleset.xml; else echo WordPress; fi) $(find /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtmedia/ -name '*.php')
-  - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.6 $(find /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtmedia/ -name '*.php')
+- phpcs --standard=$(if [ -e ruleset.xml ]; then echo ruleset.xml; else echo WordPress; fi) $(find /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtmedia/ -name '*.php')
+- phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.6 $(find /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtmedia/ -name '*.php')
 - xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --test res/setup.js
 - xvfb-run --server-args="-screen 0, 1624x1068x24" nightwatch --group src/
