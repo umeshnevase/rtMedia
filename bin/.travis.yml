@@ -14,7 +14,7 @@ before_script:
   $(pear config-get php_dir)/PHP/CodeSniffer/Standards/WordPress
 - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
 - phpenv rehash
-- ls /usr/share/pear/
+- ls $(pear config-get php_dir)
 - ls $(pear config-get php_dir)/PHP/CodeSniffer/Standards
 - ls /usr/share/pear/PHP/CodeSniffer/Standards/PHPCompatibility/Sniffs
 - export PLUGIN_DIR=$(pwd)
