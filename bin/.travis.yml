@@ -15,7 +15,7 @@ before_script:
 - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
 - phpenv rehash
 - echo $(pear config-get php_dir)
-- locate PSR1 | grep PSR1
+- locate PSR1
 - ls $(pear config-get php_dir)
 - ls $(pear config-get php_dir)/PHP
 - ls $(pear config-get php_dir)/PHP/CodeSniffer
@@ -31,7 +31,7 @@ before_script:
 - source /etc/bash_completion.d/ee_auto.rc
 - sudo ee -v
 - sudo lsb_release  -a
-- sudo ee site create wp.localtest.me --wp --user=ADMINUSER --email=ritesh.patel@rtcamp.com
+- sudo ee site create wp.localtest.me --wp --user=ADMINUSER --email=mangesh.parte@rtcamp.com
   --pass=ADMINPASS
 - sudo chmod 777 -R /var/www
 - sudo cat /etc/mysql/conf.d/my.cnf
