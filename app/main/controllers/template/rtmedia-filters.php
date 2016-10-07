@@ -282,7 +282,7 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 		$final_file_url = wp_get_attachment_url( $attachment_id );
 	}
 
-	return preg_replace( "/src=[\"]([^\"]+)[\"]/", "src=\"$final_file_url\"", $html );
+	return preg_replace( '/src=["]([^"]+)["]/', "src=\"$final_file_url\"", $html );
 
 }
 
@@ -347,7 +347,7 @@ function replace_aws_img_urls_from_activity( $html, $rtmedia_media ) {
 			}
 
 			if ( ! empty( $thumbnail_url ) ) {
-				$html = preg_replace( "/src=[\"]([^\"]+)[\"]/", "src=\"$thumbnail_url\"", $html );
+				$html = preg_replace( '/src=["]([^"]+)["]/', "src=\"$thumbnail_url\"", $html );
 			}
 		}
 	}
@@ -391,7 +391,7 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 	$url 		= '';
 	$is_img 	= strpos( $content , '<img ' );
 
-	$search 	= "/<img.+src=[\"]([^\"]+)[\"]/";
+	$search 	= '/<img.+src=["]([^"]+)["]/';
 	preg_match_all( $search , $content, $url );
 
 	if ( ! empty( $is_img ) && ! empty( $url ) && ! empty( $url[1] ) ) {
@@ -438,7 +438,6 @@ function replace_aws_img_urls_from_activities( $content, $activity = '' ) {
 				$content = str_replace( $url, $image_url, $content );
 			}
 		}
-
 	}
 	return $content;
 }
@@ -525,7 +524,7 @@ add_filter( 'show_custom_album_cover', 'rtt_restore_og_wp_image_url', 100, 3 );
  *
  * @since 4.1.7
  */
-function rt_check_addon_status(){
+function rt_check_addon_status() {
 	$addons = apply_filters( 'rtmedia_license_tabs', array() );
 
 	if ( empty( $addons ) ) {
@@ -535,13 +534,13 @@ function rt_check_addon_status(){
 	foreach ( $addons as $addon ) {
 		if ( ! empty( $addon['args']['license_key'] ) && ! empty( $addon['name'] ) && ! empty( $addon['args']['addon_id'] ) ) {
 
-			$license = $addon[ 'args' ]['license_key'];
+			$license = $addon['args']['license_key'];
 
 			$addon_name = $addon['name'];
 
 			$addon_id = $addon['args']['addon_id'];
 
-			$addon_active = get_option( 'edd_' . $addon_id . '_active');
+			$addon_active = get_option( 'edd_' . $addon_id . '_active' );
 
 			/**
 			 * Check if information about the addon in already fetched from the store
@@ -556,7 +555,7 @@ function rt_check_addon_status(){
 
 			/* If store URL not found in the addon, use the default store URL */
 			if ( empty( $store_url ) ) {
-				$store_url = "https://rtmedia.io/";
+				$store_url = 'https://rtmedia.io/';
 			}
 
 			// data to send in our API request
