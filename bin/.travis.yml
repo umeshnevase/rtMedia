@@ -17,8 +17,7 @@ before_script:
 
 script:
   ## PHP_CodeSniffer
-  - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.6 $(find /var/www/wp.localtest.me/htdocs/wp-content/plugins/rtmedia/
-  -name '*.php')
+  - phpcs --standard=PHPCompatibility --runtime-set testVersion 5.3-5.6 $(find ./ -name '*.php')
 
 notifications:
   slack:
