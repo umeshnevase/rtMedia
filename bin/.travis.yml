@@ -1,8 +1,5 @@
-sudo: true
 language: php
 php:
-  - 5.3
-  - 5.4
   - 5.5
 
 before_install:
@@ -11,9 +8,7 @@ before_install:
 
 before_script:
   ## PHP_CodeSniffer
-  - pear uninstall php_codesniffer
-  - pear config-set bin_dir /usr/local/bin
-  - sudo pear install php_codesniffer
+  - pear install pear/PHP_CodeSniffer
   - git clone git://github.com/wimg/PHPCompatibility.git $(pear config-get php_dir)/PHP/CodeSniffer/Standards/PHPCompatibility
   - phpenv rehash
   - phpcs -i
