@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the rtMedia for WordPress, BuddyPress and bbPress package.
 msgid ""
 msgstr ""
-"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.4.7\n"
+"Project-Id-Version: rtMedia for WordPress, BuddyPress and bbPress 4.4.8\n"
 "Report-Msgid-Bugs-To: http://community.rtcamp.com/c/rtmedia/\n"
-"POT-Creation-Date: 2018-04-18 06:53:36+00:00\n"
+"POT-Creation-Date: 2018-05-31 06:48:37+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -472,7 +472,7 @@ msgid "Need to specify atleast two radios, else use a checkbox instead"
 msgstr ""
 
 #: app/admin/RTMediaFormHandler.php:280 templates/media/album-gallery.php:67
-#: templates/media/media-gallery.php:95
+#: templates/media/media-gallery.php:101
 msgid "Load More"
 msgstr ""
 
@@ -2278,16 +2278,16 @@ msgstr ""
 #: app/main/RTMedia.php:1062
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:63
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:80
-#: app/main/controllers/template/rtmedia-functions.php:1163
-#: app/main/controllers/template/rtmedia-functions.php:1182
+#: app/main/controllers/template/rtmedia-functions.php:1164
+#: app/main/controllers/template/rtmedia-functions.php:1183
 msgid "Edit"
 msgstr ""
 
 #: app/main/RTMedia.php:1063
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:67
 #: app/main/controllers/media/RTMediaGalleryItemAction.php:80
-#: app/main/controllers/template/rtmedia-functions.php:2078
-#: app/main/controllers/template/rtmedia-functions.php:2087
+#: app/main/controllers/template/rtmedia-functions.php:2079
+#: app/main/controllers/template/rtmedia-functions.php:2088
 #: templates/media/album-single-edit.php:78
 msgid "Delete"
 msgstr ""
@@ -2344,7 +2344,7 @@ msgstr ""
 msgid "Description:"
 msgstr ""
 
-#: app/main/RTMedia.php:1087 templates/media/media-gallery.php:103
+#: app/main/RTMedia.php:1087 templates/media/media-gallery.php:109
 msgid "Oops !! There's no media found for the request !!"
 msgstr ""
 
@@ -2383,7 +2383,7 @@ msgstr ""
 #: app/main/controllers/activity/RTMediaBuddyPressActivity.php:325
 #: app/main/controllers/media/RTMediaComment.php:175
 #: app/main/controllers/shortcodes/RTMediaUploadShortcode.php:102
-#: app/main/controllers/template/rtmedia-functions.php:2117
+#: app/main/controllers/template/rtmedia-functions.php:2118
 msgid "You are not allowed to upload/attach media."
 msgstr ""
 
@@ -2973,7 +2973,7 @@ msgid "Please swipe for more media."
 msgstr ""
 
 #: app/main/controllers/template/rtmedia-ajax-actions.php:88
-#: app/main/controllers/template/rtmedia-functions.php:2017
+#: app/main/controllers/template/rtmedia-functions.php:2018
 msgid "Comment"
 msgstr ""
 
@@ -2989,105 +2989,105 @@ msgstr ""
 msgid "Delete Album"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1245
+#: app/main/controllers/template/rtmedia-functions.php:1246
 msgid "There are no comments on this media yet."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1277
+#: app/main/controllers/template/rtmedia-functions.php:1278
 msgid "Show all %s comments"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1310
+#: app/main/controllers/template/rtmedia-functions.php:1311
 msgid "Delete Comment"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1649
+#: app/main/controllers/template/rtmedia-functions.php:1650
 msgid "Go to page no : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:1654
+#: app/main/controllers/template/rtmedia-functions.php:1655
 msgid "Go"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2015
+#: app/main/controllers/template/rtmedia-functions.php:2016
 msgid "Type Comment..."
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2078
-#: app/main/controllers/template/rtmedia-functions.php:2087
+#: app/main/controllers/template/rtmedia-functions.php:2079
+#: app/main/controllers/template/rtmedia-functions.php:2088
 msgid "Delete Media"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2335
+#: app/main/controllers/template/rtmedia-functions.php:2336
 msgid "Profile Albums"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2339
-#: app/main/controllers/template/rtmedia-functions.php:2384
+#: app/main/controllers/template/rtmedia-functions.php:2340
+#: app/main/controllers/template/rtmedia-functions.php:2385
 msgid "Group Albums"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2560
+#: app/main/controllers/template/rtmedia-functions.php:2564
 msgid "Privacy : "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2911
+#: app/main/controllers/template/rtmedia-functions.php:2915
 msgid "You like this"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2921
+#: app/main/controllers/template/rtmedia-functions.php:2925
 msgid "You and "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:2940
+#: app/main/controllers/template/rtmedia-functions.php:2944
 msgid " person likes this"
 msgid_plural " people like this"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3045
+#: app/main/controllers/template/rtmedia-functions.php:3049
 msgid "Public"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3050
+#: app/main/controllers/template/rtmedia-functions.php:3054
 msgid "All members"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3055
+#: app/main/controllers/template/rtmedia-functions.php:3059
 msgid "Your friends"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3060
+#: app/main/controllers/template/rtmedia-functions.php:3064
 msgid "Only you"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3065
+#: app/main/controllers/template/rtmedia-functions.php:3069
 msgid "Blocked temporarily"
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3118
+#: app/main/controllers/template/rtmedia-functions.php:3122
 msgid "%s ago "
 msgstr ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3132
+#: app/main/controllers/template/rtmedia-functions.php:3136
 msgid "1 second"
 msgid_plural "%s seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3136
+#: app/main/controllers/template/rtmedia-functions.php:3140
 msgid "1 minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3140
+#: app/main/controllers/template/rtmedia-functions.php:3144
 msgid "1 hour"
 msgid_plural "%s hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: app/main/controllers/template/rtmedia-functions.php:3740
+#: app/main/controllers/template/rtmedia-functions.php:3744
 #. translators: date format, see http:php.net/date
 msgid "View Conversation"
 msgstr ""
@@ -3237,7 +3237,7 @@ msgstr ""
 msgid "Sorry !! You can not edit this album."
 msgstr ""
 
-#: templates/media/media-gallery.php:17 templates/media/media-gallery.php:48
+#: templates/media/media-gallery.php:21 templates/media/media-gallery.php:54
 msgid "Media Gallery"
 msgstr ""
 
