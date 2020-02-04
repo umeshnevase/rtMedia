@@ -1340,6 +1340,18 @@ class RTMediaFormHandler {
 				),
 				'group'    => 10,
 			),
+            'rtmedia-activity-separate-image'          => array(
+				'title'    => esc_html__( 'Show Image as separate in Activity', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
+				'args'     => array(
+					'key'   => 'buddypress_mediaSeparateImageActivity',
+					'value' => $options['buddypress_mediaSeparateImageActivity'],
+					'desc'  => esc_html__( 'Enabling this setting will Image as separate in activity.', 'buddypress-media' ),
+					'id'    => 'rtmedia-activity-separate-image',
+
+				),
+				'group'    => 10,
+			),
 			'general_enableAlbums'                     => array(
 				'title'    => esc_html__( 'Organize media into albums', 'buddypress-media' ),
 				'callback' => array( 'RTMediaFormHandler', 'checkbox' ),
@@ -1393,6 +1405,7 @@ class RTMediaFormHandler {
 			$render_options['rtmedia-activity-feed-limit']['args']['desc']     =
 			$render_options['rtmedia-enable-like-activity']['args']['desc']    =
 			$render_options['rtmedia-enable-comment-activity']['args']['desc'] =
+			$render_options['rtmedia-activity-separate-image']['args']['desc'] =
 				esc_html__( 'Please Enable BuddyPress Activity Streams to update option', 'buddypress-media' );
 		}
 
@@ -1415,7 +1428,7 @@ class RTMediaFormHandler {
 		if ( ! bp_is_active( 'activity' ) ) {
 			?>
 			<script>
-				jQuery( '#rtmedia-bp-enable-activity, #rtmedia-enable-comment-activity, #rtmedia-enable-like-activity' )
+				jQuery( '#rtmedia-bp-enable-activity, #rtmedia-enable-comment-activity, #rtmedia-enable-like-activity, #rtmedia-activity-separate-image' )
 					.prop( "disabled", true )
 					.next().css( 'background-color', '#808080' );
 				jQuery( '#rtmedia-activity-feed-limit' ).prop( "disabled", true );

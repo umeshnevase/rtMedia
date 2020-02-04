@@ -87,16 +87,17 @@ if ( ! class_exists( 'RTMediaSettings' ) ) {
 			$defaults['privacy_default']      = 0;
 			$defaults['privacy_userOverride'] = 0;
 
-			$defaults['buddypress_enableOnGroup']        = 1;
-			$defaults['buddypress_enableOnActivity']     = 1;
-			$defaults['buddypress_enableOnComment']      = 1;
-			$defaults['buddypress_enableOnProfile']      = 1;
-			$defaults['buddypress_limitOnActivity']      = 0;
-			$defaults['buddypress_enableNotification']   = 0;
-			$defaults['buddypress_mediaLikeActivity']    = 0;
-			$defaults['buddypress_mediaCommentActivity'] = 0;
-			$defaults['styles_custom']                   = '';
-			$defaults['styles_enabled']                  = 1;
+			$defaults['buddypress_enableOnGroup']              = 1;
+			$defaults['buddypress_enableOnActivity']           = 1;
+			$defaults['buddypress_enableOnComment']            = 1;
+			$defaults['buddypress_enableOnProfile']            = 1;
+			$defaults['buddypress_limitOnActivity']            = 0;
+			$defaults['buddypress_enableNotification']         = 0;
+			$defaults['buddypress_mediaLikeActivity']          = 0;
+			$defaults['buddypress_mediaCommentActivity']       = 0;
+			$defaults['buddypress_mediaSeparateImageActivity'] = 0;
+			$defaults['styles_custom']                         = '';
+			$defaults['styles_enabled']                        = 1;
 
 			/* default value for add media in comment media */
 			$defaults['rtmedia_disable_media_in_commented_media']      = 1;
