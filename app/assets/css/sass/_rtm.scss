@@ -49,9 +49,12 @@
 	}
 
 	.rtmedia-item-thumbnail {
+		width: 150px;
+		text-align: center;
+
 		img {
 			display: inline-block;
-
+			max-height: inherit;
 			// Remove extra white space below image.
 
 		}
@@ -108,6 +111,7 @@ form .rtmedia-container .rtm-plupload-list,
 		input.rtm-upload-edit-title {
 			min-width: 100%;
 			margin-top: 1px;
+			display: block;
 		}
 	}
 }
@@ -197,9 +201,14 @@ button#rtmedia-add-media-button-post-update {
 }
 
 #buddypress {
-		a.rtm-button-back{
-			padding: 3px 10px;
+	a.rtm-button-back{
+		padding: 3px 10px;
+	}
+	div.rtmedia-page-no.rtm-page-number {
+		a.rtmedia-page-link.button {
+			padding: 5px 10px;
 		}
+	}
 }
 
 // Pagination
@@ -218,6 +227,10 @@ button#rtmedia-add-media-button-post-update {
 	.rtm-go-to-num,
 	.rtmedia-page-link {
 		float: left;
+	}
+	.rtm-go-to-num,
+	.rtmedia-page-link {
+		line-height: 1.5;
 	}
 }
 
@@ -261,12 +274,13 @@ button#rtmedia-add-media-button-post-update {
 		padding: 0;
 		width: auto;
 	}
+
 }
 
 #rtmedia_go_to_num {
 	font-size: 16px;
 	margin: 0 5px;
-	padding: 4px 5px;
+	padding: 3px 5px;
 	width: 80px;
 }
 
@@ -471,6 +485,12 @@ table.rtmedia-edit-media-list {
 	}
 }
 
+.rtmedia-actions-before-description {
+	& > div {
+		margin-bottom: 5px;
+	}
+}
+
 input.imgedit-submit-btn {
 	display: none;
 }
@@ -479,4 +499,52 @@ input.imgedit-submit-btn {
 // menu properly
 .rtmedia-no-media-found, .rtmedia-list-media {
 	min-height: 95px;
+}
+
+.privacy_message_wrapper {
+	background: rgba(0,0,0,0.95);
+	z-index: 999;
+	color: #fff;
+	display: block;
+	position: fixed;
+	width: 100%;
+	padding: 5px;
+
+	p {
+		margin: 20px 25px;
+		width: calc( 100% - 100px );
+		max-width: 100%;
+		font-size: 85%;
+		text-align: justify;
+		word-wrap: break-word;
+		display: inline-block;
+
+		a {
+			color: #fff;
+			text-decoration: underline;
+
+			&:hover{
+				color: #000;
+			}
+		}
+	}
+
+	#close_rtm_privacy_message {
+		margin: 0px;
+		float: right;
+		top: 50%;
+		transform: translateY(-50%);
+		position: absolute;
+		display: inline-block;
+		color: inherit;
+		font-size: 25px;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+}
+
+.hide_privacy_wrapper {
+	display: none;
 }

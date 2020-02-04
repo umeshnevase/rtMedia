@@ -14,7 +14,13 @@ $rand_id = rand( 0, 1000 );
 		?>
 		<div id="rtm-gallery-title-container" class="clearfix rtm-gallery-shortcode-title-container">
 			<h2 class="rtm-gallery-title">
-				<?php esc_html_e( 'Media Gallery', 'buddypress-media' ); ?>
+				<?php
+				if ( $title ) {
+					echo esc_html( $title );
+				} else {
+					esc_html_e( 'Media Gallery', 'buddypress-media' );
+				}
+				?>
 			</h2>
 
 			<?php do_action( 'rtmedia_gallery_after_title' ); ?>
@@ -100,7 +106,8 @@ $rand_id = rand( 0, 1000 );
 	<?php } else { ?>
 		<p class="rtmedia-no-media-found">
 			<?php
-			apply_filters( 'rtmedia_no_media_found_message_filter', esc_html_e( 'Oops !! There\'s no media found for the request !!','buddypress-media' ) );
+			$message = apply_filters( 'rtmedia_no_media_found_message_filter', 'Sorry !! There\'s no media found for the request !!' );
+			echo esc_html__( $message, 'buddypress-media' );
 			?>
 		</p>
 	<?php } // End if().

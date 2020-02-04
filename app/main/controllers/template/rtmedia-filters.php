@@ -47,7 +47,7 @@ function rtmedia_create_album( $options ) {
 	if ( true === $display ) {
 		add_action( 'rtmedia_before_media_gallery', 'rtmedia_create_album_modal' );
 
-		$options[] = "<a href='#rtmedia-create-album-modal' class='rtmedia-reveal-modal rtmedia-modal-link'  title='" . esc_attr__( 'Create New Album', 'buddypress-media' ) . "'><i class='dashicons dashicons-plus-alt rtmicon'></i>" . esc_html__( 'Add Album', 'buddypress-media' ) . '</a>';
+		$options[] = "<a href='#rtmedia-create-album-modal' class='rtmedia-reveal-modal rtmedia-modal-link'  title='" . esc_attr__( 'Create New Album', 'buddypress-media' ) . "'><i class='dashicons dashicons-plus-alt'></i>" . esc_html__( 'Add Album', 'buddypress-media' ) . '</a>';
 	}
 
 	return $options;
@@ -79,8 +79,8 @@ function rtmedia_album_edit( $options ) {
 
 	if ( isset( $rtmedia_query->media_query ) && isset( $rtmedia_query->media_query['album_id'] ) && ! in_array( intval( $rtmedia_query->media_query['album_id'] ), array_map( 'intval', rtmedia_get_site_option( 'rtmedia-global-albums' ) ), true ) ) {
 		if ( rtmedia_is_album_editable() || is_rt_admin() ) {
-			$options[] = "<a href='edit/' class='rtmedia-edit' title='" . esc_attr__( 'Edit Album', 'buddypress-media' ) . "' ><i class='rtmicon dashicons dashicons-edit'></i>" . esc_html__( 'Edit Album', 'buddypress-media' ) . '</a>';
-			$options[] = '<form method="post" class="album-delete-form rtmedia-inline" action="delete/">' . wp_nonce_field( 'rtmedia_delete_album_' . $rtmedia_query->media_query['album_id'], 'rtmedia_delete_album_nonce' ) . '<button type="submit" name="album-delete" class="rtmedia-delete-album" title="' . esc_attr__( 'Delete Album', 'buddypress-media' ) . '"><i class="dashicons dashicons-trash rtmicon"></i>' . esc_html__( 'Delete Album', 'buddypress-media' ) . '</button></form>';
+			$options[] = "<a href='edit/' class='rtmedia-edit' title='" . esc_attr__( 'Edit Album', 'buddypress-media' ) . "' ><i class='dashicons dashicons-edit'></i>" . esc_html__( 'Edit Album', 'buddypress-media' ) . '</a>';
+			$options[] = '<form method="post" class="album-delete-form rtmedia-inline" action="delete/">' . wp_nonce_field( 'rtmedia_delete_album_' . $rtmedia_query->media_query['album_id'], 'rtmedia_delete_album_nonce' ) . '<button type="submit" name="album-delete" class="rtmedia-delete-album" title="' . esc_attr__( 'Delete Album', 'buddypress-media' ) . '"><i class="dashicons dashicons-trash"></i>' . esc_html__( 'Delete Album', 'buddypress-media' ) . '</button></form>';
 
 			if ( is_rtmedia_group_album() ) {
 				$album_list = rtmedia_group_album_list();
@@ -224,9 +224,9 @@ function rtm_modify_document_title_parts( $title = array() ) {
 		global $rtmedia_query;
 
 		if ( isset( $rtmedia_query->action_query->media_type ) ) {
-			( ! class_exists( 'BuddyPress' ) ) ? array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ), RTMEDIA_MEDIA_LABEL ) : array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ) );
+			( ! class_exists( 'BuddyPress' ) ) ? array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ), apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ) ) : array_unshift( $title, ucfirst( $rtmedia_query->action_query->media_type ) );
 		} else {
-			( ! class_exists( 'BuddyPress' ) ) ? array_unshift( $title, RTMEDIA_MEDIA_LABEL ) : '';
+			( ! class_exists( 'BuddyPress' ) ) ? array_unshift( $title, apply_filters( 'rtmedia_media_tab_name', RTMEDIA_MEDIA_LABEL ) ) : '';
 		}
 	}
 
@@ -282,7 +282,8 @@ function replace_src_with_transcoded_file_url( $html, $rtmedia_media ) {
 		$final_file_url = wp_get_attachment_url( $attachment_id );
 	}
 
-	return preg_replace( '/src=["]([^"]+)["]/', "src=\"$final_file_url\"", $html );
+	//Add timestamp to resolve conflict with cache media.
+	return preg_replace( '/src=["]([^"]+)["]/', 'src="' . $final_file_url . '?' . time() . '"', $html );
 
 }
 
@@ -677,7 +678,7 @@ add_filter( 'rtmedia_like_html_you_and_more_like', 'rtmedia_like_html_you_and_mo
  */
 function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 	if ( function_exists( 'rtmedia_media_search_enabled' ) && rtmedia_media_search_enabled() ) {
-		$search                = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search'] ) ) : '';
+		$search                = ( isset( $_REQUEST['search'] ) ) ? sanitize_text_field( urldecode( wp_unslash( $_REQUEST['search'] ) ) ) : '';
 		$search_by             = ( isset( $_REQUEST['search_by'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['search_by'] ) ) : '';
 		$media_type            = ( isset( $_REQUEST['media_type'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['media_type'] ) ) : '';
 		$rtmedia_current_album = ( isset( $_REQUEST['rtmedia-current-album'] ) ) ? sanitize_text_field( wp_unslash( $_REQUEST['rtmedia-current-album'] ) ) : '';
@@ -754,6 +755,7 @@ function rtmedia_search_fillter_where_query( $where, $table_name, $join ) {
 			}
 		} // End if().
 	} // End if().
+	
 	return $where;
 }
 
@@ -814,20 +816,6 @@ function rtmedia_model_query_columns( $columns ) {
 
 add_filter( 'rtmedia-model-query-columns', 'rtmedia_model_query_columns', 10, 1 );
 
-function rtmedia_comment_max_links_callback( $values, $option = '' ) {
-	$new_values = $values;
-	if ( apply_filters( 'rtmedia_comment_max_links', true ) && 'comment_max_links' == $option ) {
-		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
-		if ( is_array( $rtmedia_attached_files ) && ! empty( $rtmedia_attached_files[0] ) ) {
-			if ( $new_values < 5 ) {
-				$new_values = 5;
-			}
-		}
-	}
-	return $new_values;
-}
-add_filter( 'option_comment_max_links', 'rtmedia_comment_max_links_callback', 10, 2 );
-
 /**
  * add link for @mentions of the username in the comment or the activity section after the media delete or media is trancoder
  */
@@ -853,3 +841,68 @@ if ( ! function_exists( 'rtmedia_gallery_shortcode_parameter_pre_filter_callback
 }
 add_filter( 'rtmedia_gallery_shortcode_parameter_pre_filter', 'rtmedia_gallery_shortcode_parameter_pre_filter_callback', 10, 1 );
 
+
+/**
+ * Add exporters to queue
+ *
+ * @param  array $exporters Exporter queue.
+ * @return array
+ */
+function register_rtmedia_exporter( $exporters ) {
+	$exporters['buddypress-media-shortcode-uploads'] = array(
+		'exporter_friendly_name' => esc_html__( 'rtMedia Shortcode Uploads', 'buddypress-media' ),
+		'callback'               => 'rtmedia_shortcode_upload_exporter',
+	);
+	$exporters['buddypress-media-activity']          = array(
+		'exporter_friendly_name' => esc_html__( 'rtMedia Activities', 'buddypress-media' ),
+		'callback'               => 'rtmedia_activity_exporter',
+	);
+	$exporters['buddypress-media-comment']           = array(
+		'exporter_friendly_name' => esc_html__( 'rtMedia Comments', 'buddypress-media' ),
+		'callback'               => 'rtmedia_activity_comments_exporter',
+	);
+	$exporters['buddypress-media-views']             = array(
+		'exporter_friendly_name' => esc_html__( 'rtMedia Media Views', 'buddypress-media' ),
+		'callback'               => 'rtmedia_media_view_exporter',
+	);
+	$exporters['buddypress-media-likes']             = array(
+		'exporter_friendly_name' => esc_html__( 'rtMedia Media Likes', 'buddypress-media' ),
+		'callback'               => 'rtmedia_media_like_exporter',
+	);
+
+	return $exporters;
+}
+
+add_filter(
+	'wp_privacy_personal_data_exporters',
+	'register_rtmedia_exporter',
+	10
+);
+
+/**
+ * Add eraser to queue
+ *
+ * @param array $erasers Exporter queue.
+ * @return array
+ */
+function register_rtmedia_eraser( $erasers ) {
+	$erasers['buddypress-media']       = array(
+		'eraser_friendly_name' => esc_html__( 'rtMedia Eraser', 'buddypress-media' ),
+		'callback'             => 'rtmedia_eraser',
+	);
+	$erasers['buddypress-media-likes'] = array(
+		'eraser_friendly_name' => esc_html__( 'rtMedia Likes Eraser', 'buddypress-media' ),
+		'callback'             => 'rtmedia_like_eraser',
+	);
+	$erasers['buddypress-media-album'] = array(
+		'eraser_friendly_name' => esc_html__( 'rtMedia Album Eraser', 'buddypress-media' ),
+		'callback'             => 'rtmedia_album_eraser',
+	);
+	return $erasers;
+}
+
+add_filter(
+	'wp_privacy_personal_data_erasers',
+	'register_rtmedia_eraser',
+	10
+);

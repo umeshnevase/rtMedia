@@ -27,10 +27,14 @@ class RTMediaBuddyPressActivity {
 		add_action( 'bp_activity_delete_comment', array( $this, 'delete_comment_sync' ), 10, 2 );
 		add_filter( 'bp_activity_allowed_tags', array( &$this, 'override_allowed_tags' ) );
 		add_filter( 'bp_get_activity_parent_content', array( &$this, 'bp_get_activity_parent_content' ) );
+		add_filter( 'bp_activity_content_before_save', array( $this, 'bp_activity_content_before_save' ) );
+		add_filter( 'bp_activity_type_before_save', array( $this, 'bp_activity_type_before_save' ) );
 		add_action( 'bp_activity_deleted_activities', array( &$this, 'bp_activity_deleted_activities' ) );
 
 		// Filter bp_activity_prefetch_object_data for translatable activity actions
 		add_filter( 'bp_activity_prefetch_object_data', array( $this, 'bp_prefetch_activity_object_data' ), 10, 1 );
+
+		add_filter( 'bp_get_activity_action_pre_meta', array( $this, 'bp_get_activity_action_pre_meta' ), 11, 2 );
 
 		// BuddyPress activity for media like action
 		if ( isset( $rtmedia->options['buddypress_mediaLikeActivity'] ) && 0 !== intval( $rtmedia->options['buddypress_mediaLikeActivity'] ) ) {
@@ -47,19 +51,170 @@ class RTMediaBuddyPressActivity {
 
 		add_filter( 'bp_activity_permalink_access', array( $this, 'rtm_bp_activity_permalink_access' ) );
 		add_action( 'bp_activity_comment_posted', array( $this, 'rtm_check_privacy_for_comments' ), 10, 3 );
+
+		// Apply these hooks only on multisite.
+		if ( is_multisite() ) {
+			// Filter activities in ajax and page reload.
+			add_filter( 'bp_ajax_querystring', array( $this, 'filter_activity_with_blog' ) );
+			add_filter( 'bp_after_has_activities_parse_args', array( $this, 'filter_activity_with_blog' ) );
+
+			// Maintain activity list in rtm_activity table, reset transients.
+			add_action( 'bp_activity_after_save', array( $this, 'bp_activity_after_save' ) );
+			add_action( 'bp_activity_after_delete', array( $this, 'bp_activity_after_delete' ) );
+		}
 	}
 
+	/**
+	 * For adding secondary avatar in the activity header.
+	 *
+	 * @param String $action   Has the markup for activity header.
+	 * @param array  $activity Contains values realated to the activity.
+	 *
+	 * @return String $action.
+	 */
+	function bp_get_activity_action_pre_meta( $action, $activity ) {
+
+		if ( 'rtmedia_update' === $activity->type && 'groups' === $activity->component ) {
+
+			switch ( $activity->component ) {
+				case 'groups':
+				case 'friends':
+					// Only insert avatar if one exists.
+					$secondary_avatar = bp_get_activity_secondary_avatar();
+					if ( ! empty( $secondary_avatar ) && false === strpos( $activity->action, $secondary_avatar ) ) {
+
+						$reverse_content = strrev( $activity->action );
+						$position        = strpos( $reverse_content, 'a<' );
+						$action          = substr_replace( $activity->action, $secondary_avatar, -$position - 2, 0 );
+					}
+					break;
+			}
+
+			return $action;
+
+		} else {
+
+			switch ( $activity->component ) {
+				case 'groups':
+				case 'friends':
+					$secondary_avatar = bp_get_activity_secondary_avatar( array( 'linked' => false ) );
+
+					// Only insert avatar if one exists.
+					if ( ! empty( $secondary_avatar ) && false === strpos( $activity->action, $secondary_avatar ) ) {
+
+						$link_close  = '">';
+						$first_link  = strpos( $activity->action, $link_close );
+						$second_link = strpos( $activity->action, $link_close, $first_link + strlen( $link_close ) );
+						$action      = substr_replace( $activity->action, $secondary_avatar, $second_link + 2, 0 );
+					}
+					break;
+			}
+
+			return $action;
+		}
+	}
+
+	/**
+	 * To save all activities in rtm_activity table, reset transient.
+	 *
+	 * @param object $activity Saved activity object.
+	 */
+	public function bp_activity_after_save( $activity ) {
+		$activity_model = new RTMediaActivityModel();
+		if ( ! $activity_model->check( $activity->id ) ) {
+			$activity_model->insert(
+				array(
+					'activity_id' => $activity->id,
+					'user_id'     => get_current_user_id(),
+					'blog_id'     => get_current_blog_id(),
+				)
+			);
+		}
+
+		self::reset_multisite_transient();
+	}
+
+	/**
+	 * Reset transients for multisite.
+	 */
+	private static function reset_multisite_transient() {
+		$sites = get_sites( array( 'fields' => 'ids' ) );
+		foreach ( $sites as $site ) {
+			if ( $site === get_current_blog_id() ) {
+				continue;
+			}
+
+			delete_site_transient( 'rtm_filter_blog_activity_' . $site );
+		}
+	}
+
+	/**
+	 * To delete activities from rtm_activity table, reset transient.
+	 *
+	 * @param object $activity Deleted activity object.
+	 */
+	public function bp_activity_after_delete( $activity ) {
+		if ( empty( $activity ) ) {
+			return;
+		}
+
+		if ( is_array( $activity ) ) {
+			$activity = $activity[0];
+		}
+
+		$activity_model = new RTMediaActivityModel();
+		$activity_model->delete( array( 'activity_id' => $activity->id ) );
+
+		self::reset_multisite_transient();
+	}
+
+
+	/**
+	 * To handle multisite media.
+	 * Exclude activities which has media uploaded from different sites.
+	 *
+	 * @param string|array $query_string Parameters to filter list of activities.
+	 *
+	 * @return string
+	 */
+	public function filter_activity_with_blog( $query_string ) {
+		global $wpdb;
+		$prefix  = $wpdb->base_prefix;
+		$blog_id = get_current_blog_id();
+
+		$transient_name = 'rtm_filter_blog_activity_' . $blog_id;
+		$activity_ids   = get_site_transient( $transient_name );
+		if ( empty( $activity_ids ) ) {
+			$activities   = $wpdb->get_col( $wpdb->prepare( 'SELECT DISTINCT activity_id FROM ' . $prefix . 'rt_rtm_activity WHERE blog_id!=%d', $blog_id ) );
+			$activity_ids = implode( ',', $activities );
+
+			set_site_transient( $transient_name, $activity_ids );
+		}
+
+		if ( ! empty( $activity_ids ) ) {
+			if ( current_filter() === 'bp_ajax_querystring' ) {
+				$query_string .= '&exclude=' . $activity_ids;
+			} else {
+				$query_string['exclude'] = $activity_ids;
+			}
+		}
+
+		return $query_string;
+	}
+
+	/**
+	 * Fires after the activity item has been deleted for media cleanup.
+	 *
+	 * @param array $activity_ids_deleted Array of affected activity item IDs.
+	 */
 	function bp_activity_deleted_activities( $activity_ids_deleted ) {
-		//Allo delete activity othe media only of request from activity ajax
-		if ( ( is_admin() && '1' == DOING_AJAX ) || ! is_admin() ) {
-			$rt_model  = new RTMediaModel();
-			$all_media = $rt_model->get( array( 'activity_id' => $activity_ids_deleted ) );
-			if ( $all_media ) {
-				$media = new RTMediaMedia();
-				remove_action( 'bp_activity_deleted_activities', array( &$this, 'bp_activity_deleted_activities' ) );
-				foreach ( $all_media as $single_media ) {
-					$media->delete( $single_media->id, false, false );
-				}
+		$rt_model  = new RTMediaModel();
+		$all_media = $rt_model->get( array( 'activity_id' => $activity_ids_deleted ) );
+		if ( $all_media ) {
+			$media = new RTMediaMedia();
+			remove_action( 'bp_activity_deleted_activities', array( &$this, 'bp_activity_deleted_activities' ) );
+			foreach ( $all_media as $single_media ) {
+				$media->delete( $single_media->id, false, false );
 			}
 		}
 	}
@@ -94,6 +249,42 @@ class RTMediaBuddyPressActivity {
 		$content = str_replace( '<span class="time-since">%s</span>', '', $content );
 
 		return $content;
+	}
+
+	/**
+	 * This function will check for the media file attached to the activity and accordingly will set content.
+	 *
+	 * @param string $content Content of the Activity.
+	 *
+	 * @return string Filtered value of the activity content.
+	 */
+	public function bp_activity_content_before_save( $content ) {
+
+		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) ) {
+			$obj_activity = new RTMediaActivity( $rtmedia_attached_files, 0, $content );
+
+			// Remove action to fix duplication issue of comment content.
+			remove_action( 'bp_activity_content_before_save', 'rtmedia_bp_activity_comment_content_callback', 1001, 1 );
+
+			$content = $obj_activity->create_activity_html();
+		}
+		return $content;
+	}
+
+	/**
+	 * This function will check for the media file attached to the actitvity and accordingly will set type.
+	 *
+	 * @param string $type Type of the Activity.
+	 *
+	 * @return string Filtered value of the activity type.
+	 */
+	public function bp_activity_type_before_save( $type ) {
+		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
+		if ( ( ! empty( $rtmedia_attached_files ) ) && is_array( $rtmedia_attached_files ) && 'activity_update' === $type ) {
+			$type = 'rtmedia_update';
+		}
+		return $type;
 	}
 
 	function delete_comment_sync( $activity_id, $comment_id ) {
@@ -164,16 +355,7 @@ class RTMediaBuddyPressActivity {
 
 		$rtmedia_attached_files = filter_input( INPUT_POST, 'rtMedia_attached_files', FILTER_DEFAULT, FILTER_REQUIRE_ARRAY );
 		if ( is_array( $rtmedia_attached_files ) ) {
-			$updated_content = $wpdb->get_var( "select content from  {$bp->activity->table_name} where  id= $activity_id limit 1" ); // @codingStandardsIgnoreLine
-
-			$obj_activity = new RTMediaActivity( $rtmedia_attached_files, 0, $updated_content );
-			$html_content = $obj_activity->create_activity_html();
-			bp_activity_update_meta( $activity_id, 'bp_old_activity_content', $html_content );
-			bp_activity_update_meta( $activity_id, 'bp_activity_text', $updated_content );
-			$wpdb->update( $bp->activity->table_name, array(
-				'type'    => 'rtmedia_update',
-				'content' => $html_content,
-			), array( 'id' => $activity_id ) );
+			bp_activity_update_meta( $activity_id, 'bp_activity_text', bp_activity_filter_kses( $content ) );
 			$media_obj = new RTMediaModel();
 			//Credit faisal : https://gist.github.com/faishal/c4306ae7267fff976465
 			$in_str_arr = array_fill( 0, count( $rtmedia_attached_files ), '%d' );
@@ -272,6 +454,15 @@ class RTMediaBuddyPressActivity {
 	}
 
 	function bp_after_activity_post_form() {
+
+		/**
+		 * Filter to enable/disable media upload from the activity.
+		 *
+		 * @param bool Default true to enable activity media upload false to disable activity media upload.
+		 */
+		if ( ! apply_filters( 'rtmedia_enable_activity_media_upload', true ) ) {
+			return;
+		}
 		$request_uri = rtm_get_server_var( 'REQUEST_URI', 'FILTER_SANITIZE_URL' );
 		$url         = rtmedia_get_upload_url( $request_uri );
 		if ( rtmedia_is_uploader_view_allowed( true, 'activity' ) ) {
@@ -299,6 +490,7 @@ class RTMediaBuddyPressActivity {
 				'multi_selection'     => true,
 				'multipart_params'    => apply_filters( 'rtmedia-multi-params', array(
 					'redirect'             => 'no',
+					'redirection'          => 'false',
 					'rtmedia_update'       => 'true',
 					'action'               => 'wp_handle_upload',
 					'_wp_http_referer'     => $request_uri,
@@ -690,6 +882,7 @@ class RTMediaBuddyPressActivity {
 					}
 
 					// create BuddyPress activity
+					remove_filter( 'bp_activity_content_before_save', array( $this, 'bp_activity_content_before_save' ) );
 					$activity_id = bp_activity_add( $activity_args );
 
 					/* save the profile activity id in the media meta */
@@ -838,51 +1031,22 @@ class RTMediaBuddyPressActivity {
 	}
 
 	/**
-	 * Makes the comments hidden (private) if the parent comment's
-	 * privacy is set to private.
+	 * Set the privacy for comment activity.
 	 *
 	 * @param string $comment_id Activity id of the comment.
 	 * @param array  $r          Array of arguments.
 	 */
 	public function rtm_check_privacy_for_comments( $comment_id, $r ) {
-		global $wpdb;
 
 		if ( empty( $r ) || empty( $comment_id ) || ( ! is_array( $r ) ) ) {
 			return;
 		}
 
-		$db_prefix   = $wpdb->get_blog_prefix();
-		$table_name  = 'rt_rtm_activity';
 		$activity_id = $r['activity_id'];
 		$user_id     = $r['user_id'];
 		$privacy_id  = bp_activity_get_meta( $activity_id, 'rtmedia_privacy' );
-		$blog_id     = get_current_blog_id();
 
-		if ( '60' === $privacy_id ) {
-			$row_values_rtm_media = array(
-				'activity_id' => $comment_id,
-				'user_id'     => $user_id,
-				'privacy'     => $privacy_id,
-				'blog_id'     => $blog_id,
-			);
-
-			$wpdb->insert(
-				$db_prefix . $table_name,
-				$row_values_rtm_media
-			);
-
-			$table_name = 'bp_activity_meta';
-			$row_values_activity_meta = array(
-				'id'          => '',
-				'activity_id' => $comment_id,
-				'meta_key'    => 'rtmedia_privacy',
-				'meta_value'  => 60,
-			);
-
-			$wpdb->insert(
-				$db_prefix . $table_name,
-				$row_values_activity_meta
-			);
-		}
+		$rtm_activity_model = new RTMediaActivityModel();
+		$rtm_activity_model->set_privacy( $comment_id, $user_id, $privacy_id );
 	}
 }

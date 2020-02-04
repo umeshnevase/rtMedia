@@ -53,7 +53,7 @@ class RTMedia {
 	 *
 	 * @var string Support forum url
 	 */
-	public $support_url = 'http://community.rtcamp.com/c/rtmedia/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media';
+	public $support_url = 'https://rtmedia.io/support/';
 
 	/**
 	 *
@@ -90,6 +90,10 @@ class RTMedia {
 		add_action( 'wp_enqueue_scripts', array( 'RTMediaGalleryShortcode', 'register_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( &$this, 'enqueue_scripts_styles' ), 999 );
 
+		// Reset group status cache.
+		add_action( 'groups_settings_updated', array( $this, 'group_status_reset_cache' ) );
+		add_action( 'groups_delete_group', array( $this, 'group_status_reset_cache' ) );
+
 		// Including core functions, actions & filters
 		include( RTMEDIA_PATH . 'app/main/controllers/template/rtmedia-functions.php' );
 		include( RTMEDIA_PATH . 'app/main/controllers/template/rtmedia-actions.php' );
@@ -100,6 +104,15 @@ class RTMedia {
 		add_filter( 'intermediate_image_sizes', array( $this, 'filter_image_sizes' ) );
 		add_filter( 'site_option_upload_filetypes', array( &$this, 'filter_allow_mime_type_mu' ), 1, 1 );
 		add_filter( 'image_size_names_choose', array( $this, 'rtmedia_custom_image_sizes_choose' ) );
+	}
+
+	/**
+	 * Delete group status cache.
+	 *
+	 * @param int $group_id Group ID.
+	 */
+	public function group_status_reset_cache( $group_id ) {
+		delete_transient( 'group_status_' . $group_id );
 	}
 
 	function filter_allow_mime_type_mu( $options ) {
@@ -319,18 +332,77 @@ class RTMedia {
 			$media_width = 'auto';
 		}
 
-		?>
-		.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail {
-		max-width: <?php echo esc_attr( $media_width ); ?>;
-		max-height: <?php echo esc_attr( $media_height ); ?>;
-		overflow: hidden;
+		$video_height = ( isset( $this->options['defaultSizes_video_activityPlayer_height'] ) ? $this->options['defaultSizes_video_activityPlayer_height'] : '240' );
+		$video_width  = ( isset( $this->options['defaultSizes_video_activityPlayer_width'] ) ? $this->options['defaultSizes_video_activityPlayer_width'] : '320' );
+
+		if ( '0' === $video_height ) {
+			$video_height = '240';
 		}
 
-		.rtmedia-comment-media-container .mejs-container.mejs-video,
-		.rtmedia-activity-container .mejs-container.mejs-video{
-		min-height: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_height'] ); ?>px;
-		min-width: <?php echo esc_attr( $this->options['defaultSizes_video_activityPlayer_width'] ); ?>px;
+		if ( '0' === $video_width ) {
+			$video_width = '320';
 		}
+
+		$music_width = ( isset( $this->options['defaultSizes_music_activityPlayer_width'] ) ? $this->options['defaultSizes_music_activityPlayer_width'] : '320' );
+
+		if ( '0' === $music_width ) {
+			$music_width = '320';
+		}
+
+		?>
+            	.rtmedia-activity-container ul.rtm-activity-media-list{
+            	overflow: auto;
+            	}
+
+            	div.rtmedia-activity-container ul.rtm-activity-media-list li.media-type-document,
+            	div.rtmedia-activity-container ul.rtm-activity-media-list li.media-type-other{
+            	margin-left: 0.6em !important;
+            	}
+
+        	.rtmedia-activity-container li.media-type-video{
+        	height: <?php echo esc_attr( $video_height ); ?>px !important;
+        	width: <?php echo esc_attr( $video_width ); ?>px !important;
+        	}
+
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail,
+        	.rtmedia-activity-container li.media-type-photo a{
+        	width: 100% !important;
+        	height: 98% !important;
+        	}
+
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail video{
+        	width: 100% !important;
+        	height: 100% !important;
+        	}
+
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video,
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video video,
+        	.rtmedia-activity-container li.media-type-video div.rtmedia-item-thumbnail .mejs-video .mejs-overlay-play{
+        	width: 100% !important;
+        	height: 100% !important;
+        	}
+
+        	.rtmedia-activity-container li.media-type-music{
+        	width: <?php echo esc_attr( $music_width ); ?>px !important;
+        	}
+
+        	.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail,
+        	.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail .mejs-audio,
+        	.rtmedia-activity-container li.media-type-music .rtmedia-item-thumbnail audio{
+        	width: 100% !important;
+        	}
+
+        	.rtmedia-activity-container li.media-type-photo{
+        	width: <?php echo esc_attr( $media_width ); ?> !important;
+        	height: <?php echo esc_attr( $media_height ); ?> !important;
+        	}
+
+        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail,
+        	.rtmedia-activity-container .media-type-photo .rtmedia-item-thumbnail img {
+        	width: 100% !important;
+        	height: 100% !important;
+        	overflow: hidden;
+        	}
 		<?php
 		global $rtmedia;
 		if ( rtmedia_check_comment_media_allow() && ! rtmedia_check_comment_in_commented_media_allow() ) { ?>
@@ -591,7 +663,7 @@ class RTMedia {
 			'general_showAdminMenu'       => ( isset( $bp_media_options['show_admin_menu'] ) ) ? $bp_media_options['show_admin_menu'] : 0,
 			'general_videothumbs'         => 2,
 			'general_jpeg_image_quality'  => 90,
-			'general_AllowUserData'       => 1,
+			'general_AllowUserData'       => 0,
 		);
 
 		foreach ( $this->allowed_types as $type ) {
@@ -989,7 +1061,9 @@ class RTMedia {
 	}
 
 	function enqueue_scripts_styles() {
-		global $rtmedia;
+		global $rtmedia, $bp, $rtmedia_interaction;
+
+		$bp_template = get_option( '_bp_theme_package_id' );
 
 		wp_enqueue_script( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelement-and-player.min.js', '', RTMEDIA_VERSION );
 		wp_enqueue_style( 'rt-mediaelement', RTMEDIA_URL . 'lib/media-element/mediaelementplayer-legacy.min.css', '', RTMEDIA_VERSION );
@@ -1024,6 +1098,8 @@ class RTMedia {
 				'jquery',
 				'rt-mediaelement-wp',
 			), RTMEDIA_VERSION );
+			// Locallzte for rtmedia js
+			wp_localize_script( 'rtmedia-main', 'bp_template_pack', $bp_template );
 		}
 
 		wp_localize_script( 'rtmedia-main', 'rtmedia_ajax_url', admin_url( 'admin-ajax.php' ) );
@@ -1077,6 +1153,14 @@ class RTMedia {
 		foreach ( $this->allowed_types as $key_type => $value_type ) {
 			$rtmedia_media_thumbs[ $key_type ] = $value_type['thumbnail'];
 		}
+
+		/**
+		 * Filter to add docs and files thumbnails.
+		 *
+		 * This filter is used by only rtmedia-docs-files addon.
+		 * */
+		$rtmedia_media_thumbs = apply_filters( 'rtmedia_add_docs_thumbs', $rtmedia_media_thumbs );
+
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_media_thumbs', $rtmedia_media_thumbs );
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_set_featured_image_msg', esc_html__( 'Featured media set successfully.', 'buddypress-media' ) );
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_unset_featured_image_msg', esc_html__( 'Featured media removed successfully.', 'buddypress-media' ) );
@@ -1090,6 +1174,9 @@ class RTMedia {
 		$rtmedia_backbone_strings = array(
 			'rtm_edit_file_name' => esc_html__( 'Edit File Name', 'buddypress-media' ),
 		);
+
+		// Localise fot rtmedia-backcone js
+		wp_localize_script( 'rtmedia-backbone', 'bp_template_pack', $bp_template );
 
 		wp_localize_script( 'rtmedia-backbone', 'rtmedia_backbone_strings', $rtmedia_backbone_strings );
 
@@ -1211,6 +1298,7 @@ class RTMedia {
 			'multi_selection'     => false,
 			'multipart_params'    => apply_filters( 'rtmedia-multi-params', array(
 				'redirect'             => 'no',
+				'redirection'          => 'false',
 				'action'               => 'wp_handle_upload',
 				'_wp_http_referer'     => $request_uri,
 				'mode'                 => 'file_upload',
@@ -1250,6 +1338,20 @@ class RTMedia {
 			wp_localize_script( 'rtmedia-main', 'ajaxurl', admin_url( 'admin-ajax.php', is_ssl() ? 'admin' : 'http' ) );
 		}
 
+		// Only Applay if BP Template Nouveau is activate.
+		if ( ! empty( $bp_template ) && 'nouveau' === $bp_template && ( 'group' === $rtmedia_interaction->context->type || 'profile' === $rtmedia_interaction->context->type ) ) {
+			$rtmedia_router = new RTMediaRouter();
+			if ( ! empty( $rtmedia_router->query_vars ) ) {
+				$wp_current_stylesheet = get_stylesheet();
+
+				// If file is already exists in buddypress then enqueue it.
+				if ( file_exists( sprintf( '%sbp-templates/bp-legacy/css/%s.min.css', BP_PLUGIN_DIR, $wp_current_stylesheet ) ) ) {
+					wp_enqueue_style( 'bp-nouveau-stylesheet-theme', BP_PLUGIN_URL . 'bp-templates/bp-legacy/css/' . $wp_current_stylesheet . '.min.css' );
+				}
+
+				wp_enqueue_style( 'bp-nouveau-stylesheet-buddypress', BP_PLUGIN_URL . 'bp-templates/bp-legacy/css/buddypress.min.css', '' );
+			}
+		}
 	}
 
 	function set_bp_bar() {
@@ -1479,6 +1581,66 @@ function rtmedia_get_site_option( $option_name, $default = false ) {
 
 	return $return_val;
 }
+
+/**
+ * Function to show privacy message provided from rtMedia settings in front end.
+ */
+function rtm_privacy_message_on_website() {
+	global $rtmedia;
+	$options = $rtmedia->options;
+
+	$rtm_privacy_message_options = array(
+		'background-color' => 'rgba(0,0,0,0.95)',
+		'color'            => '#fff',
+		'position'         => 'bottom'
+	);
+
+	$rtm_privacy_message_options = apply_filters( 'rtm_privacy_bar_position', $rtm_privacy_message_options );
+
+	include_once ABSPATH . 'wp-admin/includes/plugin.php';
+
+ 	if ( ! is_plugin_active( 'rtmedia-upload-terms/index.php' ) ) {
+		if( ! empty( $options['general_upload_terms_show_pricacy_message'] ) && "1" === $options['general_upload_terms_show_pricacy_message'] && empty( $_COOKIE[ 'rtm_show_privacy_message' ] ) ) {
+			$rtm_privacy_allowed_postion  = array( 'top', 'bottom' );
+			$rtm_privacy_message_position = ! empty ( $rtm_privacy_message_options['position'] ) && ( in_array( $rtm_privacy_message_options['background-color'], $rtm_privacy_allowed_postion) )  ? $rtm_privacy_message_options['position'] . ':0' : 'bottom: 0';
+			$rtm_privacy_message_bgcolor  = ! empty ( $rtm_privacy_message_options['background-color'] )   ? 'background-color: ' . $rtm_privacy_message_options['background-color'] : 'background-color: rgba(0,0,0,0.95)';
+			$rtm_privacy_message_color    = ! empty ( $rtm_privacy_message_options['color'] ) ? 'color: ' . $rtm_privacy_message_options['color'] : 'color: #fff';
+
+			$rtm_privacy_style = $rtm_privacy_message_position . '; ' . $rtm_privacy_message_bgcolor . '; ' . $rtm_privacy_message_color . ';';
+
+			echo "<div class='privacy_message_wrapper' style='" . $rtm_privacy_style . "' ><p>" . wp_kses_post( $options[ 'general_upload_terms_privacy_message' ] ) . "</p><span class='dashicons dashicons-no' id='close_rtm_privacy_message'></span></div>";
+        }
+    }
+}
+add_action( 'wp_footer', 'rtm_privacy_message_on_website' );
+
+/**
+ * Function to add privacy policy information in WordPress policy section.
+ */
+function rtm_plugin_privacy_information() {
+	$policy = '';
+	if ( function_exists( 'wp_add_privacy_policy_content' ) ) {
+		ob_start();
+		?>
+		<p>We collect your information during the checkout process on your purchase. The information collected from you may include, but is not limited to, your name, billing address, shipping address, email address, phone number, credit card/payment details and any other details that might be requested from you for the purpose of processing.</p>
+		<h2>Handling this data will also allow us to:</h2>
+		<p>- Send you important service information.<br/>
+		- Respond to your queries or complaints.<br/>
+		- Set up and administer your account, provide technical and/or customer support, and to verify your identity.</p>
+		<h2>Additionally we may also collect the following information:</h2>
+		<p>- Your comments and product reviews if you choose to leave them on our website.
+		- Account email/password to allow you to access your account, if you have one.
+		- If you choose to create an account with us, your name, address, and email address, which will be used to populate the checkout for future orders.</p>
+		<?php
+		$policy = ob_get_clean();
+		wp_add_privacy_policy_content(
+			__( 'rtMedia', 'buddypress-media' ),
+			wp_kses_post( $policy )
+		);
+	}
+}
+
+add_action( 'admin_init', 'rtm_plugin_privacy_information' );
 
 /**
  * This wraps up the main rtMedia class. Three important notes:

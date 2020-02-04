@@ -245,6 +245,141 @@ class RTMediaFormHandler {
 	}
 
 	/**
+	 * Show rtMedia link in admin options.
+	 *
+	 * @access static
+	 *
+	 * @param  array $args
+	 *
+	 * @return void
+	 */
+	public static function link( $args, $echo = true ) {
+
+		$defaults = array(
+			'href'   => '',
+			'text'   => '',
+			'target' => '',
+			'desc'   => '',
+		);
+		$args     = wp_parse_args( $args, $defaults );
+		extract( $args );
+
+		if ( ! isset( $href ) ) {
+			trigger_error( esc_html__( 'Please provide a "href" in the argument.', 'buddypress-media' ) );
+
+			return;
+		}
+
+		if ( ! isset( $text ) ) {
+			trigger_error( esc_html__( 'Please provide a "text" in the argument.', 'buddypress-media' ) );
+
+			return;
+		}
+
+		if( isset( $target ) && ! empty( $target ) ) {
+			$args['misc'] = array( 'target' => $target, );
+		}
+
+		$linkObj = new rtForm();
+
+		if ( $echo ) {
+
+			$linkObj->display_link( $args );
+		} else {
+
+			return $linkObj->get_link( $args );
+		}
+	}
+
+	/**
+	 * Show rtmedia button in admin options.
+	 *
+	 * @since 4.5.0
+	 *
+	 * @access public
+	 *
+	 * @param  array $args arguments to create button.
+	 *
+	 * @return void
+	 */
+	public static function button( $args ) {
+		$defaults = array(
+			'key'  => '',
+			'desc' => '',
+		);
+		$args     = wp_parse_args( $args, $defaults );
+
+		if ( empty( $args['value'] ) ) {
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
+
+			return;
+		}
+
+		$buttonObj = new rtForm();
+		$buttonObj->display_button( $args );
+	}
+
+	/**
+	 * Show rtmedia file input in admin options.
+	 *
+	 * @since 4.5.0
+	 *
+	 * @access public
+	 *
+	 * @param  array $args Arguments to create file input control.
+	 *
+	 * @return void
+	 *
+	 */
+	public static function fileinput( $args ) {
+		$defaults = array(
+			'key'  => '',
+			'desc' => '',
+		);
+		$args     = wp_parse_args( $args, $defaults );
+
+		if ( empty( $args['value'] ) ) {
+			trigger_error( esc_html__( 'Please provide a "value" in the argument.', 'buddypress-media' ) );
+
+			return;
+		}
+
+		$fileObj = new rtForm();
+		$fileObj->display_file_input( $args );
+	}
+
+	/**
+	 * Show rtmedia input file in admin options.
+	 *
+	 * @access static
+	 *
+	 * @param  array $args Arguments to create file input control for default thumbnail generator settings.
+	 *
+	 * @return void
+	 */
+	public static function inputfile( $args ) {
+		global $rtmedia;
+		$options = $rtmedia->options;
+
+		$defaults = array(
+			'key'  => '',
+			'desc' => '',
+		);
+
+		$args = wp_parse_args( $args, $defaults );
+
+		if ( ! empty( $args['key'] ) ) {
+			$args['name'] = $args['key'];
+		}
+
+		$args['value'] = $args['value'];
+
+		$num_obj = new rtForm();
+		$num_obj->display_inputfile( $args );
+	}
+
+
+	/**
 	 * extract settings.
 	 *
 	 * @access static
@@ -463,18 +598,6 @@ class RTMediaFormHandler {
 				),
 				'group'    => 100,
 			), //
-			'rtmedia_affiliate_id'  => array(
-				'title'         => esc_html__( 'Also add my affiliate-id to rtMedia footer link', 'buddypress-media' ),
-				'callback'      => array( 'RTMediaFormHandler', 'textbox' ),
-				'args'          => array(
-					'key'   => 'rtmedia_affiliate_id',
-					'value' => $options['rtmedia_affiliate_id'],
-					'desc'  => esc_html__( 'Add your affiliate-id along with footer link and get rewarded by our affiliation program.', 'buddypress-media' ),
-				),
-				'group'         => 100,
-				'depends'       => 'rtmedia_add_linkback',
-				'after_content' => esc_html__( 'Signup for', 'buddypress-media' ) . ' rtMedia ' . esc_html__( 'affiliate program', 'buddypress-media' ) . ' <a href="https://rtmedia.io/affiliates/">' . esc_html__( 'here', 'buddypress-media' ) . '</a>',
-			), //
 			'rtmedia_enable_api'    => array(
 				'title'         => esc_html__( 'Enable JSON API', 'buddypress-media' ),
 				'callback'      => array( 'RTMediaFormHandler', 'checkbox' ),
@@ -511,6 +634,106 @@ class RTMediaFormHandler {
 		$general_group      = apply_filters( 'rtmedia_general_content_groups', $general_group );
 		ksort( $general_group );
 		self::render_tab_content( $render_options, $general_group, 90 );
+	}
+
+	/**
+	 * render export import.
+	 *
+	 * @access public
+	 *
+	 * @since 4.5.0
+	 *
+	 * @return array $render
+	 */
+	static function render_export_import() {
+		$render = array(
+			'rtmedia_export_settings' => array(
+				'title'    => esc_html__( 'Export rtMedia Settings', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'button' ),
+				'args'     => array(
+					'id'    => 'rtm-export-button',
+					'key'   => 'rtmedia_export_settings',
+					'value' => esc_html__( 'Export Settings', 'buddypress-media' ),
+					'desc'  => esc_html__( 'This will export rtMedia settings into a JSON file.', 'buddypress-media' ),
+					'class' => array( 'button', 'button-primary', 'button-small' ),
+				),
+				'group'    => 10,
+			),
+			'rtmedia_import_settings' => array(
+				'title'         => esc_html__( 'Import rtMedia Settings', 'buddypress-media' ),
+				'callback'      => array( 'RTMediaFormHandler', 'fileinput' ),
+				'args'          => array(
+					'id'    => 'rtm-import-button',
+					'key'   => 'rtmedia_import_settings',
+					'value' => esc_html__( 'Import Settings', 'buddypress-media' ),
+					'desc'  => esc_html__( 'This will import rtMedia settings. Allowed File Type: json', 'buddypress-media' ),
+				),
+				'group'         => 10,
+				'after_content' => esc_html__( 'Importing invalid files/settings may break your site. Please import valid file exported from rtMedia plugin only.', 'buddypress-media' ),
+			),
+			'rtmedia_export_personal_data' => array(
+				'title'    => esc_html__( 'Export your personal data', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'button' ),
+				'args'     => array(
+					'id'    => 'rtm-export-data-button',
+					'key'   => 'rtm-export-data-button',
+					'value' => esc_html__( 'Export Data', 'buddypress-media' ),
+					'desc'  => esc_html__( 'This will export your personal data.', 'buddypress-media' ),
+					'class' => array( 'button', 'button-primary', 'button-small' ),
+				),
+				'group'    => 11,
+			),
+			'rtmedia_erase_personal_data' => array(
+				'title'    => esc_html__( 'Erase your personal data', 'buddypress-media' ),
+				'callback' => array( 'RTMediaFormHandler', 'button' ),
+				'args'     => array(
+					'id'    => 'rtm-erase-data-button',
+					'key'   => 'rtm-erase-data-button',
+					'value' => esc_html__( 'Erase Data', 'buddypress-media' ),
+					'desc'  => esc_html__( 'This will erase your personal data.', 'buddypress-media' ),
+					'class' => array( 'button', 'button-primary', 'button-small' ),
+				),
+				'group'    => 11,
+				'after_content' => esc_html__( 'Data will be expoted or erased along with wordpress user data.', 'buddypress-media' ),
+			),
+		);
+
+		return $render;
+	}
+
+
+	/**
+	 * Render content in export/import settings tab
+	 *
+	 * @since 4.5.0
+	 *
+	 * @access public
+	 *
+	 * @return void
+	 */
+	static function rtm_export_import() {
+
+		global $rtmedia;
+		$render_options = self::render_export_import();
+
+		/**
+		 * Filter 'rtmedia_export_import_add_itmes' to modify controls in export/import settings tab
+		 *
+		 * @since 4.5.0
+		 */
+		$render_options          = apply_filters( 'rtmedia_export_import_add_itmes', $render_options );
+		$export_import_group     = array();
+		$export_import_group[10] = esc_html__( 'Export/Import Settings', 'buddypress-media' );
+		$export_import_group[11] = esc_html__( 'Export/Erase Personal Data', 'buddypress-media' );
+
+		/**
+		 * Filter 'rtmedia_export_import_groups' to modify groups in export/import settings tab
+		 *
+		 * @since 4.5.0
+		 */
+		$export_import_group = apply_filters( 'rtmedia_export_import_groups', $export_import_group );
+		ksort( $export_import_group );
+		self::render_tab_content( $render_options, $export_import_group, 100 );
 	}
 
 	/**
@@ -658,7 +881,7 @@ class RTMediaFormHandler {
 								if ( 'other' !== $key ) {
 									?>
 									<span class="rtm-tooltip rtm-extensions">
-										<i class="dashicons dashicons-info rtmicon"></i>
+										<i class="dashicons dashicons-info"></i>
 										<span class="rtm-tip">
 											<strong><?php echo esc_html__( 'File Extensions', 'buddypress-media' ); ?></strong><br/>
 											<hr/>
@@ -1345,7 +1568,7 @@ class RTMediaFormHandler {
 						<span
 							class="rtm-field-wrap"><?php call_user_func( $option['callback'], $option['args'] ); ?></span>
 						<span class="rtm-tooltip">
-							<i class="dashicons dashicons-info rtmicon"></i>
+							<i class="dashicons dashicons-info"></i>
 							<span class="rtm-tip">
 								<?php echo wp_kses( ( isset( $option['args']['desc'] ) ) ? $option['args']['desc'] : 'NA', array(
 									'a' => array(
@@ -1380,3 +1603,5 @@ class RTMediaFormHandler {
 		}
 	}
 }
+
+new RTMediaFormHandler();

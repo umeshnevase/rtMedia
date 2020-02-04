@@ -17,7 +17,13 @@ class RTMediaTemplate {
 
 		if ( $rtmedia_query ) {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_image_editor_scripts' ) );
+
+			/**
+			 * Load media edit scripts only if user is logged in
+			 */
+			if ( is_user_logged_in() ) {
+				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_image_editor_scripts' ) );
+			}
 		}
 	}
 
@@ -726,6 +732,9 @@ class RTMediaTemplate {
 						$rtmedia_buddypress_activity,
 						'comment_sync',
 					), 10, 2 );
+
+					// Remove duplicate media from activity.
+					remove_filter( 'bp_activity_content_before_save', array( $rtmedia_buddypress_activity, 'bp_activity_content_before_save' ) );
 
 					if ( function_exists( 'bp_activity_new_comment' ) ) {
 						/* comment content add to new */

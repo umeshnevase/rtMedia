@@ -356,7 +356,11 @@ function rtmedia_media_id( $id = false ) {
 		$media = $model->get_media( array(
 			'id' => $id,
 		), 0, 1 );
-		return $media[0]->media_id;
+
+		// update code to fix GL-21-rtmoderation.
+		if ( ! empty( $media ) && ! empty( $media[0] ) ) {
+			return $media[0]->media_id;
+		}
 	} else {
 		if ( is_object( $rtmedia_media ) ) {
 			return $rtmedia_media->media_id;
@@ -543,8 +547,11 @@ function rtmedia_media( $size_flag = true, $echo = true, $media_size = 'rt_media
 			 * Used `set_url_scheme` because `esc_url` breaks the image if there is special characters are there into image name.
 			 * Added by checking the code from "wp-admin/includes/media.php:2740".
 			 * Because in media library, it was not breaking.
+			 * 
+			 * Add timestamp to resolve conflict with cache image.
 			 */
-			$html = "<img src='" . set_url_scheme( $src[0] ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
+			$html = "<img src='" . set_url_scheme( $src[0]. '?' . time() ) . "' alt='" . esc_attr( $rtmedia_media->post_name ) . "' />";
+
 		} elseif ( 'video' === $rtmedia_media->media_type ) {
 			$youtube_url = get_rtmedia_meta( $rtmedia_media->id, 'video_url_uploaded_from' );
 			$height = $rtmedia->options['defaultSizes_video_singlePlayer_height'];
@@ -665,7 +672,7 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 		global $rtmedia;
 
 		// Getting the extension of the uploaded file
-		$extension = rtmedia_get_extension();
+		$extension = rtmedia_get_extension( $media_object->media_id );
 
 		// Checking if custom thumbnail for this file extension is set or not
 		if ( isset( $rtmedia->allowed_types[ $media_object->media_type ] ) && isset( $rtmedia->allowed_types[ $media_object->media_type ]['ext_thumb'] ) && isset( $rtmedia->allowed_types[ $media_object->media_type ]['ext_thumb'][ $extension ] ) ) {
@@ -686,6 +693,9 @@ function rtmedia_image( $size = 'rt_media_thumbnail', $id = false, $recho = true
 	}
 
 	$src = apply_filters( 'rtmedia_media_thumb', $src, $media_object->id, $media_object->media_type );
+
+	//Added timestamp because conflict with cache image.
+	$src = $src . '?' . time();
 
 	if ( true === $recho ) {
 		echo set_url_scheme( $src );
@@ -1308,7 +1318,7 @@ function rmedia_single_comment( $comment, $count = false, $i = false ) {
 	$html .= '<div class="rtmedia-comment-extra">' . apply_filters( 'rtmedia_comment_extra', '', $comment ) . '</div>';
 
 	if ( is_rt_admin() || ( isset( $comment['user_id'] ) && ( get_current_user_id() === intval( $comment['user_id'] ) || intval( $rtmedia_media->media_author ) === get_current_user_id() ) ) || apply_filters( 'rtmedia_allow_comment_delete', false ) ) { // show delete button for comment author and admins
-		$html .= '<i data-id="' . esc_attr( $comment['comment_ID'] ) . '" class = "rtmedia-delete-comment dashicons dashicons-no-alt rtmicon" title="' . esc_attr__( 'Delete Comment', 'buddypress-media' ) . '"></i>';
+		$html .= '<i data-id="' . esc_attr( $comment['comment_ID'] ) . '" class = "rtmedia-delete-comment dashicons dashicons-no-alt" title="' . esc_attr__( 'Delete Comment', 'buddypress-media' ) . '"></i>';
 	}
 
 	$html .= '<div class="clear"></div></div></div></li>';
@@ -1702,17 +1712,21 @@ function rtmedia_get_pagination_values() {
 }
 
 /**
- * Checking if comments are enabled
+ * Returns current value of rtMedia `Allow user to comment on uploaded media` setting.
  *
- * @global      RTMedia         $rtmedia
+ * @global object $rtmedia rtMedia global variable.
  *
- * @return      bool
+ * @return bool
  */
 function rtmedia_comments_enabled() {
 
 	global $rtmedia;
 
-	return $rtmedia->options['general_enableComments'];
+	if ( isset( $rtmedia->options['general_enableComments'] ) ) {
+		return $rtmedia->options['general_enableComments'];
+	}
+
+	return false;
 
 }
 
@@ -2558,9 +2572,10 @@ function rtmedia_edit_media_privacy_ui() {
 	$privacymodel = new RTMediaPrivacy( false );
 	$privacy      = $privacymodel->select_privacy_ui( $echo = false );
 
+	// @todo: strict standard error
 	if ( isset( $rtmedia_query->media ) && is_array( $rtmedia_query->media ) && isset( $rtmedia_query->media['0'] ) ) {
 		if ( isset( $rtmedia_query->media['0']->privacy ) && $rtmedia_query->media['0']->privacy != '80' ) {
-			if ( $privacy  && empty( $comment_media ) ) {
+			if ( $privacy && empty( $comment_media ) ) {
 				return "<div class='rtmedia-edit-privacy rtm-field-wrap'><label for='privacy'>" . esc_html__( 'Privacy : ', 'buddypress-media' ) . '</label>' . $privacy . '</div>';
 			}
 		}
@@ -2871,7 +2886,7 @@ function show_rtmedia_like_counts() {
 		}
 		?>
 		<div class='rtmedia-like-info <?php echo $class; ?>'>
-			<i class="rtmicon-thumbs-up rtmicon-fw"></i>
+			<i class="dashicons dashicons-thumbs-up"></i>
 			<span class="rtmedia-like-counter-wrap">
 				<?php
 				if ( class_exists( 'RTMediaLike' ) && function_exists( 'rtmedia_who_like_html' ) ) {
@@ -2889,69 +2904,76 @@ function show_rtmedia_like_counts() {
 }
 
 
-
 /**
  * Print rtmedia who like html
  *
- * @param       int          $like_count ( Total like Count )
- * @param      bool|string  $user_like_it ( login user like it or not )
+ * @param       int        $like_count   ( Total like Count )
+ * @param      bool|string $user_like_it ( login user like it or not )
  *
  * @return      string  HTML
  */
 if ( ! function_exists( 'rtmedia_who_like_html' ) ) {
-	function rtmedia_who_like_html( $like_count, $user_like_it ) {
-		$like_count = ( $like_count ) ? $like_count : false;
-		$user_like_it = ( $user_like_it ) ? true : false;
+	function rtmedia_who_like_html( $like_count = false, $user_like_it = false ) {
 		$like_count_new = $like_count;
-		$html = '';
+		$html           = '';
 		if ( $like_count == 1 && $user_like_it ) {
 			/**
-			 * rtmedia you like text
-			 * @param $html TEXT
-			 * @param int $like_count Total Like
+			 * Rtmedia you like text
+			 *
+			 * @param     $html         TEXT
+			 * @param int $like_count   Total Like
 			 * @param int $user_like_it User Like it or Not
+			 *
 			 * @return html TEXT to  display
-			*/
+			 */
 			$html = apply_filters( 'rtmedia_like_html_you_only_like', esc_html__( 'You like this', 'buddypress-media' ), $like_count, $user_like_it );
 		} elseif ( $like_count ) {
 			if ( $like_count > 1 && $user_like_it ) {
 				/**
-				* rtmedia you and
-				 * @param $html TEXT
-				 * @param int $like_count Total Like
+				 * Rtmedia you and
+				 *
+				 * @param     $html         TEXT
+				 * @param int $like_count   Total Like
 				 * @param int $user_like_it User Like it or Not
+				 *
 				 * @return html TEXT to  display
-				*/
+				 */
 				$html .= apply_filters( 'rtmedia_like_html_you_and_more_like', esc_html__( 'You and ', 'buddypress-media' ), $like_count, $user_like_it );
 				$like_count_new--;
 			}
 
 			/**
-			 * rtmedia Disaply count
-			 * @param int $like_count Total Like
+			 * Rtmedia Disaply count
+			 *
+			 * @param int $like_count   Total Like
 			 * @param int $user_like_it User Like it or Not
+			 *
 			 * @return INT Count to  display
-			*/
+			 */
 			$html .= apply_filters( 'rtmedia_like_html_you_and_more_like', $like_count, $user_like_it );
 
 			/**
-			 * rtmedia person or people likes it
-			 * @param $html TEXT
-			 * @param int $like_count Total Like
+			 * Rtmedia person or people likes it
+			 *
+			 * @param     $html         TEXT
+			 * @param int $like_count   Total Like
 			 * @param int $user_like_it User Like it or Not
+			 *
 			 * @return html TEXT to  display
-			*/
-			$html .= apply_filters( 'rtmedia_like_html_othe_likes_this', _n( ' person likes this', ' people like this', $like_count_new, 'buddypress-media' ) ,$like_count, $user_like_it );
+			 */
+			$html .= apply_filters( 'rtmedia_like_html_othe_likes_this', _n( ' person likes this', ' people like this', $like_count_new, 'buddypress-media' ), $like_count, $user_like_it );
 		}
 
 		/**
-		 * rtmedia return whole HTML
-		 * @param $html TEXT
-		 * @param int $like_count Total Like
+		 * Rtmedia return whole HTML
+		 *
+		 * @param     $html         TEXT
+		 * @param int $like_count   Total Like
 		 * @param int $user_like_it User Like it or Not
+		 *
 		 * @return html TEXT to  display
-		*/
-		$html = apply_filters( 'rtmedia_who_like_html', $html ,$like_count, $user_like_it );
+		 */
+		$html = apply_filters( 'rtmedia_who_like_html', $html, $like_count, $user_like_it );
 		return $html;
 	}
 }
@@ -3047,27 +3069,27 @@ function get_rtmedia_privacy_symbol( $rtmedia_id = false ) {
 		switch ( $actions[0]->privacy ) {
 			case 0: // public
 				$title = esc_html__( 'Public', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-admin-site rtmicon';
+				$icon  = 'dashicons dashicons-admin-site';
 
 				break;
 			case 20: // users
 				$title = esc_html__( 'All members', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-groups rtmicon';
+				$icon  = 'dashicons dashicons-groups';
 
 				break;
 			case 40: // friends
 				$title = esc_html__( 'Your friends', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-networking rtmicon';
+				$icon  = 'dashicons dashicons-networking';
 
 				break;
 			case 60: // private
 				$title = esc_html__( 'Only you', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-lock rtmicon';
+				$icon  = 'dashicons dashicons-lock';
 
 				break;
 			case 80: // private
 				$title = esc_html__( 'Blocked temporarily', 'buddypress-media' );
-				$icon  = 'dashicons dashicons-dismiss rtmicon';
+				$icon  = 'dashicons dashicons-dismiss';
 
 				break;
 		}
@@ -3962,7 +3984,17 @@ if ( ! function_exists( 'rtmedia_show_title' ) ) {
 		global $rtmedia_backbone;
 
 		if ( $rtmedia_backbone['backbone'] ) {
-			echo '<%= media_class %>';
+
+			$media_title = filter_input( INPUT_POST, 'media_title', FILTER_SANITIZE_STRING );
+			if ( empty( $media_title ) ) {
+				$media_title = filter_input( INPUT_GET, 'media_title', FILTER_SANITIZE_STRING );
+			}
+			if ( empty( $media_title ) || 'false' === $media_title ) {
+				return 'hide';
+			}
+
+			return 'show';
+
 		} else {
 			global $rtmedia_media;
 			$media_class = 'hide';
@@ -4179,3 +4211,714 @@ function rtmedia_number_to_human_readable( $n ) {
 	}
 }
 
+/**
+ * Activity exporter with attachments for GDPR
+ *
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ *
+ * @return array
+ */
+function rtmedia_activity_exporter( $email_address, $page = 1 ) {
+
+	// Limit to avoid timing out.
+	$number = 100;
+	$page   = (int) $page;
+
+	// setting default values.
+	$activity_count = false;
+	$user_data      = false;
+
+	// fetching user data.
+	$user_cache_key = md5( 'email_' . $email_address );
+	$user_id        = wp_cache_get( $user_cache_key, 'activity_exporter' );
+
+	if ( false === $user_id ) {
+		$user_data = get_user_by( 'email', $email_address );
+		$user_id   = $user_data->ID;
+		wp_cache_set( $user_cache_key, $user_id, 'activity_exporter', 300 );
+	}
+
+	$export_items = array();
+
+	if ( false === $user_data || empty( $user_id ) ) {
+
+		return array(
+			'data' => $export_items,
+			'done' => true,
+		);
+	}
+
+	global $wpdb;
+
+	$query = $wpdb->prepare(
+		'SELECT * FROM ' . $wpdb->prefix . "bp_activity WHERE user_id=%d and type='rtmedia_update'  LIMIT %d OFFSET %d",
+		$user_id,
+		$number,
+		$number * ( $page - 1 )
+	);
+
+	$activities_args      = array( $user_id, $number, $page );
+	$activities_cache_key = md5( wp_json_encode( $activities_args ) );
+	$activities           = wp_cache_get( $activities_cache_key, 'activity_exporter' );
+
+	if ( false === $activities ) {
+		$activities = $wpdb->get_results( $query );
+		wp_cache_set( $activities_cache_key, $activities, 'activity_exporter', 300 );
+	}
+
+	foreach ( $activities as $activity ) {
+
+		$activity_content = wp_strip_all_tags( $activity->content );
+		$activity_date    = $activity->date_recorded;
+		$activity_id      = $activity->id;
+		$item_id          = 'activity-' . $activity_id;
+		$group_id         = 'activity';
+		$group_label      = esc_html__( 'rtMedia Activities', 'buddypress-media' );
+
+		$query = $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $activity_id );
+
+		$activity_args       = array( $user_id, $activity_id );
+		$activity_cache_key  = md5( wp_json_encode( $activity_args ) );
+		$activity_count_args = array( $user_id, $activity_id, 'count' );
+		$activity_count_key  = md5( wp_json_encode( $activity_count_args ) );
+		$activity_results    = wp_cache_get( $activity_cache_key, 'activity_exporter' );
+		$activity_count      = wp_cache_get( $activity_count_key, 'activity_exporter' );
+
+		if ( false === $activity_results || false === $activity_count ) {
+			$activity_results = $wpdb->get_results( $query );
+			$activity_count   = $wpdb->num_rows;
+
+			wp_cache_set( $activity_cache_key, $activity_results, 'activity_exporter', 300 );
+			wp_cache_set( $activity_count_key, $activity_count, 'activity_exporter', 300 );
+		}
+
+		$attachments = '';
+
+		foreach ( $activity_results as $result ) {
+			$url          = wp_get_attachment_url( $result->media_id );
+			$attachments .= $result->media_title . " : <a href='" . esc_url( $url ) . "'>" . esc_url( $url ) . '</a><br />';
+		}
+
+		$data = array(
+			array(
+				'name'  => esc_html__( 'Activity Date', 'buddypress-media' ),
+				'value' => $activity_date,
+			),
+			array(
+				'name'  => esc_html__( 'Activity Content', 'buddypress-media' ),
+				'value' => $activity_content,
+			),
+			array(
+				'name'  => esc_html__( 'Attachments', 'buddypress-media' ),
+				'value' => empty( $attachments ) ? 'No attachments' : $attachments,
+			),
+		);
+
+		$export_items[] = array(
+			'group_id'    => $group_id,
+			'group_label' => $group_label,
+			'item_id'     => $item_id,
+			'data'        => $data,
+		);
+	}
+
+	$done = ( $activity_count < $number );
+	return array(
+		'data' => $export_items,
+		'done' => $done,
+	);
+}
+
+
+/**
+ * Shortcode upload exporter with  for GDPR
+ *
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ *
+ * @return array
+ */
+function rtmedia_shortcode_upload_exporter( $email_address, $page = 1 ) {
+
+	// Limit to avoid timing out.
+	$number = 100;
+	$page   = (int) $page;
+
+	// setting default value.
+	$user_data = false;
+
+	// fetching user data.
+	$user_cache_key = md5( 'email_' . $email_address );
+	$user_id        = wp_cache_get( $user_cache_key, 'upload_exporter' );
+
+	if ( false === $user_id ) {
+		$user_data = get_user_by( 'email', $email_address );
+		$user_id   = $user_data->ID;
+		wp_cache_set( $user_cache_key, $user_id, 'upload_exporter', 300 );
+	}
+
+	$export_items = array();
+
+	if ( false === $user_data || empty( $user_id ) ) {
+
+		return array(
+			'data' => $export_items,
+			'done' => true,
+		);
+	}
+
+	global $wpdb;
+
+	$query = $wpdb->prepare( 'SELECT media.media_id, media.media_title, media.upload_date, album.media_title AS album_title FROM ' . $wpdb->prefix . 'rt_rtm_media AS media, ' . $wpdb->prefix . 'rt_rtm_media AS album WHERE media.album_id=album.id AND media.activity_id=0 AND media.media_author=%d LIMIT %d OFFSET %d',
+		$user_id,
+		$number,
+		$number * ( $page - 1 )
+	);
+
+	$upload_args      = array( $user_id, $number, $page );
+	$upload_cache_key = md5( wp_json_encode( $upload_args ) );
+	$media_count_args = array( $user_id, $number, $page, 'count' );
+	$media_count_key  = md5( wp_json_encode( $media_count_args ) );
+	$media            = wp_cache_get( $upload_cache_key, 'upload_exporter' );
+	$media_count      = wp_cache_get( $media_count_key, 'upload_exporter' );
+
+	if ( false === $media || false === $media_count ) {
+		$media       = $wpdb->get_results( $query );
+		$media_count = $wpdb->num_rows;
+
+		wp_cache_set( $upload_cache_key, $media, 'upload_exporter', 300 );
+		wp_cache_set( $media_count_key, $media_count, 'upload_exporter', 300 );
+	}
+
+	foreach ( $media as $media_data ) {
+		$item_id     = 'shortcode-upload-' . $media_data->media_id;
+		$group_id    = 'shortcode-upload';
+		$group_label = esc_html__( 'rtMedia Shortcode Uploads', 'buddypress-media' );
+
+		$media_url   = wp_get_attachment_url( $media_data->media_id );
+		$media_title = $media_data->media_title;
+		$album_title = $media_data->album_title;
+		$upload_date = $media_data->upload_date;
+
+		$data = array(
+			array(
+				'name'  => esc_html__( 'Media Upload Date', 'buddypress-media' ),
+				'value' => $upload_date,
+			),
+			array(
+				'name'  => esc_html__( 'Media Title', 'buddypress-media' ),
+				'value' => $media_title,
+			),
+			array(
+				'name'  => __( 'Media URL', 'buddypress-media' ),
+				'value' => $media_url,
+			),
+			array(
+				'name'  => esc_html__( 'Album Title', 'buddypress-media' ),
+				'value' => $album_title,
+			),
+		);
+
+		$export_items[] = array(
+			'group_id'    => $group_id,
+			'group_label' => $group_label,
+			'item_id'     => $item_id,
+			'data'        => $data,
+		);
+	}
+
+	$done = ( $media_count < $number );
+	return array(
+		'data' => $export_items,
+		'done' => $done,
+	);
+}
+
+/**
+ * Activity Comment exporter with attachments for GDPR
+ *
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ *
+ * @return array
+ */
+function rtmedia_activity_comments_exporter( $email_address, $page = 1 ) {
+
+	// Limit to avoid timing out.
+	$number = 100;
+	$page   = (int) $page;
+
+	// setting default value.
+	$user_data = false;
+
+	// fetching user data.
+	$user_cache_key = md5( 'email_' . $email_address );
+	$user_id        = wp_cache_get( $user_cache_key, 'comments_exporter' );
+
+	if ( false === $user_id ) {
+		$user_data = get_user_by( 'email', $email_address );
+		$user_id   = $user_data->ID;
+		wp_cache_set( $user_cache_key, $user_id, 'comments_exporter', 300 );
+	}
+
+	$export_items = array();
+
+	if ( false === $user_data || empty( $user_id ) ) {
+
+		return array(
+			'data' => $export_items,
+			'done' => true,
+		);
+	}
+
+	global $wpdb;
+
+	$query = $wpdb->prepare(
+		'SELECT * FROM ' . $wpdb->prefix . "bp_activity WHERE user_id=%d and type='activity_comment'  LIMIT %d OFFSET %d",
+		$user_id,
+		$number,
+		$number * ( $page - 1 )
+	);
+
+	$activity_comment_args      = array( $user_id, $number, $page );
+	$activity_comment_cache_key = md5( wp_json_encode( $activity_comment_args ) );
+	$comment_count_args         = array( $user_id, $number, $page, 'count' );
+	$comment_count_key          = md5( wp_json_encode( $comment_count_args ) );
+	$comment_count              = wp_cache_get( $comment_count_key, 'comments_exporter' );
+	$comments                   = wp_cache_get( $activity_comment_cache_key, 'comments_exporter' );
+
+	if ( false === $comments || false === $comment_count ) {
+		$comments      = $wpdb->get_results( $query );
+		$comment_count = $wpdb->num_rows;
+
+		wp_cache_set( $activity_comment_cache_key, $comments, 'comments_exporter', 300 );
+		wp_cache_set( $comment_count_key, $comment_count, 'comments_exporter', 300 );
+	}
+
+	foreach ( $comments as $comment ) {
+
+		$comment_content = wp_strip_all_tags( $comment->content );
+		$comment_date    = $comment->date_recorded;
+		$comment_id      = $comment->id;
+		$item_id         = 'activity-comment-' . $comment_id;
+		$group_id        = 'activity-comment';
+		$group_label     = esc_html__( 'rtMedia Activity Comments', 'buddypress-media' );
+
+		$query = $wpdb->prepare( 'SELECT media_id, media_title FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE activity_id=%d', $comment_id );
+
+		$comment_args      = array( $user_id, $comment_id );
+		$comment_cache_key = md5( wp_json_encode( $comment_args ) );
+		$comment_results   = wp_cache_get( $comment_cache_key, 'comments_exporter' );
+
+		if ( false === $comment_results ) {
+			$comment_results = $wpdb->get_results( $query );
+			wp_cache_set( $comment_cache_key, $comment_results, 'comments_exporter', 300 );
+		}
+
+		$attachments = '';
+
+		foreach ( $comment_results as $result ) {
+			$url          = wp_get_attachment_url( $result->media_id );
+			$attachments .= $result->media_title . " : <a href='" . esc_url( $url ) . "'>" . esc_url( $url ) . '</a><br />';
+		}
+
+		$data = array(
+			array(
+				'name'  => esc_html__( 'Comment Date', 'buddypress-media' ),
+				'value' => $comment_date,
+			),
+			array(
+				'name'  => esc_html__( 'Comment Content', 'buddypress-media' ),
+				'value' => $comment_content,
+			),
+			array(
+				'name'  => esc_html__( 'Attachments', 'buddypress-media' ),
+				'value' => empty( $attachments ) ? 'No attachments' : $attachments,
+			),
+		);
+
+		$export_items[] = array(
+			'group_id'    => $group_id,
+			'group_label' => $group_label,
+			'item_id'     => $item_id,
+			'data'        => $data,
+		);
+	}
+
+	$done = ( $comment_count < $number );
+
+	return array(
+		'data' => $export_items,
+		'done' => $done,
+	);
+}
+
+/**
+ * Media view exporter for GDPR
+ *
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ *
+ * @return array
+ */
+function rtmedia_media_view_exporter( $email_address, $page = 1 ) {
+
+	// Limit to avoid timing out.
+	$number = 100;
+	$page   = (int) $page;
+
+	// setting default value.
+	$user_data = false;
+
+	// fetching user data.
+	$user_cache_key = md5( 'email_' . $email_address );
+	$user_id        = wp_cache_get( $user_cache_key, 'view_exporter' );
+
+	if ( false === $user_id ) {
+		$user_data = get_user_by( 'email', $email_address );
+		$user_id   = $user_data->ID;
+		wp_cache_set( $user_cache_key, $user_id, 'view_exporter', 300 );
+	}
+
+	$export_items = array();
+
+	if ( false === $user_data || empty( $user_id ) ) {
+
+		return array(
+			'data' => $export_items,
+			'done' => true,
+		);
+	}
+
+	global $wpdb;
+
+	$query = $wpdb->prepare(
+		'SELECT interaction.*, media.media_id FROM ' . $wpdb->prefix . 'rt_rtm_media_interaction as interaction, ' . $wpdb->prefix . "rt_rtm_media as media WHERE interaction.user_id=%d and interaction.action='view' and media.id = interaction.media_id LIMIT %d OFFSET %d",
+		$user_id,
+		$number,
+		$number * ( $page - 1 )
+	);
+
+	$view_args       = array( $user_id, $number, $page );
+	$view_cache_key  = md5( wp_json_encode( $view_args ) );
+	$view_count_args = array( $user_id, $number, $page, 'count' );
+	$view_count_key  = md5( wp_json_encode( $view_count_args ) );
+	$view_count      = wp_cache_get( $view_count_key, 'view_exporter' );
+	$views           = wp_cache_get( $view_cache_key, 'view_exporter' );
+
+	if ( false === $views || false === $view_count ) {
+		$views      = $wpdb->get_results( $query );
+		$view_count = $wpdb->num_rows;
+
+		wp_cache_set( $view_cache_key, $views, 'view_exporter', 300 );
+		wp_cache_set( $view_count_key, $view_count, 'view_exporter', 300 );
+	}
+
+	foreach ( $views as $view ) {
+		$no_of_views     = $view->value;
+		$first_view_date = $view->action_date;
+		$item_id         = 'media-view' . $view->id;
+		$group_id        = 'media-view';
+		$media_url       = wp_get_attachment_url( $view->media_id );
+		$media_url       = "<a href='" . esc_url( $media_url ) . "'>" . esc_url( $media_url ) . '</a>';
+		$group_label     = esc_html__( 'rtMedia Media Views', 'buddypress-media' );
+
+		$data = array(
+			array(
+				'name'  => esc_html__( 'Media URL', 'buddypress-media' ),
+				'value' => $media_url,
+			),
+			array(
+				'name'  => esc_html__( 'Number of Views', 'buddypress-media' ),
+				'value' => $no_of_views,
+			),
+			array(
+				'name'  => esc_html__( 'Date of First View', 'buddypress-media' ),
+				'value' => $first_view_date,
+			),
+		);
+
+		$export_items[] = array(
+			'group_id'    => $group_id,
+			'group_label' => $group_label,
+			'item_id'     => $item_id,
+			'data'        => $data,
+		);
+	}
+
+	$done = ( $view_count < $number );
+
+	return array(
+		'data' => $export_items,
+		'done' => $done,
+	);
+}
+
+/**
+ * Media Like exporter with attachments for GDPR
+ *
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ *
+ * @return array
+ */
+function rtmedia_media_like_exporter( $email_address, $page = 1 ) {
+
+	// Limit to avoid timing out.
+	$number = 100;
+	$page   = (int) $page;
+
+	// setting default value.
+	$user_data = false;
+
+	// fetching user data.
+	$user_cache_key = md5( 'email_' . $email_address );
+	$user_id        = wp_cache_get( $user_cache_key, 'like_exporter' );
+
+	if ( false === $user_id ) {
+		$user_data = get_user_by( 'email', $email_address );
+		$user_id   = $user_data->ID;
+		wp_cache_set( $user_cache_key, $user_id, 'like_exporter', 300 );
+	}
+
+	$export_items = array();
+
+	if ( false === $user_data || empty( $user_id ) ) {
+
+		return array(
+			'data' => $export_items,
+			'done' => true,
+		);
+	}
+
+	global $wpdb;
+
+	$query = $wpdb->prepare(
+		'SELECT interaction.*, media.media_id FROM ' . $wpdb->prefix . 'rt_rtm_media_interaction as interaction, ' . $wpdb->prefix . "rt_rtm_media as media WHERE interaction.user_id=%d and interaction.action='like' and media.id = interaction.media_id LIMIT %d OFFSET %d",
+		$user_id,
+		$number,
+		$number * ( $page - 1 )
+	);
+
+	$likes_args      = array( $user_id, $number, $page );
+	$likes_cache_key = md5( wp_json_encode( $likes_args ) );
+	$like_count_args = array( $user_id, $number, $page, 'count' );
+	$like_count_key  = md5( wp_json_encode( $like_count_args ) );
+	$like_count      = wp_cache_get( $like_count_key, 'like_exporter' );
+	$likes           = wp_cache_get( $likes_cache_key, 'like_exporter' );
+
+	if ( false === $likes || false === $like_count ) {
+		$likes      = $wpdb->get_results( $query );
+		$like_count = $wpdb->num_rows;
+
+		wp_cache_set( $likes_cache_key, $likes, 'like_exporter', 300 );
+		wp_cache_set( $like_count_key, $like_count, 'like_exporter', 300 );
+	}
+
+	foreach ( $likes as $like ) {
+
+		$like_date   = $like->action_date;
+		$item_id     = 'media-like' . $like->id;
+		$group_id    = 'media-like';
+		$media_url   = wp_get_attachment_url( $like->media_id );
+		$media_url   = "<a href='" . esc_url( $media_url ) . "'>" . esc_url( $media_url ) . '</a>';
+		$group_label = esc_html__( 'rtMedia Media Likes', 'buddypress-media' );
+
+		$data = array(
+			array(
+				'name'  => esc_html__( 'Media URL', 'buddypress-media' ),
+				'value' => $media_url,
+			),
+			array(
+				'name'  => esc_html__( 'Date', 'buddypress-media' ),
+				'value' => $like_date,
+			),
+		);
+
+		$export_items[] = array(
+			'group_id'    => $group_id,
+			'group_label' => $group_label,
+			'item_id'     => $item_id,
+			'data'        => $data,
+		);
+	}
+
+	$done = ( $like_count < $number );
+
+	return array(
+		'data' => $export_items,
+		'done' => $done,
+	);
+}
+
+
+/**
+ * Media eraser for GDPR
+ *
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ *
+ * @return array
+ */
+function rtmedia_eraser( $email_address, $page = 1 ) {
+
+	// Limit to avoid timing out.
+	$number = 100;
+	$page   = (int) $page;
+
+	// fetching user data.
+	$user_data     = get_user_by( 'email', $email_address );
+	$items_removed = false;
+
+	if ( false === $user_data || empty( $user_data->ID ) ) {
+
+		return array(
+			'items_removed'  => $items_removed,
+			'items_retained' => false,
+			'messages'       => array(),
+			'done'           => true,
+		);
+	}
+
+	global $wpdb;
+
+	$query = $wpdb->prepare(
+		'SELECT media_id FROM ' . $wpdb->prefix . 'rt_rtm_media WHERE media_author=%d LIMIT %d OFFSET %d',
+		$user_data->ID,
+		$number,
+		$number * ( $page - 1 )
+	);
+
+	$media_ids = $wpdb->get_col( $query );
+
+	foreach ( $media_ids as $media_id ) {
+
+		// remove all attachment data.
+		wp_delete_attachment( $media_id, true );
+
+		$items_removed = true;
+	}
+
+	$done = ( count( $media_ids ) < $number );
+
+	return array(
+		'items_removed'  => $items_removed,
+		'items_retained' => false,
+		'messages'       => array(),
+		'done'           => $done,
+	);
+}
+
+/**
+ * Media album eraser for GDPR
+ *
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ * @return array
+ */
+function rtmedia_album_eraser( $email_address, $page = 1 ) {
+
+	// Limit to avoid timing out.
+	$number = 100;
+	$page   = (int) $page;
+
+	// fetching user data.
+	$user_data     = get_user_by( 'email', $email_address );
+	$items_removed = false;
+
+	if ( false === $user_data || empty( $user_data->ID ) ) {
+
+		return array(
+			'items_removed'  => $items_removed,
+			'items_retained' => false,
+			'messages'       => array(),
+			'done'           => true,
+		);
+	}
+
+	global $wpdb;
+
+	$default_albums           = rtmedia_global_albums();
+	$default_album_str        = '';
+	$default_album_postid_str = '';
+	foreach ( $default_albums as $default_album ) {
+		$default_album_str        .= $default_album . ',';
+		$default_album_postid_str .= rtmedia_media_id( $default_album ) . ',';
+	}
+	$default_album_str        = rtrim( $default_album_str, ',' );
+	$default_album_postid_str = rtrim( $default_album_postid_str, ',' );
+
+	$query = $wpdb->prepare(
+		'DELETE FROM ' . $wpdb->prefix . "rt_rtm_media WHERE media_type='album' AND media_author=%d AND id NOT IN (" . $default_album_str . ") LIMIT %d",
+		$user_data->ID,
+		$number
+	);
+
+	$items_removed = $wpdb->query( $query );
+
+	$query = $wpdb->prepare(
+		'DELETE FROM ' . $wpdb->prefix . "posts WHERE post_type='rtmedia_album' AND post_author=%d AND ID NOT IN (" . $default_album_postid_str . ") LIMIT %d",
+		$user_data->ID,
+		$number
+	);
+
+	$items_removed += $wpdb->query( $query );
+
+	$done = ( $items_removed < $number );
+
+	return array(
+		'items_removed'  => $items_removed,
+		'items_retained' => false,
+		'messages'       => array(),
+		'done'           => $done,
+	);
+}
+
+
+/**
+ * Media like eraser for GDPR
+ *
+ * @param  string $email_address user email address.
+ * @param  int    $page          page no to fetch data from.
+ * @return array
+ */
+function rtmedia_like_eraser( $email_address, $page = 1 ) {
+
+	// Limit to avoid timing out.
+	$number = 100;
+	$page   = (int) $page;
+
+	// fetching user data.
+	$user_data     = get_user_by( 'email', $email_address );
+	$items_removed = false;
+
+	if ( false === $user_data || empty( $user_data->ID ) ) {
+
+		return array(
+			'items_removed'  => $items_removed,
+			'items_retained' => false,
+			'messages'       => array(),
+			'done'           => true,
+		);
+	}
+
+	global $wpdb;
+
+	$query = $wpdb->prepare(
+		'DELETE FROM ' . $wpdb->prefix . "bp_activity WHERE type='rtmedia_like_activity' AND user_id=%d LIMIT %d",
+		$user_data->ID,
+		$number
+	);
+
+	$items_removed = $wpdb->query( $query );
+
+	$done = ( $items_removed < $number );
+
+	return array(
+		'items_removed'  => $items_removed,
+		'items_retained' => false,
+		'messages'       => array(),
+		'done'           => $done,
+	);
+}
