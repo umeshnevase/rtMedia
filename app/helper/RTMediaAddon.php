@@ -99,7 +99,7 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 		 * @return void
 		 */
 		public function plugins_content( $args = '' ) {
-			$rtcamp_upload_url = 'https://cdn.rtmedia.io/wp-content/uploads/';
+			$rtcamp_upload_url = 'https://rtmedia.io/wp-content/uploads/';
 			$rtmedia_demo_url  = 'http://demo.rtmedia.io/';
 			$addons            = array(
 				array(
@@ -433,17 +433,6 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 					'purchased'    => ( defined( 'RTMEDIA_MYCRED_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-mycred/index.php' ) ) ? true : false,
 				),
 				array(
-					'title'        => esc_html__( 'Upload Terms', 'buddypress-media' ),
-					'img_src'      => $rtcamp_upload_url . 'edd/2015/06/rtmedia-upload-terms.jpg',
-					'product_link' => 'https://rtmedia.io/products/rtmedia-upload-terms/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'desc'         => '<p>' . esc_html__( 'User must have to check the terms and conditions checkbox before uploading the media.', 'buddypress-media' ) . '</p>',
-					'price'        => '$49',
-					'demo_link'    => $rtmedia_demo_url . '?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'buy_now'      => 'https://rtmedia.io/products/rtmedia-upload-terms/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'category'     => 'general',
-					'purchased'    => ( defined( 'RTMEDIA_UPLOAD_TERMS_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-upload-terms/index.php' ) ) ? true : false,
-				),
-				array(
 					'title'        => esc_html__( 'CubePoints', 'buddypress-media' ),
 					'img_src'      => $rtcamp_upload_url . 'edd/2015/06/rtmedia-cubepoints.jpg',
 					'product_link' => 'https://rtmedia.io/products/rtmedia-cubepoints/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
@@ -497,28 +486,6 @@ if ( ! class_exists( 'RTMediaAddon' ) ) {
 					'buy_now'      => 'https://rtmedia.io/products/rtmedia-photo-filters/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
 					'category'     => 'photo',
 					'purchased'    => ( defined( 'RTMEDIA_INSTAGRAM_URL' ) || file_exists( WP_PLUGIN_DIR . '/bpm-instagram/index.php' ) || defined( 'RTMEDIA_PHOTO_FILTERS_URL' ) || file_exists( WP_PLUGIN_DIR . '/rtmedia-photo-filters/index.php' ) ) ? true : false,
-				),
-				array(
-					'title'        => esc_html__( 'Kaltura Add-on', 'buddypress-media' ),
-					'img_src'      => $rtcamp_upload_url . 'edd/2015/08/rtMedia-Kaltura-Add-on.png',
-					'product_link' => 'https://rtmedia.io/products/rtmedia-kaltura-add-on/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'desc'         => '<p>' . esc_html__( 'Add support for more video formats using Kaltura video solution. It works with Kaltura.com, self-hosted Kaltura-CE and Kaltura-on-premise.', 'buddypress-media' ) . '</p>',
-					'price'        => '$499',
-					'demo_link'    => $rtmedia_demo_url . 'bpm-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'buy_now'      => 'https://rtmedia.io/products/rtmedia-kaltura/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'category'     => 'video',
-					'purchased'    => ( defined( 'RTMEDIA_KALTURA_PATH' ) || file_exists( WP_PLUGIN_DIR . '/bpm-kaltura/index.php' ) ) ? true : false,
-				),
-				array(
-					'title'        => esc_html__( 'FFMPEG Add-on', 'buddypress-media' ),
-					'img_src'      => $rtcamp_upload_url . 'edd/2015/08/rtMedia-FFMPEG-Addon.png',
-					'product_link' => 'https://rtmedia.io/products/buddypress-media-ffmpeg-converter/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'desc'         => '<p>' . esc_html__( 'Add supports for more audio & video formats using open-source media-node. Media node comes with automated setup script for Ubuntu/Debian.', 'buddypress-media' ) . '</p>',
-					'price'        => '$499',
-					'demo_link'    => $rtmedia_demo_url . 'bpm-media/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'buy_now'      => 'https://rtmedia.io/products/rtmedia-ffmpeg/?utm_source=dashboard&utm_medium=plugin&utm_campaign=buddypress-media',
-					'category'     => 'video',
-					'purchased'    => ( defined( 'RTMEDIA_FFMPEG_URL' ) || file_exists( WP_PLUGIN_DIR . '/bpm-ffmpeg/index.php' ) ) ? true : false,
 				),
 				array(
 					'title'        => esc_html__( 'Membership Add-on', 'buddypress-media' ),

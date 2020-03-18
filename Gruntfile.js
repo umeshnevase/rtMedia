@@ -48,7 +48,9 @@ module.exports = function ( grunt ) {
 				files: {
 					'app/assets/admin/css/admin.min.css': 'app/assets/admin/css/sass/admin.scss',
 					'app/assets/admin/css/widget.min.css': 'app/assets/admin/css/sass/widget.scss',
-					'app/assets/css/rtmedia.min.css': 'app/assets/css/sass/rtmedia.scss'
+					'app/assets/css/rtmedia.min.css': 'app/assets/css/sass/rtmedia.scss',
+					'app/assets/css/rtm-upload-terms.min.css': 'app/assets/css/rtm-upload-terms.css',
+					'app/assets/admin/css/rtm-upload-terms.min.css': 'app/assets/css/rtm-upload-terms.css'
 				}
 			}
 		},
@@ -79,9 +81,21 @@ module.exports = function ( grunt ) {
 				src: [
 					'app/assets/js/vendors/magnific-popup.js',
 					'app/assets/admin/js/vendors/tabs.js',
-					'app/assets/js/rtMedia.js'
+					'app/assets/js/rtMedia.js',
 				],
 				dest: 'app/assets/js/rtmedia.min.js'
+			},
+			rtmUploadTerms: {
+				src: [
+					'app/assets/js/rtm-upload-terms.js',
+				],
+				dest: 'app/assets/js/rtm-upload-terms.min.js'
+			},
+			adminUploadTerms: {
+				src: [
+					'app/assets/js/admin-upload-terms.js'
+				],
+				dest: 'app/assets/js/admin-upload-terms.min.js'
 			},
 			backend: {
 				src: [
@@ -136,7 +150,7 @@ module.exports = function ( grunt ) {
 						poedit: true, // Includes common Poedit headers.
 						'Last-Translator': 'rtMedia <rtmedia@rtcamp.com>',
 						'Language-Team': 'rtMedia <rtmedia@rtcamp.com>',
-						'report-msgid-bugs-to': 'http://community.rtcamp.com/c/rtmedia/',
+						'report-msgid-bugs-to': 'https://rtmedia.io/support/',
 						'x-poedit-keywordslist': true // Include a list of all possible gettext functions.
 					},
 					type: 'wp-plugin', // Type of project (wp-plugin or wp-theme).
